@@ -1,7 +1,5 @@
 # Editor
 
-Namespace FineGameDesign.Go
-
 1. [ ] Go Referee
     1. [ ] Game State (Go.Game)
     1. [ ] Listen to GoCellView.OnClick
@@ -12,11 +10,7 @@ Namespace FineGameDesign.Go
         1. [ ] OnCaptured(Group)
         1. [ ] OnOccupied(PointContent)
     1. [ ] Players
-1. [ ] Board Loader
-    1. [ ] SGF File
-        1. [ ] Board Size
-    1. [ ] Go Referee
-        1. [ ] Set Game State
+1. [x] Configure [Game Loader](../LudumDare43/Assets/Scripts/Go/GameLoader.cs)
 1. [ ] Board Layout
     1. [ ] Go Referee
     1. [ ] Tile Center Position.
