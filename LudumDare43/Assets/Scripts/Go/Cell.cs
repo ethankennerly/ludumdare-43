@@ -27,7 +27,7 @@ namespace FineGameDesign.Go
         private Content m_Content;
 
         [Serializable]
-        private struct AnimatedPlayerTile
+        public struct AnimatedPlayerTile
         {
             public Animator animator;
             public AnimatedPlayerTileSet tileSet;
@@ -102,9 +102,8 @@ namespace FineGameDesign.Go
                 return;
 
             foreach (AnimatedPlayerTile tile in m_AnimatedPlayerTiles)
-            {
                 tile.Update(m_Content, next.Content);
-            }
+
             m_Content = next.Content;
         }
     }
