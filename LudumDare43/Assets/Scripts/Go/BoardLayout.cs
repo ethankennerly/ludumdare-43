@@ -6,6 +6,8 @@ namespace FineGameDesign.Go
 {
     public sealed class BoardLayout : MonoBehaviour
     {
+        public static event Action<Board.PositionContent> OnContentChanged;
+
         [SerializeField]
         private Cell m_CellPrefab;
 
@@ -25,7 +27,7 @@ namespace FineGameDesign.Go
 
         private Cell[] m_Cells;
 
-        private Board m_Board;
+        private Board m_PreviousBoard;
 
         private void OnEnable()
         {
@@ -40,45 +42,85 @@ namespace FineGameDesign.Go
             m_Referee.OnBoardSetup -= m_OnSetup;
         }
 
-        public void Setup(Board board)
+        public void Setup(Board nextBoard)
         {
-            Debug.Log(board);
+            Debug.Log(nextBoard);
 
-            if (board == null)
+            if (nextBoard == null)
             {
-                m_Board = board;
-                foreach (Cell cell in m_Cells)
-                    Destroy(cell.gameObject);
-                m_Cells = null;
+                DestroyCells();
                 return;
             }
 
-            if (m_Board == null || board.SizeX != m_Board.SizeX || board.SizeY != m_Board.SizeY)
+            if (!EqualSize(m_PreviousBoard, nextBoard))
             {
-                if (m_Cells != null)
-                    foreach (Cell cell in m_Cells)
-                        Destroy(cell.gameObject);
-
-                int numCells = board.SizeX * board.SizeY;
-                m_Cells = new Cell[numCells];
-                float halfWidth = 0.5f * board.SizeX - 0.5f;
-                float halfHeight = 0.5f * board.SizeY - 0.5f;
-                Vector3 origin = transform.position + m_Center -
-                    (m_HorizontalOffset * halfWidth) -
-                    (m_VerticalOffset * halfHeight);
-                for (int cellIndex = 0; cellIndex < numCells; ++cellIndex)
-                {
-                    int x = cellIndex % board.SizeX;
-                    int y = cellIndex / board.SizeY;
-                    Vector3 position = origin +
-                        (m_HorizontalOffset * x) +
-                        (m_VerticalOffset * y);
-                    Cell cell = Instantiate(m_CellPrefab, position, Quaternion.identity, transform);
-                    cell.Point = new Point(x, y);
-                    m_Cells[cellIndex] = cell;
-                }
+                CreateCells(nextBoard);
             }
-            m_Board = board;
+            ChangeContents(m_PreviousBoard, nextBoard);
+            m_PreviousBoard = nextBoard;
+        }
+
+        private bool EqualSize(Board previousBoard, Board nextBoard)
+        {
+            if (previousBoard == null && nextBoard == null)
+                return true;
+
+            return previousBoard != null && nextBoard != null &&
+                nextBoard.SizeX == previousBoard.SizeX &&
+                nextBoard.SizeY == previousBoard.SizeY;
+        }
+
+        private void DestroyCells()
+        {
+            m_PreviousBoard = null;
+            foreach (Cell cell in m_Cells)
+                Destroy(cell.gameObject);
+            m_Cells = null;
+        }
+
+        private void CreateCells(Board board)
+        {
+            if (m_Cells != null)
+                foreach (Cell cell in m_Cells)
+                    Destroy(cell.gameObject);
+
+            int numCells = board.SizeX * board.SizeY;
+            m_Cells = new Cell[numCells];
+            float halfWidth = 0.5f * board.SizeX - 0.5f;
+            float halfHeight = 0.5f * board.SizeY - 0.5f;
+            Vector3 origin = transform.position + m_Center -
+                (m_HorizontalOffset * halfWidth) -
+                (m_VerticalOffset * halfHeight);
+            for (int cellIndex = 0; cellIndex < numCells; ++cellIndex)
+            {
+                int x = cellIndex % board.SizeX;
+                int y = cellIndex / board.SizeY;
+                Vector3 position = origin +
+                    (m_HorizontalOffset * x) +
+                    (m_VerticalOffset * y);
+                Cell cell = Instantiate(m_CellPrefab, position, Quaternion.identity, transform);
+                cell.Point = new Point(x, y);
+                m_Cells[cellIndex] = cell;
+            }
+        }
+
+        private void ChangeContents(Board previousBoard, Board nextBoard)
+        {
+            if (nextBoard == null)
+                return;
+
+            if (OnContentChanged == null)
+                return;
+
+            bool equalSize = EqualSize(previousBoard, nextBoard);
+            foreach (Board.PositionContent cell in nextBoard.AllCells)
+            {
+                if (equalSize &&
+                    previousBoard.GetContentAt(cell.Position) == cell.Content)
+                        continue;
+
+                OnContentChanged(cell);
+            }
         }
     }
 }

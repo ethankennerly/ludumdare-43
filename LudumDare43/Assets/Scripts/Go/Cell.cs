@@ -24,7 +24,30 @@ namespace FineGameDesign.Go
             }
         }
 
+        private Content m_Content;
+
+        [Serializable]
+        private struct AnimatedPlayerTile
+        {
+            public Animator animator;
+            public AnimatedPlayerTileSet tileSet;
+
+            public void Update(Content previous, Content next)
+            {
+                string animationName = tileSet.GetAnimationName(previous, next);
+                if (string.IsNullOrEmpty(animationName))
+                    return;
+
+                animator.Play(animationName, -1, 0f);
+            }
+        }
+
+        [SerializeField]
+        private AnimatedPlayerTile[] m_AnimatedPlayerTiles;
+
         private Action<Collider2D> m_OnClickAnything;
+
+        private Action<Board.PositionContent> m_OnContentChanged;
 
         private void OnEnable()
         {
@@ -41,15 +64,21 @@ namespace FineGameDesign.Go
             if (m_OnClickAnything == null)
                 m_OnClickAnything = PublishClick;
 
+            if (m_OnContentChanged == null)
+                m_OnContentChanged = SetContent;
+
             RemoveListeners();
 
             ClickInputSystem.instance.onCollisionEnter2D += m_OnClickAnything;
+            BoardLayout.OnContentChanged += m_OnContentChanged;
         }
 
         private void RemoveListeners()
         {
             if (ClickInputSystem.InstanceExists())
                 ClickInputSystem.instance.onCollisionEnter2D -= m_OnClickAnything;
+            
+            BoardLayout.OnContentChanged -= m_OnContentChanged;
         }
 
         private void PublishClick(Collider2D target)
@@ -57,15 +86,26 @@ namespace FineGameDesign.Go
             if (target == null)
                 return;
 
-            if (target.name != m_Collider.name)
+            if (target != m_Collider)
                 return;
-
-            Debug.Log("PublishClick: " + target);
 
             if (OnClick == null)
                 return;
 
             OnClick(Point.x, Point.y);
+        }
+
+        private void SetContent(Board.PositionContent next)
+        {
+            if (next.Position.x != m_Point.x ||
+                next.Position.y != m_Point.y)
+                return;
+
+            foreach (AnimatedPlayerTile tile in m_AnimatedPlayerTiles)
+            {
+                tile.Update(m_Content, next.Content);
+            }
+            m_Content = next.Content;
         }
     }
 }

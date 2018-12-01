@@ -40,8 +40,6 @@ namespace FineGameDesign.Go
 
         private void MakeMove(int x, int y)
         {
-            Debug.Log("MakeMove: " + x + ", " + y);
-
             bool legal;
             Game = Game.MakeMove(x, y, out legal);
         }
