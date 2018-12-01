@@ -10,15 +10,12 @@
         1. [ ] OnCaptured(Group)
         1. [ ] OnOccupied(PointContent)
     1. [ ] Players
-1. [x] Configure [Game Loader](../LudumDare43/Assets/Scripts/Go/GameLoader.cs)
-1. [ ] Board Layout
-    1. [ ] Go Referee
-    1. [ ] Tile Center Position.
-    1. [ ] Tile Offset: to support shearing or isometric.
+    1. [x] Configure [Board Layout](../LudumDare43/Assets/Scripts/Go/BoardLayout.cs)
+    1. [x] Configure [Game Loader](../LudumDare43/Assets/Scripts/Go/GameLoader.cs)
 1. [ ] Playing
     1. [ ] Sound Loop
 1. [ ] ClickInputSystemView
-1. [ ] Go Cell View
+1. [ ] Cell
     1. [ ] Address (Vector2Int)
     1. [ ] Click (Collider 2D)
     1. [ ] Static Event OnClick(int, int)

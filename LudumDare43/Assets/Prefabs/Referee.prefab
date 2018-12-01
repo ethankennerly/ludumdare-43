@@ -11,6 +11,22 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1579869024792280}
   m_IsPrefabParent: 1
+--- !u!1 &1162115034538828
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4048117056778418}
+  - component: {fileID: 114978293143443196}
+  m_Layer: 0
+  m_Name: BoardLayout
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1579869024792280
 GameObject:
   m_ObjectHideFlags: 0
@@ -43,6 +59,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4048117056778418
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1162115034538828}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4502366227029736}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4139873032424056
 Transform:
   m_ObjectHideFlags: 1
@@ -67,6 +96,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4139873032424056}
+  - {fileID: 4048117056778418}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -94,3 +124,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54c62d6ee2df448f9903903c9aa353c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114978293143443196
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1162115034538828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4218b6352b8f841d2ae6d02cecf5b993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CellPrefab: {fileID: 0}
+  m_CellOffset: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
+  m_Referee: {fileID: 114833984343437736}
