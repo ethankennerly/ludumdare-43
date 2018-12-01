@@ -7,7 +7,7 @@ namespace FineGameDesign.Go
     public sealed class BoardLayout : MonoBehaviour
     {
         [SerializeField]
-        private GameObject m_CellPrefab;
+        private Cell m_CellPrefab;
 
         [SerializeField]
         private Vector3 m_CellOffset;

@@ -10,18 +10,12 @@
         1. [ ] OnCaptured(Group)
         1. [ ] OnOccupied(PointContent)
     1. [ ] Players
-    1. [x] Configure [Board Layout](../LudumDare43/Assets/Scripts/Go/BoardLayout.cs)
-    1. [x] Configure [Game Loader](../LudumDare43/Assets/Scripts/Go/GameLoader.cs)
+    1. [x] Configure [Board Layout](LudumDare43/Assets/Scripts/Go/BoardLayout.cs)
+    1. [x] Configure [Game Loader](LudumDare43/Assets/Scripts/Go/GameLoader.cs)
 1. [ ] Playing
     1. [ ] Sound Loop
 1. [ ] ClickInputSystemView
-1. [ ] Cell
-    1. [ ] Address (Vector2Int)
-    1. [ ] Click (Collider 2D)
-    1. [ ] Static Event OnClick(int, int)
-        1. [ ] Static (FineGameDesign.Utils.ClickInputSystem) OnCollisionEnter2D
-            1. [ ] If not GoCellView: stop here.
-            1. [ ] OnClick(column, row)
+1. [ ] Configure [Cell](LudumDare43/Assets/Scripts/Go/Cell.cs)
 1. [ ] SoundOnEnable
     1. [ ] Sound: Only plays once if multiple tiles affected.
 1. [ ] Go Player
