@@ -1,16 +1,30 @@
-# Features
+# Editor
+
+1. [ ] GoGameView
+    1. [ ] Go.Game
+    1. [ ] Origin.
+        1. [ ] Tile Offset: to support shearing or isometric.
+    1. [ ] Playing
+        1. [ ] Sound Loop
+1. [ ] GoTileView
+    1. [ ] Address (Vector2)
+    1. [ ] GoGameView
+        1. [ ] Make move.
+
+                Game postMove = game.MakeMove(3, 3, out legal);
+
+    1. [ ] Occupied
+        1. [ ] Sound
+        1. [ ] Sprite
+    1. [ ] Captured
+        1. [ ] Sound
+        1. [ ] Sprite
+1. [ ] Active Player
+    1. [ ] Sound Loop
+    1. [ ] Sprite
 
 # Todo
 
-1. [ ] Click a tile.
-    1. [ ] Hear sound.
-1. [ ] Occupied tile appears.
-1. [ ] Capture group.
-1. [ ] Setup 320 x 240 resolution.
-    1. [ ] Zoom pixelated graphics.
-1. [ ] Next turn
-    1. [ ] Play player's music.
-    1. [ ] Show turn image.
 1. [ ] Game ends
     1. [ ] Play winner's animation.
     1. [ ] Play winner's music.
