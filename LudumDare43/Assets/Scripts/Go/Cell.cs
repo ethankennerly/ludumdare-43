@@ -16,7 +16,12 @@ namespace FineGameDesign.Go
         public Point Point
         {
             get { return m_Point; }
-            set { m_Point = value; }
+            set
+            {
+                name = "Cell_" + value.x + "_" + value.y;
+
+                m_Point = value;
+            }
         }
 
         private Action<Collider2D> m_OnClickAnything;
@@ -52,8 +57,10 @@ namespace FineGameDesign.Go
             if (target == null)
                 return;
 
-            if (target != m_Collider)
+            if (target.name != m_Collider.name)
                 return;
+
+            Debug.Log("PublishClick: " + target);
 
             if (OnClick == null)
                 return;

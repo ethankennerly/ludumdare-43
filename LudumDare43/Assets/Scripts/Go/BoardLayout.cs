@@ -43,6 +43,7 @@ namespace FineGameDesign.Go
         public void Setup(Board board)
         {
             Debug.Log(board);
+
             if (board == null)
             {
                 m_Board = board;
@@ -51,6 +52,7 @@ namespace FineGameDesign.Go
                 m_Cells = null;
                 return;
             }
+
             if (m_Board == null || board.SizeX != m_Board.SizeX || board.SizeY != m_Board.SizeY)
             {
                 if (m_Cells != null)
@@ -72,7 +74,7 @@ namespace FineGameDesign.Go
                         (m_HorizontalOffset * x) +
                         (m_VerticalOffset * y);
                     Cell cell = Instantiate(m_CellPrefab, position, Quaternion.identity, transform);
-                    cell.name = cell.name + "_" + x + "_" + y;
+                    cell.Point = new Point(x, y);
                     m_Cells[cellIndex] = cell;
                 }
             }

@@ -22,5 +22,28 @@ namespace FineGameDesign.Go
                     OnBoardSetup(value.Board);
             }
         }
+
+        private Action<int, int> m_OnClickCell;
+
+        private void OnEnable()
+        {
+            if (m_OnClickCell == null)
+                m_OnClickCell = MakeMove;
+            Cell.OnClick -= m_OnClickCell;
+            Cell.OnClick += m_OnClickCell;
+        }
+
+        private void OnDisable()
+        {
+            Cell.OnClick -= m_OnClickCell;
+        }
+
+        private void MakeMove(int x, int y)
+        {
+            Debug.Log("MakeMove: " + x + ", " + y);
+
+            bool legal;
+            Game = Game.MakeMove(x, y, out legal);
+        }
     }
 }
