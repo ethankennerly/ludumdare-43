@@ -52,14 +52,13 @@ namespace FineGameDesign.Go
             if (target == null)
                 return;
 
-            Cell cell = (Cell)target.GetComponent(typeof(Cell));
-            if (cell == null)
+            if (target != m_Collider)
                 return;
 
             if (OnClick == null)
                 return;
 
-            OnClick(cell.Point.x, cell.Point.y);
+            OnClick(Point.x, Point.y);
         }
     }
 }

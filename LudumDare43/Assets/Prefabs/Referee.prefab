@@ -70,7 +70,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4502366227029736}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4139873032424056
 Transform:
@@ -83,7 +83,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4502366227029736}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4502366227029736
 Transform:
@@ -95,8 +95,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4139873032424056}
   - {fileID: 4048117056778418}
+  - {fileID: 4139873032424056}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -135,7 +135,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4218b6352b8f841d2ae6d02cecf5b993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CellPrefab: {fileID: 0}
-  m_CellOffset: {x: 0, y: 0, z: 0}
+  m_CellPrefab: {fileID: 114544461226294382, guid: 28fcc6c390fe3443ca7a67f4210ae957,
+    type: 2}
+  m_HorizontalOffset: {x: 0.4, y: 0, z: -0.0001}
+  m_VerticalOffset: {x: -0.13, y: -0.4, z: -0.01}
   m_Center: {x: 0, y: 0, z: 0}
   m_Referee: {fileID: 114833984343437736}
