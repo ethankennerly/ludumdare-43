@@ -1,3 +1,5 @@
+![Mock up](LudumDare43/Assets/Sprites/Mock.png)
+
 # Capitalists vs Communists
 
 [Game jam](https://ldjam.com/events/ludum-dare/43/$129381) for Ludum Dare, Nov 30 - Dec 2, 2018.
