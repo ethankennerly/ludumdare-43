@@ -1,5 +1,7 @@
 # Editor
 
+Namespace FineGameDesign.Go
+
 1. [ ] Go Referee
     1. [ ] Game State (Go.Game)
     1. [ ] Listen to GoCellView.OnClick
