@@ -20,8 +20,9 @@ namespace FineGameDesign.Go
         [SerializeField]
         private Vector3 m_Center;
 
+        [Header("Logs diagram of board.")]
         [SerializeField]
-        private Referee m_Referee;
+        private bool m_Verbose;
 
         private Action<Board> m_OnSetup;
 
@@ -33,18 +34,19 @@ namespace FineGameDesign.Go
         {
             if (m_OnSetup == null)
                 m_OnSetup = Setup;
-            m_Referee.OnBoardSetup -= m_OnSetup;
-            m_Referee.OnBoardSetup += m_OnSetup;
+            Referee.OnBoardSetup -= m_OnSetup;
+            Referee.OnBoardSetup += m_OnSetup;
         }
 
         private void OnDisable()
         {
-            m_Referee.OnBoardSetup -= m_OnSetup;
+            Referee.OnBoardSetup -= m_OnSetup;
         }
 
         public void Setup(Board nextBoard)
         {
-            Debug.Log(nextBoard);
+            if (m_Verbose)
+                Debug.Log(nextBoard);
 
             if (nextBoard == null)
             {

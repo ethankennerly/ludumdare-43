@@ -6,9 +6,14 @@ namespace FineGameDesign.Go
 {
     public sealed class Referee : MonoBehaviour
     {
+        /// <summary>
+        /// Static events avoid constructor/destructor races and references.
+        /// </summary>
         public static event Action<Content, Content> OnTurn;
 
-        public event Action<Board> OnBoardSetup;
+        public static event Action<int, int> OnIllegalMove;
+
+        public static event Action<Board> OnBoardSetup;
 
         private Content m_Turn;
         private Content Turn
@@ -62,7 +67,15 @@ namespace FineGameDesign.Go
         private void MakeMove(int x, int y)
         {
             bool legal;
-            Game = Game.MakeMove(x, y, out legal);
+            Game nextGame = Game.MakeMove(x, y, out legal);
+            if (!legal)
+            {
+                if (OnIllegalMove != null)
+                    OnIllegalMove(x, y);
+                return;
+            }
+
+            Game = nextGame;
         }
     }
 }
