@@ -51,7 +51,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4502366227029736}
-  - component: {fileID: 114833984343437736}
   m_Layer: 0
   m_Name: Referee
   m_TagString: Untagged
@@ -142,7 +141,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SgfFile: {fileID: 4900000, guid: d7f6f5ba2258544e9a060fa361567412, type: 3}
-  m_Referee: {fileID: 114833984343437736}
 --- !u!114 &114554431746926692
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -152,18 +150,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc964bcc70b6c4799a81b74f369781e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Referee: {fileID: 114833984343437736}
---- !u!114 &114833984343437736
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1579869024792280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54c62d6ee2df448f9903903c9aa353c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114978293143443196
