@@ -15,7 +15,10 @@ namespace FineGameDesign.Go
         [SerializeField]
         private Cell m_PositionFilter;
 
-        private Action<int, int> m_OnIllegalMove;
+        [SerializeField]
+        private Content m_TurnFilter;
+
+        private Action<Content, int, int> m_OnIllegalMove;
 
         private void OnEnable()
         {
@@ -30,11 +33,12 @@ namespace FineGameDesign.Go
             Referee.OnIllegalMove -= m_OnIllegalMove;
         }
 
-        private void PlayAnimation(int x, int y)
+        private void PlayAnimation(Content turn, int x, int y)
         {
             if (m_PositionFilter != null)
                 if (m_PositionFilter.Point.x != x ||
-                    m_PositionFilter.Point.y != y)
+                    m_PositionFilter.Point.y != y ||
+                    m_TurnFilter != turn)
                     return;
 
             m_Animator.Play(m_AnimationName, -1, 0f);

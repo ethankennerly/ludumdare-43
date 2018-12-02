@@ -1186,6 +1186,7 @@ MonoBehaviour:
   m_Animator: {fileID: 95202871290073266}
   m_AnimationName: Illegal
   m_PositionFilter: {fileID: 114544461226294382}
+  m_TurnFilter: 1
 --- !u!114 &114814433916564198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1200,6 +1201,7 @@ MonoBehaviour:
   m_Animator: {fileID: 95770855143175724}
   m_AnimationName: Illegal
   m_PositionFilter: {fileID: 114544461226294382}
+  m_TurnFilter: 2
 --- !u!212 &212090095424731546
 SpriteRenderer:
   m_ObjectHideFlags: 1

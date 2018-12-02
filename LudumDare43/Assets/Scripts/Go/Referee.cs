@@ -11,7 +11,7 @@ namespace FineGameDesign.Go
         /// </summary>
         public static event Action<Content, Content> OnTurn;
 
-        public static event Action<int, int> OnIllegalMove;
+        public static event Action<Content, int, int> OnIllegalMove;
 
         public static event Action<Board> OnBoardSetup;
 
@@ -71,7 +71,7 @@ namespace FineGameDesign.Go
             if (!legal)
             {
                 if (OnIllegalMove != null)
-                    OnIllegalMove(x, y);
+                    OnIllegalMove(Game.Turn, x, y);
                 return;
             }
 
