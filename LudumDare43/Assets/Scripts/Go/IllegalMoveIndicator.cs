@@ -15,6 +15,7 @@ namespace FineGameDesign.Go
         [SerializeField]
         private Cell m_PositionFilter;
 
+        [Header("Empty permits either turn.")]
         [SerializeField]
         private Content m_TurnFilter;
 
@@ -35,11 +36,14 @@ namespace FineGameDesign.Go
 
         private void PlayAnimation(Content turn, int x, int y)
         {
-            if (m_PositionFilter != null)
-                if (m_PositionFilter.Point.x != x ||
-                    m_PositionFilter.Point.y != y ||
-                    m_TurnFilter != turn)
-                    return;
+            if (m_PositionFilter != null &&
+                (m_PositionFilter.Point.x != x ||
+                m_PositionFilter.Point.y != y))
+                return;
+
+            if (m_TurnFilter != Content.Empty &&
+                m_TurnFilter != turn)
+                return;
 
             m_Animator.Play(m_AnimationName, -1, 0f);
         }
