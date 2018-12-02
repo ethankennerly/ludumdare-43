@@ -70,8 +70,9 @@ GameObject:
   - component: {fileID: 23740652421667572}
   - component: {fileID: 222702131012981824}
   - component: {fileID: 114792469282436976}
+  - component: {fileID: 114029245758715224}
   m_Layer: 0
-  m_Name: Score
+  m_Name: ScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -486,6 +487,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114029245758715224
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1329474475911568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd23ca45b3ed34f2da613a86bab7e1df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ScoreText: {fileID: 114792469282436976}
+  m_PlayerFilter: 1
 --- !u!114 &114714048882125666
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -550,9 +564,9 @@ MonoBehaviour:
   m_fontSize: 0.2
   m_fontSizeBase: 0.2
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 0.05
+  m_fontSizeMax: 0.2
   m_fontStyle: 0
   m_textAlignment: 513
   m_isAlignmentEnumConverted: 1
@@ -565,7 +579,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 0
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_enableKerning: 1
@@ -690,6 +704,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.2723, y: 0.1181}
-  m_SizeDelta: {x: 0.561, y: 0.1461}
+  m_AnchoredPosition: {x: -1.2574, y: 0.109}
+  m_SizeDelta: {x: 0.6003, y: 0.1824}
   m_Pivot: {x: 0.5, y: 0.5}

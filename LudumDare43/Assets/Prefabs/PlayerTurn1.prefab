@@ -120,8 +120,9 @@ GameObject:
   - component: {fileID: 23085921913669180}
   - component: {fileID: 222462014865180354}
   - component: {fileID: 114603121759169092}
+  - component: {fileID: 114003946130799120}
   m_Layer: 0
-  m_Name: Score
+  m_Name: ScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -486,6 +487,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114003946130799120
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1911163766394764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd23ca45b3ed34f2da613a86bab7e1df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ScoreText: {fileID: 114603121759169092}
+  m_PlayerFilter: 2
 --- !u!114 &114070909500535656
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -550,9 +564,9 @@ MonoBehaviour:
   m_fontSize: 0.2
   m_fontSizeBase: 0.2
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 0.05
+  m_fontSizeMax: 0.2
   m_fontStyle: 0
   m_textAlignment: 516
   m_isAlignmentEnumConverted: 1
@@ -690,6 +704,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.2938, y: -0.1034}
-  m_SizeDelta: {x: 0.5357, y: 0.1914}
+  m_AnchoredPosition: {x: 1.2868, y: -0.1034}
+  m_SizeDelta: {x: 0.5499, y: 0.1914}
   m_Pivot: {x: 0.5, y: 0.5}

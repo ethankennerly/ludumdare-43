@@ -9,6 +9,8 @@ namespace FineGameDesign.Go
     {
         public static event Action<Content, int, int> OnIllegalMove;
 
+        public static event Action<Content, float> OnScoreSet;
+
         /// <summary>
         /// Static events avoid constructor/destructor races and references.
         /// </summary>
@@ -52,6 +54,12 @@ namespace FineGameDesign.Go
 
                 if (value != null && OnBoardSet != null)
                     OnBoardSet(value.Board);
+
+                if (value != null && OnScoreSet != null)
+                {
+                    OnScoreSet(Content.Black, value.GetScore(Content.Black));
+                    OnScoreSet(Content.White, value.GetScore(Content.White));
+                }
             }
         }
 
