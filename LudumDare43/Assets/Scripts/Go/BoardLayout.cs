@@ -1,5 +1,6 @@
 using Go;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FineGameDesign.Go
@@ -147,9 +148,49 @@ namespace FineGameDesign.Go
 
             nextBoard.UpdateScoring();
 
-            foreach (Board.PositionContent cell in nextBoard.AllTerritory)
-            {
+            List<Board.PositionContent> territories = nextBoard.AllTerritory;
+            foreach (Board.PositionContent cell in territories)
                 OnTerritoryChanged(cell);
+
+            var game = Referee.instance.Game;
+            FillInCaptures(
+                game.BlackCaptures,
+                game.WhiteCaptures,
+                territories);
+        }
+
+        /// <summary>
+        /// Signals capture by two events, to distinguish from neutral.
+        /// </summary>
+        private void FillInCaptures(int blackCaptures, int whiteCaptures,
+            List<Board.PositionContent> territories)
+        {
+            if (whiteCaptures <= 0 && blackCaptures <= 0)
+                return;
+
+            foreach (Board.PositionContent cell in territories)
+            {
+                if (cell.Content == Content.Empty)
+                    continue;
+
+                if (cell.Content == Content.White && blackCaptures <= 0)
+                    continue;
+
+                if (cell.Content == Content.Black && whiteCaptures <= 0)
+                    continue;
+
+                if (cell.Content == Content.White)
+                    blackCaptures--;
+                else if (cell.Content == Content.Black)
+                    whiteCaptures--;
+
+                Board.PositionContent capture;
+                capture.Content = Content.Empty;
+                capture.Position = cell.Position;
+                OnTerritoryChanged(capture);
+
+                if (whiteCaptures <= 0 && blackCaptures <= 0)
+                    return;
             }
         }
     }
