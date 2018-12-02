@@ -36,6 +36,8 @@ namespace FineGameDesign.Go
                 m_OnSetup = Setup;
             Referee.OnBoardSetup -= m_OnSetup;
             Referee.OnBoardSetup += m_OnSetup;
+
+            Setup(Referee.Board);
         }
 
         private void OnDisable()

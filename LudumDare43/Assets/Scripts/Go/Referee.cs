@@ -15,6 +15,13 @@ namespace FineGameDesign.Go
 
         public static event Action<Board> OnBoardSetup;
 
+        public static Board s_Board;
+
+        public static Board Board
+        {
+            get { return s_Board; }
+        }
+
         private Content m_Turn;
         private Content Turn
         {
@@ -42,7 +49,10 @@ namespace FineGameDesign.Go
                 m_Game = value;
 
                 if (value != null)
+                {
                     Turn = value.Turn;
+                    s_Board = value.Board;
+                }
 
                 if (value != null && OnBoardSetup != null)
                     OnBoardSetup(value.Board);
