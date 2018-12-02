@@ -14,19 +14,19 @@
     1. [x] Configure [Animated Player Tile Set](LudumDare43/Assets/Scripts/Go/AnimatedPlayerTileSet.cs)
 1. [x] Configure [Animated Turn](LudumDare43/Assets/Scripts/Go/AnimatedTurn.cs)
     1. [x] Configure [Animated Player Tile Set](LudumDare43/Assets/Scripts/Go/AnimatedPlayerTileSet.cs)
-    1. [ ] Sound Loop
+    1. [x] Animate volume of Sound Loop
 1. [x] Configure [Illegal Move Indicator](LudumDare43/Assets/Scripts/Go/IllegalMoveIndicator.cs)
-1. [ ] Pass
-    1. [ ] Referee.Game pass.
-    1. [ ] Two consecutive passes ends.
+1. [x] Pass
+    1. [x] Referee.Game pass.
+    1. [x] Two consecutive passes ends.
     1. [ ] No legal moves ends.
 1. [ ] End Game
-    1. [ ] Disable placing pieces.
-    1. [ ] Player Score
-        1. [ ] Content: Filters to this player
-        1. [ ] Score Text
-        1. [ ] Listens to On Score Changed
-        1. [ ] SGF: Second player compensation (5.5)
+    1. [x] Disable placing pieces.
+    1. [x] Player Score
+        1. [x] Content: Filters to this player
+        1. [x] Score Text
+        1. [x] Listens to On Score Changed
+        1. [x] SGF: Second player compensation (5.5)
     1. [ ] Count territory.
         1. [ ] Infer dead groups.
         1. [ ] Fill in captures.
@@ -38,9 +38,13 @@
         1. [ ] Tap sets dead at position.
         1. [ ] Score mode.
 1. [ ] AI
-    1. [ ] Monte Carlo Tree Search
-        1. [ ] <https://github.com/CampbellAlexander/GameAI>
-        1. [ ] <https://github.com/rfrerebe/MCTS>
-        1. [ ] <https://github.com/dmacthedestroyer/mcts>
+    1. [x] Monte Carlo Tree Search
+        1. [x] Pass on <https://github.com/CampbellAlexander/GameAI> Dependencies missing.
+        1. [x] Pass on <https://github.com/rfrerebe/MCTS> Not .NET 3.5 compatible.
+        1. [x] Import <https://github.com/dmacthedestroyer/mcts>
+            1. [ ] Implement interfaces.
+            1. [ ] Set player 2 to computer.
+            1. [ ] Computer makes move.
+            1. [ ] Disable pass and cell input during computer turn.
 1. [ ] Sound On Enable
     1. [ ] Sound: Only plays once if multiple sounds affected.
