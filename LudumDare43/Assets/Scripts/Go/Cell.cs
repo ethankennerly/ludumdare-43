@@ -26,6 +26,8 @@ namespace FineGameDesign.Go
 
         private Content m_Content;
 
+        private Content m_Territory;
+
         [Serializable]
         public struct AnimatedPlayerTile
         {
@@ -45,9 +47,13 @@ namespace FineGameDesign.Go
         [SerializeField]
         private AnimatedPlayerTile[] m_AnimatedPlayerTiles;
 
+        [SerializeField]
+        private AnimatedPlayerTile[] m_PlayerTerritories;
+
         private Action<Collider2D> m_OnClickAnything;
 
         private Action<Board.PositionContent> m_OnContentChanged;
+        private Action<Board.PositionContent> m_OnTerritoryChanged;
 
         private void OnEnable()
         {
@@ -67,10 +73,14 @@ namespace FineGameDesign.Go
             if (m_OnContentChanged == null)
                 m_OnContentChanged = SetContent;
 
+            if (m_OnTerritoryChanged == null)
+                m_OnTerritoryChanged = SetTerritory;
+
             RemoveListeners();
 
             ClickInputSystem.instance.onCollisionEnter2D += m_OnClickAnything;
             BoardLayout.OnContentChanged += m_OnContentChanged;
+            BoardLayout.OnTerritoryChanged += m_OnTerritoryChanged;
         }
 
         private void RemoveListeners()
@@ -79,6 +89,7 @@ namespace FineGameDesign.Go
                 ClickInputSystem.instance.onCollisionEnter2D -= m_OnClickAnything;
             
             BoardLayout.OnContentChanged -= m_OnContentChanged;
+            BoardLayout.OnTerritoryChanged -= m_OnTerritoryChanged;
         }
 
         private void PublishClick(Collider2D target)
@@ -105,6 +116,21 @@ namespace FineGameDesign.Go
                 tile.Update(m_Content, next.Content);
 
             m_Content = next.Content;
+        }
+
+        private void SetTerritory(Board.PositionContent next)
+        {
+            if (next.Position.x != m_Point.x ||
+                next.Position.y != m_Point.y)
+                return;
+
+            foreach (AnimatedPlayerTile tile in m_PlayerTerritories)
+            {
+                Debug.Log("SetTerritory: previous=" + m_Territory + " next=" + next.Content);
+                tile.Update(m_Territory, next.Content);
+            }
+
+            m_Territory = next.Content;
         }
     }
 }

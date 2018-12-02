@@ -7,6 +7,7 @@ namespace FineGameDesign.Go
     public sealed class BoardLayout : MonoBehaviour
     {
         public static event Action<Board.PositionContent> OnContentChanged;
+        public static event Action<Board.PositionContent> OnTerritoryChanged;
 
         [SerializeField]
         private Cell m_CellPrefab;
@@ -63,6 +64,7 @@ namespace FineGameDesign.Go
                 CreateCells(nextBoard);
             }
             ChangeContents(m_PreviousBoard, nextBoard);
+            ChangeTerritory(m_PreviousBoard, nextBoard);
             m_PreviousBoard = nextBoard;
         }
 
@@ -129,6 +131,25 @@ namespace FineGameDesign.Go
                         continue;
 
                 OnContentChanged(cell);
+            }
+        }
+
+        private void ChangeTerritory(Board previousBoard, Board nextBoard)
+        {
+            if (nextBoard == null)
+                return;
+
+            if (OnTerritoryChanged == null)
+                return;
+
+            if (!nextBoard.IsScoring)
+                return;
+
+            nextBoard.UpdateScoring();
+
+            foreach (Board.PositionContent cell in nextBoard.AllTerritory)
+            {
+                OnTerritoryChanged(cell);
             }
         }
     }

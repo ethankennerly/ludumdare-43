@@ -20,6 +20,8 @@ namespace FineGameDesign.Go
 
         public static event Action<Board> OnBoardSet;
 
+        private bool m_Verbose = false;
+
         private Content m_Turn;
         private Content Turn
         {
@@ -101,9 +103,16 @@ namespace FineGameDesign.Go
             }
         }
 
+        /// <summary>
+        /// Republishes board. Otherwise territories did not appear.
+        /// </summary>
         private void EndPlay()
         {
-            Debug.Log("EndPlay: TODO: IsScoring=" + Game.Board.IsScoring + " Board=\n" + Game.Board);
+            if (m_Verbose)
+                Debug.Log("EndPlay: IsScoring=" + Game.Board.IsScoring + " Board=\n" + Game.Board);
+
+            if (OnBoardSet != null)
+                OnBoardSet(Game.Board);
 
             Turn = Content.Empty;
 
