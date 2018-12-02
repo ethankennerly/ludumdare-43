@@ -21,6 +21,7 @@
     1. [ ] Two consecutive passes ends.
     1. [ ] No legal moves ends.
 1. [ ] End Game
+    1. [ ] Disable placing pieces.
     1. [ ] Player Score
         1. [ ] Content: Filters to this player
         1. [ ] Score Text

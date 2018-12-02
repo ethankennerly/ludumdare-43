@@ -7,10 +7,14 @@ namespace FineGameDesign.Go
 {
     public sealed class Referee : ASingleton<Referee>
     {
+        public static event Action<Content, int, int> OnIllegalMove;
+
         /// <summary>
         /// Static events avoid constructor/destructor races and references.
         /// </summary>
         public static event Action<Content, Content> OnTurn;
+
+        public static event Action<Content> OnWin;
 
         public static event Action<Board> OnBoardSet;
 
@@ -40,7 +44,7 @@ namespace FineGameDesign.Go
             {
                 m_Game = value;
 
-                if (value != null)
+                if (!m_Ended && value != null)
                     Turn = value.Turn;
 
                 if (value != null && OnBoardSet != null)
@@ -48,9 +52,48 @@ namespace FineGameDesign.Go
             }
         }
 
+        public void MakeMove(int x, int y)
+        {
+            if (m_Ended)
+                return;
+
+            bool legal;
+            Game previousGame = Game;
+            Game nextGame = previousGame.MakeMove(x, y, out legal);
+            if (!legal)
+            {
+                if (OnIllegalMove != null)
+                    OnIllegalMove(previousGame.Turn, x, y);
+                return;
+            }
+
+            if (m_NumPasses > 0)
+                m_NumPasses--;
+
+            Game = nextGame;
+        }
+
+        private const int kMaxPasses = 1;
+        private int m_NumPasses = 0;
+        private bool m_Ended = false;
+
         public void Pass()
         {
+            m_NumPasses++;
+            m_Ended = m_NumPasses > kMaxPasses;
             Game = Game.Pass();
+            if (m_Ended)
+            {
+                EndPlay();
+                return;
+            }
+        }
+
+        private void EndPlay()
+        {
+            Debug.Log("EndPlay: TODO");
+            Turn = Content.Empty;
+            m_Ended = true;
         }
     }
 }
