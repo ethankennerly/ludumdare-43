@@ -49,9 +49,6 @@ namespace FineGameDesign.Go
                 if (!m_Ended && value != null)
                     Turn = value.Turn;
 
-                if (m_Ended && value != null && value.Board != null)
-                    value.Board.IsScoring = true;
-
                 if (value != null && OnBoardSet != null)
                     OnBoardSet(value.Board);
 
@@ -92,6 +89,10 @@ namespace FineGameDesign.Go
         {
             m_NumPasses++;
             m_Ended = m_NumPasses > kMaxPasses;
+            if (m_Ended)
+            {
+                Game.Board.IsScoring = true;
+            }
             Game = Game.Pass();
             if (m_Ended)
             {
@@ -102,8 +103,10 @@ namespace FineGameDesign.Go
 
         private void EndPlay()
         {
-            Debug.Log("EndPlay: TODO");
+            Debug.Log("EndPlay: TODO: IsScoring=" + Game.Board.IsScoring + " Board=\n" + Game.Board);
+
             Turn = Content.Empty;
+
             m_Ended = true;
         }
     }
