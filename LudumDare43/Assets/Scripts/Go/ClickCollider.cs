@@ -12,6 +12,12 @@ namespace FineGameDesign.Go
         [SerializeField]
         private Collider2D m_Collider;
 
+        [Header("Optional. Restarts animation on each click.")]
+        [SerializeField]
+        private Animator m_Animator;
+        [SerializeField]
+        private string m_AnimationName = "Clicked";
+
         private Action<Collider2D> m_OnClickAnything;
 
         private void OnEnable()
@@ -42,6 +48,9 @@ namespace FineGameDesign.Go
                 return;
 
             HandleClick();
+
+            if (m_Animator != null)
+                m_Animator.Play(m_AnimationName, -1, 0f);
 
             if (OnClick == null)
                 return;
