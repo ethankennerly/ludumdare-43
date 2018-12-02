@@ -8,9 +8,6 @@ namespace FineGameDesign.Go
     {
         public static event Action<Content, int, int> OnIllegalMove;
 
-        [SerializeField]
-        private Referee m_Referee;
-
         private Action<int, int> m_OnClickCell;
 
         private void OnEnable()
@@ -29,7 +26,7 @@ namespace FineGameDesign.Go
         private void MakeMove(int x, int y)
         {
             bool legal;
-            Game previousGame = m_Referee.Game;
+            Game previousGame = Referee.instance.Game;
             Game nextGame = previousGame.MakeMove(x, y, out legal);
             if (!legal)
             {
@@ -38,7 +35,7 @@ namespace FineGameDesign.Go
                 return;
             }
 
-            m_Referee.Game = nextGame;
+            Referee.instance.Game = nextGame;
         }
     }
 }

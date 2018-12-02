@@ -24,7 +24,7 @@ namespace FineGameDesign.Go
         [SerializeField]
         private bool m_Verbose;
 
-        private Action<Board> m_OnSetup;
+        private Action<Board> m_OnSet;
 
         private Cell[] m_Cells;
 
@@ -32,20 +32,22 @@ namespace FineGameDesign.Go
 
         private void OnEnable()
         {
-            if (m_OnSetup == null)
-                m_OnSetup = Setup;
-            Referee.OnBoardSetup -= m_OnSetup;
-            Referee.OnBoardSetup += m_OnSetup;
+            if (m_OnSet == null)
+                m_OnSet = SetBoard;
+            Referee.OnBoardSet -= m_OnSet;
+            Referee.OnBoardSet += m_OnSet;
 
-            Setup(Referee.Board);
+            if (Referee.InstanceExists() &&
+                Referee.instance.Game != null)
+                SetBoard(Referee.instance.Game.Board);
         }
 
         private void OnDisable()
         {
-            Referee.OnBoardSetup -= m_OnSetup;
+            Referee.OnBoardSet -= m_OnSet;
         }
 
-        public void Setup(Board nextBoard)
+        private void SetBoard(Board nextBoard)
         {
             if (m_Verbose)
                 Debug.Log(nextBoard);

@@ -9,9 +9,6 @@ namespace FineGameDesign.Go
         [SerializeField]
         private TextAsset m_SgfFile = null;
 
-        [SerializeField]
-        private Referee m_Referee = null;
-
         private void OnEnable()
         {
             Load();
@@ -20,7 +17,7 @@ namespace FineGameDesign.Go
         public void Load()
         {
             string sgf = m_SgfFile.text;
-            m_Referee.Game = Game.SerializeGameFromSGFString(sgf);
+            Referee.instance.Game = Game.SerializeGameFromSGFString(sgf);
         }
     }
 }

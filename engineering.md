@@ -17,6 +17,7 @@
     1. [ ] Sound Loop
 1. [x] Configure [Illegal Move Indicator](LudumDare43/Assets/Scripts/Go/IllegalMoveIndicator.cs)
 1. [ ] Pass
+    1. [ ] Referee.Game pass.
     1. [ ] Two consecutive passes ends.
     1. [ ] No legal moves ends.
 1. [ ] End Game
