@@ -23,7 +23,9 @@ Pixel-art 8-bit sound remake of the classic Chinese Game of Go on a 5x5 grid.
 - Sound Effects: Jason Denney
 - Engineering: Ethan Kennerly
 - Host: GluPlay, creator of Cooking Dash
-- Playtesters: [Jerome Byrne](playtesters.md#jerome-byrne)
+- Playtesters:
+[Jerome Byrne](playtesters.md#jerome-byrne),
+[Shine Garg](playtesters.md#shine-garg)
 
 ### Tools
 

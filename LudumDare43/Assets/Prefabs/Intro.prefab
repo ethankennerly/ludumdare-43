@@ -144,6 +144,11 @@ MonoBehaviour:
 
 
 
+
+
+
+
+
     TO WIN'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6c99b9921c0e54761811b8cb79087ead, type: 2}
@@ -154,8 +159,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278248191
-  m_fontColor: {r: 1, g: 0.88965523, b: 0, a: 1}
+    rgba: 4283095273
+  m_fontColor: {r: 0.91372555, g: 0.8470589, b: 0.2901961, a: 1}
   m_enableVertexGradient: 0
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}
@@ -172,8 +177,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 3
-  m_fontSizeBase: 3
+  m_fontSize: 0.2
+  m_fontSizeBase: 0.2
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -190,15 +195,15 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 19
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_enableKerning: 1
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
-  m_isRichText: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 0
+  m_isRichText: 0
+  m_parseCtrlCharacters: 0
+  m_isOrthographic: 1
   m_isCullingEnabled: 0
   m_ignoreRectMaskCulling: 0
   m_ignoreCulling: 1
@@ -212,12 +217,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 114462484302156736}
-    characterCount: 20
+    characterCount: 25
     spriteCount: 0
-    spaceCount: 7
+    spaceCount: 12
     wordCount: 3
     linkCount: 0
-    lineCount: 7
+    lineCount: 12
     pageCount: 1
     materialCount: 1
   m_havePropertiesChanged: 1
@@ -259,6 +264,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.04}
+  m_AnchoredPosition: {x: 0, y: 0.02}
   m_SizeDelta: {x: 3.2, y: 2.3}
   m_Pivot: {x: 0.5, y: 0.5}
