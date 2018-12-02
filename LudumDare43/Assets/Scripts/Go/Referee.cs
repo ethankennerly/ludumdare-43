@@ -47,6 +47,9 @@ namespace FineGameDesign.Go
                 if (!m_Ended && value != null)
                     Turn = value.Turn;
 
+                if (m_Ended && value != null && value.Board != null)
+                    value.Board.IsScoring = true;
+
                 if (value != null && OnBoardSet != null)
                     OnBoardSet(value.Board);
             }
