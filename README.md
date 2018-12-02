@@ -1,8 +1,10 @@
 ![Mock up](LudumDare43/Assets/Sprites/Mock.png)
 
-# Capitalists vs Communists
+- Play [Web GL](http://finegamedesign.com/cappiesvscommies/webgl/index.html)
+- Play [Android](http://finegamedesign.com/cappiesvscommies/cappiesvscommies.apk)
+- [Comment](https://ldjam.com/events/ludum-dare/43/cappies-vs-commies) on Ludum Dare (Nov 30 - Dec 2, 2018).
 
-[Game jam](https://ldjam.com/events/ludum-dare/43/$129381) for Ludum Dare, Nov 30 - Dec 2, 2018.
+# Cappies vs Commies
 
 Pixel-art 8-bit sound remake of the classic Chinese Game of Go on a 5x5 grid.
 

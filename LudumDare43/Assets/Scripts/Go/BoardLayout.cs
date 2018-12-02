@@ -77,6 +77,9 @@ namespace FineGameDesign.Go
         private void DestroyCells()
         {
             m_PreviousBoard = null;
+            if (m_Cells == null)
+                return;
+
             foreach (Cell cell in m_Cells)
                 Destroy(cell.gameObject);
             m_Cells = null;

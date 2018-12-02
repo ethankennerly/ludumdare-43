@@ -25,13 +25,13 @@ namespace FineGameDesign.Go
         {
             if (m_OnIllegalMove == null)
                 m_OnIllegalMove = PlayAnimation;
-            Referee.OnIllegalMove -= m_OnIllegalMove;
-            Referee.OnIllegalMove += m_OnIllegalMove;
+            ClickPlacer.OnIllegalMove -= m_OnIllegalMove;
+            ClickPlacer.OnIllegalMove += m_OnIllegalMove;
         }
 
         private void OnDisable()
         {
-            Referee.OnIllegalMove -= m_OnIllegalMove;
+            ClickPlacer.OnIllegalMove -= m_OnIllegalMove;
         }
 
         private void PlayAnimation(Content turn, int x, int y)
