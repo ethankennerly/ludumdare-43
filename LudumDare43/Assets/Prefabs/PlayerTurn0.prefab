@@ -134,8 +134,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4370182451414388}
   - component: {fileID: 60136362728508854}
+  - component: {fileID: 114857532584092776}
   m_Layer: 0
-  m_Name: PassButton
+  m_Name: PassCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -612,6 +613,18 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   m_maskType: 0
+--- !u!114 &114857532584092776
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1963818379950418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ed8482b8a29f48aab167d4bed8202e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Collider: {fileID: 60136362728508854}
 --- !u!212 &212947925485262348
 SpriteRenderer:
   m_ObjectHideFlags: 1

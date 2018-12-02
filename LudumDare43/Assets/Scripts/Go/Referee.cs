@@ -47,5 +47,10 @@ namespace FineGameDesign.Go
                     OnBoardSet(value.Board);
             }
         }
+
+        public void Pass()
+        {
+            Game = Game.Pass();
+        }
     }
 }
