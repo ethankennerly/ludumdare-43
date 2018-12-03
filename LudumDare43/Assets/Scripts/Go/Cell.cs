@@ -7,6 +7,8 @@ namespace FineGameDesign.Go
 {
     public sealed class Cell : MonoBehaviour
     {
+        private static readonly bool s_Verbose = false;
+
         public static event Action<int, int> OnClick;
 
         [SerializeField]
@@ -34,13 +36,21 @@ namespace FineGameDesign.Go
             public Animator animator;
             public AnimatedPlayerTileSet tileSet;
 
-            public void Update(Content previous, Content next)
+            public void Update(Content previous, Content next, bool doNotRestart = false)
             {
                 string animationName = tileSet.GetAnimationName(previous, next);
                 if (string.IsNullOrEmpty(animationName))
                     return;
 
-                animator.Play(animationName, -1, 0f);
+                if (s_Verbose)
+                    Debug.Log("Update: animationName=" + animationName +
+                        " previous=" + previous + " next=" + next + " doNotRestart=" + doNotRestart,
+                        animator);
+
+                if (doNotRestart)
+                    animator.Play(animationName);
+                else
+                    animator.Play(animationName, -1, 0f);
             }
         }
 
@@ -125,10 +135,7 @@ namespace FineGameDesign.Go
                 return;
 
             foreach (AnimatedPlayerTile tile in m_PlayerTerritories)
-            {
-                Debug.Log("SetTerritory: previous=" + m_Territory + " next=" + next.Content);
                 tile.Update(m_Territory, next.Content);
-            }
 
             m_Territory = next.Content;
         }

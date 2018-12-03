@@ -16,24 +16,45 @@ namespace FineGameDesign.Go
         /// </summary>
         public static event Action<Content, Content> OnTurn;
 
-        // TODO: public static event Action<Content> OnWin;
+        public static event Action<Content> OnWin;
 
         public static event Action<Board> OnBoardSet;
 
         private bool m_Verbose = false;
 
-        private Content m_Turn;
-        private Content Turn
+        private Content m_Turn = Content.Empty;
+        public Content Turn
         {
-            set
+            get { return m_Turn; }
+
+            private set
             {
                 if (m_Turn == value)
                     return;
 
-                if (OnTurn != null)
-                    OnTurn(m_Turn, value);
-
+                Content previous = m_Turn;
                 m_Turn = value;
+
+                if (OnTurn != null)
+                    OnTurn(previous, value);
+            }
+        }
+
+        private Content m_Win = Content.Empty;
+        public Content Win
+        {
+            get { return m_Win; }
+
+            private set
+            {
+                if (m_Win == value)
+                    return;
+
+                Turn = value;
+                m_Win = value;
+
+                if (OnWin != null)
+                    OnWin(value);
             }
         }
 
@@ -95,17 +116,20 @@ namespace FineGameDesign.Go
             if (m_Verbose)
                 Debug.Log("PublishPlayEnded: IsScoring=" + Game.Board.IsScoring + " Board=\n" + Game.Board);
 
-            Turn = Content.Empty;
-            /*
+            PublishWin();
+
+            if (OnBoardSet != null)
+                OnBoardSet(Game.Board);
+        }
+
+        private void PublishWin()
+        {
             float blackScore = Game.GetScore(Content.Black);
             float whiteScore = Game.GetScore(Content.White);
             if (blackScore == whiteScore)
                 return;
-            Turn = blackScore > whiteScore ? Content.Black : Content.White;
-             */
 
-            if (OnBoardSet != null)
-                OnBoardSet(Game.Board);
+            Win = blackScore > whiteScore ? Content.Black : Content.White;
         }
     }
 }
