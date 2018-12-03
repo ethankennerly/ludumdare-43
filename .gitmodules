@@ -1,3 +1,9 @@
 [submodule "LudumDare43/Assets/Plugins/UnityToykit"]
 	path = LudumDare43/Assets/Plugins/UnityToykit
 	url = git@github.com:ethankennerly/UnityToykit
+[submodule "LudumDare43/Assets/Plugins/GoSharp"]
+	path = LudumDare43/Assets/Plugins/GoSharp
+	url = git@github.com:ethankennerly/GoSharp
+[submodule "LudumDare43/Assets/Plugins/mcts"]
+	path = LudumDare43/Assets/Plugins/mcts
+	url = git@github.com:ethankennerly/mcts
