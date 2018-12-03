@@ -870,7 +870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Collider: {fileID: 60136362728508854}
-  m_Animator: {fileID: 0}
+  m_Animator: {fileID: 95264414776022842}
   m_AnimationName: Clicked
 --- !u!114 &114948777383676698
 MonoBehaviour:
