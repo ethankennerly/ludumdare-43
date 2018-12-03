@@ -15,6 +15,7 @@ Pixel-art 8-bit sound remake of the classic Chinese Game of Go on a 5x5 grid.
 1. To score, surround the biggest territory.
 1. To destroy, surround the enemy base.
 1. More detailed [rules of Go.](https://senseis.xmp.net/?BasicRulesOfGo)
+1. There is no AI to the scoring, so if you want the score to be accurate, capture all the dead pieces before ending.
 
 ## Credits
 
