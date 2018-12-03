@@ -21,23 +21,27 @@
     1. [x] Referee.Game pass.
     1. [x] Two consecutive passes ends.
     1. [ ] No legal moves ends.
-1. [ ] End Game
+1. [x] End Game
     1. [x] Disable placing pieces.
     1. [x] Player Score
         1. [x] Content: Filters to this player
         1. [x] Score Text
         1. [x] Listens to On Score Changed
         1. [x] SGF: Second player compensation (5.5)
+    1. [x] Player Result Status
+        1. [x] Listens to Win Game
+        1. [x] Win Animation
+            1. [x] Configure [Animated Turn](LudumDare43/Assets/Scripts/Go/AnimatedTurn.cs)
+                1. [x] Win Indicators
     1. [ ] Count territory.
+        1. [x] Fill in captures.
         1. [ ] Infer dead groups.
-        1. [ ] Fill in captures.
         1. [ ] Infer ambiguous.
-    1. [ ] Player Result Status
-        1. [ ] Listens to Win Game
-        1. [ ] Win Animation
     1. [ ] Activate Click Killer
         1. [ ] Tap sets dead at position.
         1. [ ] Score mode.
+1. [ ] Sound On Enable
+    1. [ ] Sound: Only plays once if multiple sounds affected.
 1. [ ] AI
     1. [x] Monte Carlo Tree Search
         1. [x] Pass on <https://github.com/CampbellAlexander/GameAI> Dependencies missing.
@@ -47,5 +51,3 @@
             1. [ ] Set player 2 to computer.
             1. [ ] Computer makes move.
             1. [ ] Disable pass and cell input during computer turn.
-1. [ ] Sound On Enable
-    1. [ ] Sound: Only plays once if multiple sounds affected.

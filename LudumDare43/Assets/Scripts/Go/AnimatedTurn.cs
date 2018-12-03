@@ -12,6 +12,9 @@ namespace FineGameDesign.Go
         [SerializeField]
         private Cell.AnimatedPlayerTile[] m_Indicators;
 
+        [SerializeField]
+        private Cell.AnimatedPlayerTile[] m_WinIndicators;
+
         private void OnEnable()
         {
             AddTurnListener();
@@ -58,9 +61,11 @@ namespace FineGameDesign.Go
             if (Referee.instance.Game != null)
                 turn = Referee.instance.Turn;
 
-            Debug.Log("SetWin: turn=" + turn + " winner=" + winner);
             foreach (var indicator in m_Indicators)
                 indicator.Update(turn, winner, true);
+
+            foreach (var indicator in m_WinIndicators)
+                indicator.Update(Content.Empty, winner);
         }
     }
 }
