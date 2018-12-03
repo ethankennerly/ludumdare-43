@@ -17,6 +17,8 @@ namespace FineGameDesign.Go
                 m_OnTurn = SetTurn;
             Referee.OnTurn -= m_OnTurn;
             Referee.OnTurn += m_OnTurn;
+            if (Referee.InstanceExists())
+                m_OnTurn(Content.Empty, Referee.instance.Game.Turn);
         }
 
         private void OnDisable()

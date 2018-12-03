@@ -38,7 +38,6 @@ namespace FineGameDesign.Go
                 m_OnSet = SetBoard;
             Referee.OnBoardSet -= m_OnSet;
             Referee.OnBoardSet += m_OnSet;
-
             if (Referee.InstanceExists() &&
                 Referee.instance.Game != null)
                 SetBoard(Referee.instance.Game.Board);

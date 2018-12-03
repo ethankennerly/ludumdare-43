@@ -19,9 +19,13 @@ namespace FineGameDesign.Go
         {
             if (m_OnScoreSet == null)
                 m_OnScoreSet = SetScore;
-
             Referee.OnScoreSet -= m_OnScoreSet;
             Referee.OnScoreSet += m_OnScoreSet;
+            if (Referee.InstanceExists() && Referee.instance.Game != null)
+            {
+                float score = Referee.instance.Game.GetScore(m_PlayerFilter);
+                SetScore(m_PlayerFilter, score);
+            }
         }
 
         private void OnDisable()
