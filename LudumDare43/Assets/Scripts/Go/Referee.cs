@@ -111,12 +111,19 @@ namespace FineGameDesign.Go
             if (m_Verbose)
                 Debug.Log("EndPlay: IsScoring=" + Game.Board.IsScoring + " Board=\n" + Game.Board);
 
-            if (OnBoardSet != null)
-                OnBoardSet(Game.Board);
+            m_Ended = true;
 
             Turn = Content.Empty;
+            /*
+            float blackScore = Game.GetScore(Content.Black);
+            float whiteScore = Game.GetScore(Content.White);
+            if (blackScore == whiteScore)
+                return;
+            Turn = blackScore > whiteScore ? Content.Black : Content.White;
+             */
 
-            m_Ended = true;
+            if (OnBoardSet != null)
+                OnBoardSet(Game.Board);
         }
     }
 }
