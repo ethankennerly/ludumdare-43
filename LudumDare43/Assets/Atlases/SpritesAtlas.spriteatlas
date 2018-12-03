@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: SpritesAtlas
+  m_EditorData:
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 0
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingParameters:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: a358f2cc2238541b4ae407d5fea8659b, type: 3}
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: f6a8b48d4f87148ca89a9e2000939dd1, type: 3}
+  - {fileID: 21300000, guid: 8a92fcbd8289b497aadbe6bd4ba768ce, type: 3}
+  - {fileID: 21300000, guid: 041669c5375294e9ead09312bb463e95, type: 3}
+  - {fileID: 21300000, guid: 33225ab27455b4ce0a99e06af03764b4, type: 3}
+  - {fileID: 21300000, guid: 32c3ecb8c817b44a88b9623b1b446683, type: 3}
+  - {fileID: 21300000, guid: 4c35472152cb6432d9fb2e7aab13ddd6, type: 3}
+  - {fileID: 21300000, guid: 898e74b3a662d43698ea01babc03a322, type: 3}
+  - {fileID: 21300000, guid: feaf45a6f4dae472eb0a7bccc5ccb24c, type: 3}
+  - {fileID: 21300000, guid: 6b76963fe0efb4ec99d69d5efd1cdfd3, type: 3}
+  - {fileID: 21300000, guid: f1f92c7890d574eee91ae947160184a6, type: 3}
+  - {fileID: 21300000, guid: 8ef64ef0adc9b4246953b08ab3624cd8, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - BG
+  - Stalin
+  - Truman
+  - CapitalistFactory
+  - SovietFactory
+  - CapitalistCaptured
+  - SovietsCaptured
+  - CapitalistSilos
+  - SovietSilos
+  - PassButtonUp
+  - PassButtonDown
+  m_Tag: SpritesAtlas
+  m_IsVariant: 0

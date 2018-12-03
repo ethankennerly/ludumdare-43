@@ -18,7 +18,9 @@ namespace FineGameDesign.Go
             int numPoints = points.Count;
             List<GoAction> actions = new List<GoAction>(numPoints);
             for (int index = 0; index < numPoints; ++index)
-                actions[index] = new GoAction(points[index]);
+            {
+                actions.Add(new GoAction(points[index]));
+            }
             return actions;
         }
     }
