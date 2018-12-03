@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 4370182451414388}
   - component: {fileID: 60136362728508854}
   - component: {fileID: 114857532584092776}
-  - component: {fileID: 95845597462038884}
+  - component: {fileID: 95264414776022842}
   m_Layer: 0
   m_Name: PassCollider
   m_TagString: Untagged
@@ -701,7 +701,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!95 &95845597462038884
+--- !u!95 &95264414776022842
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
@@ -710,7 +710,7 @@ Animator:
   m_GameObject: {fileID: 1963818379950418}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f7b199fd63c2645fbad3ca9a614386cb, type: 2}
+  m_Controller: {fileID: 9100000, guid: d8e20a4ab35274c008635538a57f6537, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -870,7 +870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Collider: {fileID: 60136362728508854}
-  m_Animator: {fileID: 95845597462038884}
+  m_Animator: {fileID: 0}
   m_AnimationName: Clicked
 --- !u!114 &114948777383676698
 MonoBehaviour:
