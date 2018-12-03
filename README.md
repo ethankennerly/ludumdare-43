@@ -1,4 +1,4 @@
-![Mock up](LudumDare43/Assets/Sprites/Mock.png)
+![Screenshot](screenshot.png)
 
 - Play [Web GL](http://finegamedesign.com/cappiesvscommies/webgl/index.html)
 - Play [Android](http://finegamedesign.com/cappiesvscommies/cappiesvscommies.apk)
@@ -32,6 +32,5 @@ Pixel-art 8-bit sound remake of the classic Chinese Game of Go on a 5x5 grid.
 - Unity 2017.4.10f1
 - Text Mesh Pro
 - [GoSharp](https://github.com/paviad/GoSharp) by Aviad Pineles
-- [MCTS](https://github.com/dmacthedestroyer/mcts) by Dmach The Destroyer
 
 [Engineering notes](engineering.md)
