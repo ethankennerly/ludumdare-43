@@ -44,3 +44,9 @@ sysinfo.txt
 
 # Mac
 .DS_Store
+
+# JetBrains
+.idea
+Assets/Plugins/Editor/JetBrains*
+/*/Assets/Plugins/Editor/JetBrains*
+/*/Assets/Plugins/Editor.meta

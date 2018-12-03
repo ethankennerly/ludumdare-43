@@ -145,8 +145,6 @@ namespace FineGameDesign.Go
             if (!nextBoard.IsScoring)
                 return;
 
-            nextBoard.UpdateScoring();
-
             List<Board.PositionContent> territories = nextBoard.AllTerritory;
             foreach (Board.PositionContent cell in territories)
                 OnTerritoryChanged(cell);

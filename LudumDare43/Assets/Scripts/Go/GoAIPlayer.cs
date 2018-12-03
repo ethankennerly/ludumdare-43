@@ -25,7 +25,7 @@ namespace FineGameDesign.Go
 
             Referee.OnTurn -= m_OnTurn;
             Referee.OnTurn += m_OnTurn;
-            if (Referee.InstanceExists())
+            if (Referee.InstanceExists() && Referee.instance.Game != null)
                 m_OnTurn(Content.Empty, Referee.instance.Game.Turn);
         }
 

@@ -6,6 +6,8 @@ namespace FineGameDesign.Go
 {
     public struct GoAction : IAction
     {
+        private static readonly List<GoAction> s_Empty = new List<GoAction>();
+
         public Point Position;
 
         public GoAction(Point position)
@@ -16,6 +18,9 @@ namespace FineGameDesign.Go
         public static IList<GoAction> ConvertMoves(List<Point> points)
         {
             int numPoints = points.Count;
+            if (numPoints == 0)
+                return s_Empty;
+
             List<GoAction> actions = new List<GoAction>(numPoints);
             for (int index = 0; index < numPoints; ++index)
             {
@@ -55,14 +60,16 @@ namespace FineGameDesign.Go
 
         private readonly Game m_Game;
 
+        private IList<GoAction> m_Actions;
+
         public IList<GoAction> Actions
         {
             get
             {
-                if (m_Game == null || m_Game.Board == null || m_Game.Board.IsScoring)
-                    return new GoAction[0];
+                if (m_Actions == null)
+                    m_Actions = GoAction.ConvertMoves(m_Game.GetLegalMoves());
 
-                return GoAction.ConvertMoves(m_Game.GetLegalMoves());
+                return m_Actions;
             }
         }
 
@@ -71,12 +78,17 @@ namespace FineGameDesign.Go
             m_Game = game;
         }
 
+        /// <summary>
+        /// Remove action.
+        /// Otherwise, searcher infinitely repeats getting an action.
+        /// </summary>
         // TODO: Handle pass to end game.
-        // TODO: Pass represented by PassMove.
         // TODO: Less waste. GoSharp clones game everytime an action is applied.
         public void ApplyAction(GoAction action)
         {
             m_Game.MakeMove(action.Position);
+            if (m_Actions != null)
+                m_Actions.Remove(action);
         }
 
         public IState<GoPlayer, GoAction> Clone()

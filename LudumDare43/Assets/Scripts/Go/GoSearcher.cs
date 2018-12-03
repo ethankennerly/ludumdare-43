@@ -9,6 +9,7 @@ namespace FineGameDesign.Go
     {
         // 50000 freezes laptop.        
         private const int kMaxIterations = 2;
+        private const int kMaxMilliseconds = 100000;
 
         public void MakeMove(Referee referee)
         {
@@ -22,7 +23,7 @@ namespace FineGameDesign.Go
             if (!gameState.Actions.Any())
                 return Game.PassMove;
 
-            var topActions = MonteCarloTreeSearch.GetTopActions(gameState, kMaxIterations).ToList();
+            var topActions = MonteCarloTreeSearch.GetTopActions(gameState, kMaxIterations, kMaxMilliseconds).ToList();
             if (topActions.Count == 0)
                 return Game.PassMove;
 

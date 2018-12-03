@@ -16,7 +16,7 @@ namespace FineGameDesign.Go
         /// </summary>
         public static event Action<Content, Content> OnTurn;
 
-        public static event Action<Content> OnWin;
+        // TODO: public static event Action<Content> OnWin;
 
         public static event Action<Board> OnBoardSet;
 
@@ -48,23 +48,25 @@ namespace FineGameDesign.Go
             {
                 m_Game = value;
 
-                if (!m_Ended && value != null)
+                if (value.Ended)
+                    PublishPlayEnded();
+                else if (value != null)
                     Turn = value.Turn;
-
-                if (value != null && OnBoardSet != null)
-                    OnBoardSet(value.Board);
 
                 if (value != null && OnScoreSet != null)
                 {
                     OnScoreSet(Content.Black, value.GetScore(Content.Black));
                     OnScoreSet(Content.White, value.GetScore(Content.White));
                 }
+
+                if (value != null && OnBoardSet != null)
+                    OnBoardSet(value.Board);
             }
         }
 
         public void MakeMove(int x, int y)
         {
-            if (m_Ended)
+            if (Game.Ended)
                 return;
 
             bool legal;
@@ -77,41 +79,21 @@ namespace FineGameDesign.Go
                 return;
             }
 
-            if (m_NumPasses > 0)
-                m_NumPasses--;
-
             Game = nextGame;
         }
 
-        private const int kMaxPasses = 1;
-        private int m_NumPasses = 0;
-        private bool m_Ended = false;
-
         public void Pass()
         {
-            m_NumPasses++;
-            m_Ended = m_NumPasses > kMaxPasses;
-            if (m_Ended)
-            {
-                Game.Board.IsScoring = true;
-            }
             Game = Game.Pass();
-            if (m_Ended)
-            {
-                EndPlay();
-                return;
-            }
         }
 
         /// <summary>
         /// Republishes board. Otherwise territories did not appear.
         /// </summary>
-        private void EndPlay()
+        private void PublishPlayEnded()
         {
             if (m_Verbose)
-                Debug.Log("EndPlay: IsScoring=" + Game.Board.IsScoring + " Board=\n" + Game.Board);
-
-            m_Ended = true;
+                Debug.Log("PublishPlayEnded: IsScoring=" + Game.Board.IsScoring + " Board=\n" + Game.Board);
 
             Turn = Content.Empty;
             /*
