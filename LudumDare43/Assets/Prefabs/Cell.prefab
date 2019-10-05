@@ -1414,7 +1414,7 @@ MonoBehaviour:
       - {fileID: 21300000, guid: b7710d30f16a3a24294990a95372e139, type: 3}
       - {fileID: 21300000, guid: f4381e4b3fa77d9408c8bb6890f94c3f, type: 3}
       - {fileID: 21300000, guid: efd9c37b5f8804e46b7473ad979091fd, type: 3}
-    - replacedRenderer: {fileID: 0}
+    - replacedRenderer: {fileID: 212048513930917732}
       cellSprites:
       - {fileID: 21300000, guid: 392da1af37ddd8e43be872d2aaf5668b, type: 3}
       - {fileID: 21300000, guid: 0e030b81bc1b0704eaba3b6f399ab5c2, type: 3}
@@ -1471,7 +1471,7 @@ MonoBehaviour:
       - {fileID: 21300000, guid: 8535b73c062031540ac3227f5a64de3a, type: 3}
       - {fileID: 21300000, guid: d08568c3228e58c409e440099d520e25, type: 3}
       - {fileID: 21300000, guid: 045cf06cfbe9318499d08bb0d2a4d913, type: 3}
-    - replacedRenderer: {fileID: 0}
+    - replacedRenderer: {fileID: 212586420324946230}
       cellSprites:
       - {fileID: 21300000, guid: 392da1af37ddd8e43be872d2aaf5668b, type: 3}
       - {fileID: 21300000, guid: 0e030b81bc1b0704eaba3b6f399ab5c2, type: 3}

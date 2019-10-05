@@ -214,7 +214,14 @@ namespace FineGameDesign.Go
             foreach (AnimatedPlayerTile tile in m_PlayerTerritories)
                 tile.Update(m_Territory, next.Content);
 
+            if (m_Territory == next.Content)
+                return;
+
             m_Territory = next.Content;
+
+            Board.PositionContent clearCapture = next;
+            clearCapture.Content = Content.Empty;
+            SetContent(clearCapture);
         }
     }
 }
