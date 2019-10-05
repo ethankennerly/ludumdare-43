@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BlackAI: 0
-  m_WhiteAI: 0
+  m_WhiteAI: 1
 --- !u!114 &114311300796001796
 MonoBehaviour:
   m_ObjectHideFlags: 1
