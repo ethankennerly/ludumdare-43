@@ -32,8 +32,8 @@ namespace FineGameDesign.Go
             if (topActions.Count == 0)
                 return Game.PassMove;
 
-            Log(gameState.CurrentPlayer.Turn.ToString(), topActions);
-            IMctsNode<GoAction> topAction = topActions[0];
+            Log(gameState.CurrentPlayer.Turn.ToString(), topActions, game.Board);
+            MonteCarloTreeSearch.Node<GoPlayer, GoAction> topAction = topActions[0];
             double exploitationValue = topAction.NumWins / topAction.NumRuns;
             if (exploitationValue < kMinExploitationValue)
             {
@@ -44,7 +44,9 @@ namespace FineGameDesign.Go
         }
 
         [Conditional("DEBUG")]
-        private void Log(string prefix, IEnumerable<IMctsNode<GoAction>> actions, int maxActions = 10)
+        private void Log(string prefix, IList<MonteCarloTreeSearch.Node<GoPlayer, GoAction>> actions,
+            Board board = null,
+            int maxActions = 10)
         {
             var sb = new StringBuilder();
             sb.Append(prefix);
@@ -66,6 +68,13 @@ namespace FineGameDesign.Go
                 sb.Append("/");
                 sb.Append(action.NumRuns);
             }
+
+            if (board != null)
+            {
+                sb.Append("\n");
+                sb.Append(board.ToString());
+            }
+
             string message = sb.ToString();
             UnityEngine.Debug.Log(message);
         }
