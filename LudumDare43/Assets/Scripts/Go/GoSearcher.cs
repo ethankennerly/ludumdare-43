@@ -12,7 +12,7 @@ namespace FineGameDesign.Go
     {
         // 2 idiotic moves at edges.
         // 50000 freezes laptop.
-        private const int kMaxIterations = 100;
+        private const int kMaxIterations = 1000;
         private const int kMaxMilliseconds = 4000;
         private const double kMinExploitationValue = 0.125;
 
@@ -37,6 +37,8 @@ namespace FineGameDesign.Go
             double exploitationValue = topAction.NumWins / topAction.NumRuns;
             if (exploitationValue < kMinExploitationValue)
             {
+                UnityEngine.Debug.Log(gameState.CurrentPlayer.Turn.ToString() +
+                    ": No good moves. Passing.");
                 return Game.PassMove;
             }
 
@@ -64,7 +66,7 @@ namespace FineGameDesign.Go
 
                 sb.Append(", ");
                 sb.Append(action.Action.Position);
-                sb.Append(action.NumWins.ToString("N2"));
+                sb.Append(UnityEngine.Mathf.Round((float)action.NumWins));
                 sb.Append("/");
                 sb.Append(action.NumRuns);
             }

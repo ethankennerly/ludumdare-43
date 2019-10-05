@@ -78,7 +78,7 @@ namespace FineGameDesign.Go
         public GoState(Game game)
         {
             m_Game = game;
-            m_Actions = GoAction.ConvertMoves(m_Game.GetLegalMoves());
+            m_Actions = GoAction.ConvertMoves(m_Game.GetLegalMoves(cloneTurn: true));
         }
 
         /// <summary>
