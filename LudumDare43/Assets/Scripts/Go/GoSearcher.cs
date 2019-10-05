@@ -1,7 +1,10 @@
 using Go;
 using MonteCarlo;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Text;
 
 namespace FineGameDesign.Go
 {
@@ -9,8 +12,9 @@ namespace FineGameDesign.Go
     {
         // 2 idiotic moves at edges.
         // 50000 freezes laptop.
-        private const int kMaxIterations = 20000;
+        private const int kMaxIterations = 80000;
         private const int kMaxMilliseconds = 4000;
+        private const double kMinExploitationValue = 0.125;
 
         public void MakeMove(Referee referee)
         {
@@ -28,7 +32,42 @@ namespace FineGameDesign.Go
             if (topActions.Count == 0)
                 return Game.PassMove;
 
-            return topActions[0].Action.Position;
+            Log(gameState.CurrentPlayer.Turn.ToString(), topActions);
+            IMctsNode<GoAction> topAction = topActions[0];
+            double exploitationValue = topAction.NumWins / topAction.NumRuns;
+            if (exploitationValue < kMinExploitationValue)
+            {
+                return Game.PassMove;
+            }
+
+            return topAction.Action.Position;
+        }
+
+        [Conditional("DEBUG")]
+        private void Log(string prefix, IEnumerable<IMctsNode<GoAction>> actions, int maxActions = 10)
+        {
+            var sb = new StringBuilder();
+            sb.Append(prefix);
+            int numActions = actions.Count();
+            if (numActions > maxActions)
+            {
+                numActions = maxActions;
+            }
+            int actionIndex = -1;
+            foreach (var action in actions)
+            {
+                actionIndex++;
+                if (actionIndex >= numActions)
+                    break;
+
+                sb.Append(", ");
+                sb.Append(action.Action.Position);
+                sb.Append(action.NumWins.ToString("N2"));
+                sb.Append("/");
+                sb.Append(action.NumRuns);
+            }
+            string message = sb.ToString();
+            UnityEngine.Debug.Log(message);
         }
     }
 }
