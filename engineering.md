@@ -17,10 +17,11 @@
     1. [x] Animate volume of Sound Loop
 1. [x] Configure [Illegal Move Indicator](LudumDare43/Assets/Scripts/Go/IllegalMoveIndicator.cs)
 1. [x] Configure [pixel perfect settings](https://hackernoon.com/making-your-pixel-art-game-look-pixel-perfect-in-unity3d-3534963cad1d)
-1. [ ] Destroyed tile replaced by occupied tile hides destroyed tile of opposing color.
-1. [ ] AI passes when no move.
-1. [ ] AI passes when a move would lose a point.
-1. [ ] AI not stuck.
+1. [x] Destroyed tile replaced by occupied tile hides destroyed tile of opposing color.
+1. [x] AI passes when no move.
+1. [x] AI passes when a move would lose a point.
+1. [ ] Editor does not freeze with several iterations on 5x5.
+1. [ ] If player passes, and AI passes for fear of losing, player wins.
 1. [x] Pass
     1. [x] Referee.Game pass.
     1. [x] Two consecutive passes ends.

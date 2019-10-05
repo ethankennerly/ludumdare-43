@@ -17,7 +17,7 @@ namespace FineGameDesign.Go
         private readonly GoSearcher m_Searcher = new GoSearcher();
 
         private bool m_WillMove;
-        private float m_MoveDelay = 1f;
+        private float m_MoveDelay = 1.5f;
         private float m_MoveDelayRemaining;
 
         private void OnEnable()

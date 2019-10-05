@@ -10,10 +10,12 @@ namespace FineGameDesign.Go
 {
     public sealed class GoSearcher
     {
-        // 2 idiotic moves at edges.
-        // 50000 freezes laptop.
+        // 2 at 3x3 idiotic moves at edges.
+        // 10 at 5x5 freezes laptop.
+        // 1000 at 3x3 reasonable, fast.
+        // 50000 at 5x5 freezes laptop.
         private const int kMaxIterations = 1000;
-        private const int kMaxMilliseconds = 4000;
+        private const int kMaxMilliseconds = 500;
         private const double kMinExploitationValue = 0.125;
 
         public void MakeMove(Referee referee)
@@ -37,7 +39,7 @@ namespace FineGameDesign.Go
             double exploitationValue = topAction.NumWins / topAction.NumRuns;
             if (exploitationValue < kMinExploitationValue)
             {
-                UnityEngine.Debug.Log(gameState.CurrentPlayer.Turn.ToString() +
+                Log(gameState.CurrentPlayer.Turn.ToString() +
                     ": No good moves. Passing.");
                 return Game.PassMove;
             }
@@ -45,7 +47,13 @@ namespace FineGameDesign.Go
             return topAction.Action.Position;
         }
 
-        [Conditional("DEBUG")]
+        [Conditional("LOG_GO_SEARCHER")]
+        private void Log(string message)
+        {
+            UnityEngine.Debug.Log(message);
+        }
+
+        [Conditional("LOG_GO_SEARCHER")]
         private void Log(string prefix, IList<MonteCarloTreeSearch.Node<GoPlayer, GoAction>> actions,
             Board board = null,
             int maxActions = 10)
