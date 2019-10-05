@@ -70,7 +70,7 @@ namespace FineGameDesign.Go
                 if (m_Actions == null)
                 {
                     m_Actions = GoAction.ConvertMoves(m_Game.GetLegalMoves());
-                    Debug.Log("GoState.Actions: " + m_Game.Turn + ": num moves=" + m_Actions.Count);
+                    // Debug.Log("GoState.Actions: " + m_Game.Turn + ": num moves=" + m_Actions.Count);
                 }
 
                 return m_Actions;
