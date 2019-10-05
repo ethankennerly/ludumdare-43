@@ -1,0 +1,41 @@
+
+nuke.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+nuclear_explosion_01
+  rotate: false
+  xy: 2, 2
+  size: 550, 400
+  orig: 550, 400
+  offset: 0, 0
+  index: -1
+nuclear_explosion_02
+  rotate: false
+  xy: 554, 404
+  size: 550, 400
+  orig: 550, 400
+  offset: 0, 0
+  index: -1
+nuclear_explosion_03
+  rotate: false
+  xy: 554, 2
+  size: 550, 400
+  orig: 550, 400
+  offset: 0, 0
+  index: -1
+nuclear_explosion_04
+  rotate: false
+  xy: 1106, 404
+  size: 550, 400
+  orig: 550, 400
+  offset: 0, 0
+  index: -1
+nuclear_explosion_05
+  rotate: false
+  xy: 2, 404
+  size: 550, 400
+  orig: 550, 400
+  offset: 0, 0
+  index: -1

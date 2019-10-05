@@ -14,7 +14,7 @@ namespace FineGameDesign.Go
         // 10 at 5x5 freezes laptop.
         // 1000 at 3x3 reasonable, fast.
         // 50000 at 5x5 freezes laptop.
-        private const int kMaxIterations = 1000;
+        private const int kMaxIterations = 2;
         private const int kMaxMilliseconds = 500;
         private const double kMinExploitationValue = 0.125;
 
