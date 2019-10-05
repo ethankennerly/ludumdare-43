@@ -1414,7 +1414,7 @@ MonoBehaviour:
       - {fileID: 21300000, guid: b7710d30f16a3a24294990a95372e139, type: 3}
       - {fileID: 21300000, guid: f4381e4b3fa77d9408c8bb6890f94c3f, type: 3}
       - {fileID: 21300000, guid: efd9c37b5f8804e46b7473ad979091fd, type: 3}
-    - replacedRenderer: {fileID: 212048513930917732}
+    - replacedRenderer: {fileID: 0}
       cellSprites:
       - {fileID: 21300000, guid: 392da1af37ddd8e43be872d2aaf5668b, type: 3}
       - {fileID: 21300000, guid: 0e030b81bc1b0704eaba3b6f399ab5c2, type: 3}
@@ -1471,7 +1471,7 @@ MonoBehaviour:
       - {fileID: 21300000, guid: 8535b73c062031540ac3227f5a64de3a, type: 3}
       - {fileID: 21300000, guid: d08568c3228e58c409e440099d520e25, type: 3}
       - {fileID: 21300000, guid: 045cf06cfbe9318499d08bb0d2a4d913, type: 3}
-    - replacedRenderer: {fileID: 212586420324946230}
+    - replacedRenderer: {fileID: 0}
       cellSprites:
       - {fileID: 21300000, guid: 392da1af37ddd8e43be872d2aaf5668b, type: 3}
       - {fileID: 21300000, guid: 0e030b81bc1b0704eaba3b6f399ab5c2, type: 3}
@@ -1501,10 +1501,64 @@ MonoBehaviour:
   m_PlayerTerritories:
   - animator: {fileID: 95968933615243880}
     tileSet: {fileID: 11400000, guid: ae310091361914e06b35b860a5d1b132, type: 2}
-    cellSpriteSets: []
+    cellSpriteSets:
+    - replacedRenderer: {fileID: 212693032920523734}
+      cellSprites:
+      - {fileID: 21300000, guid: b11c760c021250642b4d585152d74e63, type: 3}
+      - {fileID: 21300000, guid: 8d4efceef2067204d91d265499d10082, type: 3}
+      - {fileID: 21300000, guid: 8b898735ba3cbb84fbd5b02702d2508e, type: 3}
+      - {fileID: 21300000, guid: af54931bf123fb04da218c9ac2c9a335, type: 3}
+      - {fileID: 21300000, guid: a81ae1fd284a310498bcb644f8955eaf, type: 3}
+      - {fileID: 21300000, guid: 7fe18afc90ba5bd4e8a6490652f9ceac, type: 3}
+      - {fileID: 21300000, guid: 18c68676e77f7eb4ea7a7ae4ecdc517e, type: 3}
+      - {fileID: 21300000, guid: e089bcd2429699040b466344633e5ec2, type: 3}
+      - {fileID: 21300000, guid: 092bf961a6556724fa10e35d0958a35e, type: 3}
+      - {fileID: 21300000, guid: ef5f6bc908f0c3545b53ac4e63c56bc8, type: 3}
+      - {fileID: 21300000, guid: 94d9bc1351cda0148b1d7fb0da43eaac, type: 3}
+      - {fileID: 21300000, guid: 67dbfef26dd118f4b80cbfce8a39b0cc, type: 3}
+      - {fileID: 21300000, guid: d76655b57490a0f468ff41df3f663b74, type: 3}
+      - {fileID: 21300000, guid: a924f60fcc062674e83527f671433d7f, type: 3}
+      - {fileID: 21300000, guid: 1759b8b6df8b50b42be1096d472d7ea2, type: 3}
+      - {fileID: 21300000, guid: 146a5eeb76f1a3e4a910899b5bd3f0fe, type: 3}
+      - {fileID: 21300000, guid: ef09ef83c23beb94292b2a89731f3d09, type: 3}
+      - {fileID: 21300000, guid: a38bdc2b8fa76bd4688b1b3921546902, type: 3}
+      - {fileID: 21300000, guid: 172208cb413945d42a70c96d5b476a9f, type: 3}
+      - {fileID: 21300000, guid: 64bd209f3e957a74f89af6a893e297e8, type: 3}
+      - {fileID: 21300000, guid: 4afb1b1a57890a4429b32a02a4558f2d, type: 3}
+      - {fileID: 21300000, guid: a26977b00a2d19949b3b7166e3eec85b, type: 3}
+      - {fileID: 21300000, guid: b7710d30f16a3a24294990a95372e139, type: 3}
+      - {fileID: 21300000, guid: f4381e4b3fa77d9408c8bb6890f94c3f, type: 3}
+      - {fileID: 21300000, guid: efd9c37b5f8804e46b7473ad979091fd, type: 3}
   - animator: {fileID: 95948932955255572}
     tileSet: {fileID: 11400000, guid: fefdf06639ba94424af3314933e68123, type: 2}
-    cellSpriteSets: []
+    cellSpriteSets:
+    - replacedRenderer: {fileID: 212090095424731546}
+      cellSprites:
+      - {fileID: 21300000, guid: d04655f45b05e0042bcf1ba14408119d, type: 3}
+      - {fileID: 21300000, guid: c929c169f2ccef74784dd454a234caf8, type: 3}
+      - {fileID: 21300000, guid: 69f7242f66b80274eabb1c1114545e9a, type: 3}
+      - {fileID: 21300000, guid: 00225794fafca1f438d345e62e672a75, type: 3}
+      - {fileID: 21300000, guid: 4d55cd4425739844e8e919afd46a6009, type: 3}
+      - {fileID: 21300000, guid: f580b3a909ecbd9449035ceb908e3f37, type: 3}
+      - {fileID: 21300000, guid: dcb84d9672ed63141b04656cf2971708, type: 3}
+      - {fileID: 21300000, guid: 5d25e693a8147254ba3b2b1e6f58d1e8, type: 3}
+      - {fileID: 21300000, guid: 488b0e1294c51b340994b90195ec5dd2, type: 3}
+      - {fileID: 21300000, guid: 585c301fdf2b2db4ead8c4cbb8db2447, type: 3}
+      - {fileID: 21300000, guid: 3e4db1e135d7a804193da458e1f45990, type: 3}
+      - {fileID: 21300000, guid: 590c9879c40564346987c4b86b0c7881, type: 3}
+      - {fileID: 21300000, guid: 504b6238ea9c1e7498ba0afe10e033a0, type: 3}
+      - {fileID: 21300000, guid: c0fac3c9f89f3504ea85608cc90a5761, type: 3}
+      - {fileID: 21300000, guid: 3948545291b97924588b714ef6887902, type: 3}
+      - {fileID: 21300000, guid: 50ace56e298e8064e88c2c1b9471dd6e, type: 3}
+      - {fileID: 21300000, guid: 9a50bc7615b6d2c4e8af69a52fa94958, type: 3}
+      - {fileID: 21300000, guid: 01dc7120c84e50b4b9ba2c63bbff73c3, type: 3}
+      - {fileID: 21300000, guid: 2ec2a480cf61d7d41bfaaddf60392ed7, type: 3}
+      - {fileID: 21300000, guid: 4ac78e7b5e9ed4a42b808ab4245a5b1d, type: 3}
+      - {fileID: 21300000, guid: e01bd7dc92131464b8ad812e402dac0d, type: 3}
+      - {fileID: 21300000, guid: a45db7e5c45994249845992d0e6f3a9e, type: 3}
+      - {fileID: 21300000, guid: 8535b73c062031540ac3227f5a64de3a, type: 3}
+      - {fileID: 21300000, guid: d08568c3228e58c409e440099d520e25, type: 3}
+      - {fileID: 21300000, guid: 045cf06cfbe9318499d08bb0d2a4d913, type: 3}
 --- !u!114 &114560136222069444
 MonoBehaviour:
   m_ObjectHideFlags: 1
