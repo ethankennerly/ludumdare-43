@@ -12,7 +12,7 @@ namespace FineGameDesign.Go
     {
         // 2 idiotic moves at edges.
         // 50000 freezes laptop.
-        private const int kMaxIterations = 80000;
+        private const int kMaxIterations = 100;
         private const int kMaxMilliseconds = 4000;
         private const double kMinExploitationValue = 0.125;
 
