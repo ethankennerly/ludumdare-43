@@ -7,9 +7,10 @@ namespace FineGameDesign.Go
 {
     public sealed class GoSearcher
     {
-        // 50000 freezes laptop.        
-        private const int kMaxIterations = 2;
-        private const int kMaxMilliseconds = 100000;
+        // 2 idiotic moves at edges.
+        // 50000 freezes laptop.
+        private const int kMaxIterations = 20000;
+        private const int kMaxMilliseconds = 4000;
 
         public void MakeMove(Referee referee)
         {

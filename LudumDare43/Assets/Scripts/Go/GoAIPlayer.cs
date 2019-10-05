@@ -17,6 +17,8 @@ namespace FineGameDesign.Go
         private readonly GoSearcher m_Searcher = new GoSearcher();
 
         private bool m_WillMove;
+        private float m_MoveDelay = 1f;
+        private float m_MoveDelayRemaining;
 
         private void OnEnable()
         {
@@ -42,11 +44,16 @@ namespace FineGameDesign.Go
                 return;
 
             m_WillMove = true;
+            m_MoveDelayRemaining = m_MoveDelay;
         }
 
         private void Update()
         {
             if (!m_WillMove)
+                return;
+
+            m_MoveDelayRemaining -= Time.deltaTime;
+            if (m_MoveDelayRemaining > 0f)
                 return;
 
             m_WillMove = false;
