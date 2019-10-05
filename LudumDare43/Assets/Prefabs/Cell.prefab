@@ -1384,13 +1384,46 @@ MonoBehaviour:
   m_AnimatedPlayerTiles:
   - animator: {fileID: 95636881816810892}
     tileSet: {fileID: 11400000, guid: ae310091361914e06b35b860a5d1b132, type: 2}
+    cellSpriteSets:
+    - replacedRenderer: {fileID: 212917757146381052}
+      cellSprites:
+      - {fileID: 21300000, guid: b11c760c021250642b4d585152d74e63, type: 3}
+      - {fileID: 21300000, guid: 8d4efceef2067204d91d265499d10082, type: 3}
+      - {fileID: 21300000, guid: 8b898735ba3cbb84fbd5b02702d2508e, type: 3}
+      - {fileID: 21300000, guid: af54931bf123fb04da218c9ac2c9a335, type: 3}
+      - {fileID: 21300000, guid: a81ae1fd284a310498bcb644f8955eaf, type: 3}
+      - {fileID: 21300000, guid: 7fe18afc90ba5bd4e8a6490652f9ceac, type: 3}
+      - {fileID: 21300000, guid: 18c68676e77f7eb4ea7a7ae4ecdc517e, type: 3}
+      - {fileID: 21300000, guid: e089bcd2429699040b466344633e5ec2, type: 3}
+      - {fileID: 21300000, guid: 092bf961a6556724fa10e35d0958a35e, type: 3}
+      - {fileID: 21300000, guid: ef5f6bc908f0c3545b53ac4e63c56bc8, type: 3}
+      - {fileID: 21300000, guid: 94d9bc1351cda0148b1d7fb0da43eaac, type: 3}
+      - {fileID: 21300000, guid: 67dbfef26dd118f4b80cbfce8a39b0cc, type: 3}
+      - {fileID: 21300000, guid: d76655b57490a0f468ff41df3f663b74, type: 3}
+      - {fileID: 21300000, guid: a924f60fcc062674e83527f671433d7f, type: 3}
+      - {fileID: 21300000, guid: 1759b8b6df8b50b42be1096d472d7ea2, type: 3}
+      - {fileID: 21300000, guid: 146a5eeb76f1a3e4a910899b5bd3f0fe, type: 3}
+      - {fileID: 21300000, guid: ef09ef83c23beb94292b2a89731f3d09, type: 3}
+      - {fileID: 21300000, guid: a38bdc2b8fa76bd4688b1b3921546902, type: 3}
+      - {fileID: 21300000, guid: 172208cb413945d42a70c96d5b476a9f, type: 3}
+      - {fileID: 21300000, guid: 64bd209f3e957a74f89af6a893e297e8, type: 3}
+      - {fileID: 21300000, guid: 4afb1b1a57890a4429b32a02a4558f2d, type: 3}
+      - {fileID: 21300000, guid: a26977b00a2d19949b3b7166e3eec85b, type: 3}
+      - {fileID: 21300000, guid: b7710d30f16a3a24294990a95372e139, type: 3}
+      - {fileID: 21300000, guid: f4381e4b3fa77d9408c8bb6890f94c3f, type: 3}
+      - {fileID: 21300000, guid: efd9c37b5f8804e46b7473ad979091fd, type: 3}
+    - replacedRenderer: {fileID: 0}
+      cellSprites: []
   - animator: {fileID: 95641866694203126}
     tileSet: {fileID: 11400000, guid: fefdf06639ba94424af3314933e68123, type: 2}
+    cellSpriteSets: []
   m_PlayerTerritories:
   - animator: {fileID: 95968933615243880}
     tileSet: {fileID: 11400000, guid: ae310091361914e06b35b860a5d1b132, type: 2}
+    cellSpriteSets: []
   - animator: {fileID: 95948932955255572}
     tileSet: {fileID: 11400000, guid: fefdf06639ba94424af3314933e68123, type: 2}
+    cellSpriteSets: []
 --- !u!114 &114560136222069444
 MonoBehaviour:
   m_ObjectHideFlags: 1

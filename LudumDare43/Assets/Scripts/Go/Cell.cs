@@ -26,15 +26,92 @@ namespace FineGameDesign.Go
             }
         }
 
+        private int m_SpriteIndex = -1;
+
+        public int GetSpriteIndex()
+        {
+            return m_SpriteIndex;
+        }
+
+        public void SetSpritesByIndex(int nextIndex)
+        {
+            if (m_SpriteIndex == nextIndex)
+            {
+                return;
+            }
+            m_SpriteIndex = nextIndex;
+
+            if (m_AnimatedPlayerTiles != null)
+            {
+                foreach (AnimatedPlayerTile tile in m_AnimatedPlayerTiles)
+                {
+                    tile.SetSpritesByIndex(nextIndex);
+                }
+            }
+
+            if (m_PlayerTerritories != null)
+            {
+                foreach (AnimatedPlayerTile tile in m_PlayerTerritories)
+                {
+                    tile.SetSpritesByIndex(nextIndex);
+                }
+            }
+        }
+
         private Content m_Content;
 
         private Content m_Territory;
+
+        [Serializable]
+        public struct CellSpriteSet
+        {
+            public SpriteRenderer replacedRenderer;
+
+            [Header("Replaces sprite by cell index.")]
+            public Sprite[] cellSprites;
+
+            /// <summary>
+            /// Replaces sprite by index from cell sprites.
+            /// Ignores if undefined.
+            /// </summary>
+            public void SetSpriteByIndex(int cellIndex)
+            {
+                if (replacedRenderer == null)
+                {
+                    return;
+                }
+
+                int numCells = cellSprites.Length;
+                if (cellSprites == null || numCells == 0)
+                {
+                    return;
+                }
+
+                cellIndex %= numCells;
+                replacedRenderer.sprite = cellSprites[cellIndex];
+            }
+        }
 
         [Serializable]
         public struct AnimatedPlayerTile
         {
             public Animator animator;
             public AnimatedPlayerTileSet tileSet;
+
+            public CellSpriteSet[] cellSpriteSets;
+
+            public void SetSpritesByIndex(int cellIndex)
+            {
+                if (cellSpriteSets == null)
+                {
+                    return;
+                }
+
+                foreach (CellSpriteSet set in cellSpriteSets)
+                {
+                    set.SetSpriteByIndex(cellIndex);
+                }
+            }
 
             public void Update(Content previous, Content next, bool doNotRestart = false)
             {

@@ -111,6 +111,7 @@ namespace FineGameDesign.Go
                     (m_VerticalOffset * y);
                 Cell cell = Instantiate(m_CellPrefab, position, Quaternion.identity, transform);
                 cell.Point = new Point(x, y);
+                cell.SetSpritesByIndex(cellIndex);
                 m_Cells[cellIndex] = cell;
             }
         }
