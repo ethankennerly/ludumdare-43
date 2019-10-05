@@ -67,12 +67,7 @@ namespace FineGameDesign.Go
         {
             get
             {
-                if (m_Actions == null)
-                {
-                    m_Actions = GoAction.ConvertMoves(m_Game.GetLegalMoves());
-                    // Debug.Log("GoState.Actions: " + m_Game.Turn + ": num moves=" + m_Actions.Count);
-                }
-
+                m_Actions = GoAction.ConvertMoves(m_Game.GetLegalMoves());
                 return m_Actions;
             }
         }
@@ -91,8 +86,6 @@ namespace FineGameDesign.Go
         public void ApplyAction(GoAction action)
         {
             m_Game.MakeMove(action.Position);
-            if (m_Actions != null)
-                m_Actions.Remove(action);
         }
 
         public IState<GoPlayer, GoAction> Clone()
@@ -102,7 +95,11 @@ namespace FineGameDesign.Go
 
         public double GetResult(GoPlayer forPlayer)
         {
-            return m_Game.GetResult(forPlayer.Turn);
+            double result = m_Game.GetResult(forPlayer.Turn);
+            Debug.Log("GetResult: " + forPlayer.Turn + ": result: " + result +
+                " IsScoring: " + m_Game.Board.IsScoring +
+                "\n" + m_Game.Board);
+            return result;
         }
     }
 }
