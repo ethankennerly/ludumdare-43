@@ -30,7 +30,7 @@ Pixel-art 8-bit sound remake of the classic Chinese Game of Go on a 5x5 grid.
 
 ### Tools
 
-- Unity 2017.4.10f1
+- Unity 2017.4.23f1
 - Text Mesh Pro
 - [GoSharp](https://github.com/paviad/GoSharp) by Aviad Pineles
 
