@@ -561,7 +561,7 @@ PlayerSettings:
   webGLUseWasm: 0
   webGLCompressionFormat: 1
   scriptingDefineSymbols:
-    7: DISABLE_GROUP_POINTS;DISABLE_CALC_TERRITORY;DISABLE_ARRAY_COPY;DISABLE_CAPTURES_DICTIONARY
+    7: 
   platformArchitecture: {}
   scriptingBackend:
     Android: 1
