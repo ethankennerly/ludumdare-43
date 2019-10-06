@@ -560,7 +560,8 @@ PlayerSettings:
   webGLUseEmbeddedResources: 0
   webGLUseWasm: 0
   webGLCompressionFormat: 1
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    7: DISABLE_GROUP_POINTS;DISABLE_CALC_TERRITORY;DISABLE_ARRAY_COPY;DISABLE_CAPTURES_DICTIONARY
   platformArchitecture: {}
   scriptingBackend:
     Android: 1
@@ -645,7 +646,7 @@ PlayerSettings:
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled: {}
   facebookSdkVersion: 7.9.4
-  apiCompatibilityLevel: 3
+  apiCompatibilityLevel: 2
   cloudProjectId: 
   projectName: 
   organizationId: 

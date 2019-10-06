@@ -22,6 +22,7 @@
 1. [x] AI passes when a move would lose a point.
 1. [ ] Editor does not freeze with several iterations on 5x5.
 1. [ ] If player passes, and AI passes for fear of losing, player wins.
+1. [ ] If player passes, and AI is winning by score on board, pass.
 1. [x] Pass
     1. [x] Referee.Game pass.
     1. [x] Two consecutive passes ends.
@@ -39,6 +40,7 @@
             1. [x] Configure [Animated Turn](LudumDare43/Assets/Scripts/Go/AnimatedTurn.cs)
                 1. [x] Win Indicators
     1. [ ] Count territory.
+    1. [ ] Animate illegal move.
         1. [x] Fill in captures.
         1. [ ] Infer dead groups.
         1. [ ] Infer ambiguous.
