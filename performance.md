@@ -34,8 +34,12 @@
 1. [ ] Pool actions.
 1. [ ] +30%: Cache boards of legal moves for reuse in make move.
 1. [ ] With the above disabled, 5x5 runs 1000 iterations in 200 ms in editor.
+1. [ ] class references array of values.
+1. [ ] profile struct vs class
+1. [ ] seal classes
 1. [x] Custom [HashSet comparison.](https://www.codeproject.com/Articles/1280633/Creating-a-Faster-HashSet-for-NET)
 1. [ ] MCTS: Collections without Linq. Get max element. Random choice.
 1. [ ] Thread.
+1. [ ] burst compiler.
 1. [ ] Job System.
 1. [ ] Pool game tree node.
