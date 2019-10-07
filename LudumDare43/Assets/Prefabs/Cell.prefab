@@ -229,6 +229,7 @@ GameObject:
   - component: {fileID: 33091959330933374}
   - component: {fileID: 23201025252290788}
   - component: {fileID: 114863235964848858}
+  - component: {fileID: 114739112584005028}
   m_Layer: 0
   m_Name: NukeAnimation
   m_TagString: Untagged
@@ -441,6 +442,7 @@ GameObject:
   - component: {fileID: 33276465323289468}
   - component: {fileID: 23014191624490034}
   - component: {fileID: 114097705302194294}
+  - component: {fileID: 114845331360073168}
   m_Layer: 0
   m_Name: NukeAnimation
   m_TagString: Untagged
@@ -1537,7 +1539,7 @@ MonoBehaviour:
   useClipping: 1
   immutableTriangles: 0
   pmaVertexColors: 0
-  clearStateOnDisable: 0
+  clearStateOnDisable: 1
   tintBlack: 0
   singleSubmesh: 0
   addNormals: 0
@@ -1750,6 +1752,19 @@ MonoBehaviour:
   m_AnimationName: Illegal
   m_PositionFilter: {fileID: 114544461226294382}
   m_TurnFilter: 1
+--- !u!114 &114739112584005028
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1601593211865128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8ac0cc87c56d304eb6e1536a5fcf910, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Skeleton: {fileID: 114863235964848858}
+  m_AnimationName: animation
 --- !u!114 &114814433916564198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1765,6 +1780,19 @@ MonoBehaviour:
   m_AnimationName: Illegal
   m_PositionFilter: {fileID: 114544461226294382}
   m_TurnFilter: 2
+--- !u!114 &114845331360073168
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1999273372838430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8ac0cc87c56d304eb6e1536a5fcf910, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Skeleton: {fileID: 114097705302194294}
+  m_AnimationName: animation
 --- !u!114 &114863235964848858
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1785,7 +1813,7 @@ MonoBehaviour:
   useClipping: 1
   immutableTriangles: 0
   pmaVertexColors: 0
-  clearStateOnDisable: 0
+  clearStateOnDisable: 1
   tintBlack: 0
   singleSubmesh: 0
   addNormals: 0
