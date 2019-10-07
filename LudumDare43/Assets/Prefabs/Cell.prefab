@@ -230,7 +230,7 @@ GameObject:
   - component: {fileID: 23201025252290788}
   - component: {fileID: 114863235964848858}
   m_Layer: 0
-  m_Name: nuke_SkeletonAnimation
+  m_Name: NukeAnimation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -442,7 +442,7 @@ GameObject:
   - component: {fileID: 23014191624490034}
   - component: {fileID: 114097705302194294}
   m_Layer: 0
-  m_Name: nuke_SkeletonAnimation
+  m_Name: NukeAnimation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
