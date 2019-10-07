@@ -1,41 +1,153 @@
 
 nuke.png
-size: 2048,1024
+size: 1024,128
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 nuclear_explosion_01
-  rotate: false
-  xy: 2, 2
-  size: 550, 400
-  orig: 550, 400
+  rotate: true
+  xy: 87, 64
+  size: 60, 83
+  orig: 60, 83
   offset: 0, 0
   index: -1
 nuclear_explosion_02
-  rotate: false
-  xy: 554, 404
-  size: 550, 400
-  orig: 550, 400
+  rotate: true
+  xy: 172, 64
+  size: 60, 83
+  orig: 60, 83
   offset: 0, 0
   index: -1
 nuclear_explosion_03
-  rotate: false
-  xy: 554, 2
-  size: 550, 400
-  orig: 550, 400
+  rotate: true
+  xy: 257, 64
+  size: 60, 83
+  orig: 60, 83
   offset: 0, 0
   index: -1
 nuclear_explosion_04
-  rotate: false
-  xy: 1106, 404
-  size: 550, 400
-  orig: 550, 400
+  rotate: true
+  xy: 342, 64
+  size: 60, 83
+  orig: 60, 83
   offset: 0, 0
   index: -1
 nuclear_explosion_05
-  rotate: false
-  xy: 2, 404
-  size: 550, 400
-  orig: 550, 400
+  rotate: true
+  xy: 427, 64
+  size: 60, 83
+  orig: 60, 83
+  offset: 0, 0
+  index: -1
+nuclear_explosion_06
+  rotate: true
+  xy: 512, 64
+  size: 60, 83
+  orig: 60, 83
+  offset: 0, 0
+  index: -1
+nuclear_explosion_07
+  rotate: true
+  xy: 597, 64
+  size: 60, 83
+  orig: 60, 83
+  offset: 0, 0
+  index: -1
+nuclear_explosion_08
+  rotate: true
+  xy: 682, 64
+  size: 60, 83
+  orig: 60, 83
+  offset: 0, 0
+  index: -1
+nuclear_explosion_09
+  rotate: true
+  xy: 767, 64
+  size: 60, 83
+  orig: 60, 83
+  offset: 0, 0
+  index: -1
+nuclear_explosion_10
+  rotate: true
+  xy: 852, 64
+  size: 60, 83
+  orig: 60, 83
+  offset: 0, 0
+  index: -1
+nuclear_explosion_11
+  rotate: true
+  xy: 937, 64
+  size: 60, 83
+  orig: 60, 83
+  offset: 0, 0
+  index: -1
+nuclear_explosion_12
+  rotate: true
+  xy: 2, 2
+  size: 60, 83
+  orig: 60, 83
+  offset: 0, 0
+  index: -1
+nuclear_explosion_13
+  rotate: true
+  xy: 87, 2
+  size: 60, 83
+  orig: 60, 83
+  offset: 0, 0
+  index: -1
+nuclear_explosion_14
+  rotate: true
+  xy: 172, 2
+  size: 60, 83
+  orig: 60, 83
+  offset: 0, 0
+  index: -1
+nuclear_explosion_15
+  rotate: true
+  xy: 257, 2
+  size: 60, 83
+  orig: 60, 83
+  offset: 0, 0
+  index: -1
+nuclear_explosion_16
+  rotate: true
+  xy: 342, 2
+  size: 60, 83
+  orig: 60, 83
+  offset: 0, 0
+  index: -1
+nuclear_explosion_17
+  rotate: true
+  xy: 427, 2
+  size: 60, 83
+  orig: 60, 83
+  offset: 0, 0
+  index: -1
+nuclear_explosion_18
+  rotate: true
+  xy: 512, 2
+  size: 60, 83
+  orig: 60, 83
+  offset: 0, 0
+  index: -1
+nuclear_explosion_19
+  rotate: true
+  xy: 597, 2
+  size: 60, 83
+  orig: 60, 83
+  offset: 0, 0
+  index: -1
+nuclear_explosion_20
+  rotate: true
+  xy: 682, 2
+  size: 60, 83
+  orig: 60, 83
+  offset: 0, 0
+  index: -1
+nuclear_explosion_21
+  rotate: true
+  xy: 2, 64
+  size: 60, 83
+  orig: 60, 83
   offset: 0, 0
   index: -1
