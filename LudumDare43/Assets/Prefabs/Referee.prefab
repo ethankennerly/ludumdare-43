@@ -170,8 +170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914713429aba943d1b36bbeec00a88c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BlackAI: 0
-  m_WhiteAI: 0
+  m_BlackAI: 1
+  m_WhiteAI: 1
 --- !u!114 &114311300796001796
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4c91731d3413488cb0661efb3c8a59b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SgfFile: {fileID: 4900000, guid: d7f6f5ba2258544e9a060fa361567412, type: 3}
+  m_SgfFile: {fileID: 4900000, guid: e16c80554add9e24cb0cb596e7d721d9, type: 3}
 --- !u!114 &114554431746926692
 MonoBehaviour:
   m_ObjectHideFlags: 1
