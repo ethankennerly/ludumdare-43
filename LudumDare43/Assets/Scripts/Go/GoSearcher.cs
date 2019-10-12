@@ -20,6 +20,8 @@ namespace FineGameDesign.Go
 
         public void MakeMove(Referee referee)
         {
+            Game.InitPools();
+
             Point move = GetMove(referee.Game);
             referee.MakeMove(move.x, move.y);
         }

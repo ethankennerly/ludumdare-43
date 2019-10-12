@@ -11,11 +11,14 @@
 
 ## Solutions
 
+1. [ ] Pool groups.
+1. [ ] Pool boards.
+1. [ ] Pool games.
 1. [x] `DISABLE_GROUP_POINTS` hypothesizes next hotspots.
 1. [ ] Flyweight board data structure.
 1. [ ] With each move, modify only necessary data.
 1. [ ] Localize memory access.
-1. [ ] Preallocate structs of fixed length data.
+1. [ ] Preallocate fixed length data.
 1. [ ] Bitmask 5x5 board into 25 bits of a 32-bit integer. Masks: Black, White.
 1. [ ] legal moves.
 1. [ ] Query has liberty before suicide.
@@ -24,13 +27,10 @@
 1. [ ] Superko by circular array of bitmasks.
 1. [ ] Index instead of point.
 1. [ ] Bitmask instead of groups.
-1. [ ] Pool groups.
 1. [x] `DISABLE_CALC_TERRITORY`
 1. [ ] When no legal move, cache loss for that player. Do not calc territory.
 1. [ ] Cache boards.
-1. [ ] Pool boards.
 1. [x] `DISABLE_CAPTURES_DICTIONARY`
-1. [ ] Pool games.
 1. [ ] Pool actions.
 1. [ ] +30%: Cache boards of legal moves for reuse in make move.
 1. [ ] With the above disabled, 5x5 runs 1000 iterations in 200 ms in editor.

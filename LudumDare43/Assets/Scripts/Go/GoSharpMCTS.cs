@@ -85,8 +85,6 @@ namespace FineGameDesign.Go
         /// Remove action.
         /// Otherwise, searcher infinitely repeats getting an action.
         /// </summary>
-        // TODO: Handle pass to end game.
-        // TODO: Less waste. GoSharp clones game everytime an action is applied.
         public void ApplyAction(GoAction action)
         {
             Log("ApplyAction: Before: " + m_Game.Turn + action.Position +
@@ -97,7 +95,10 @@ namespace FineGameDesign.Go
 
         public IState<GoPlayer, GoAction> Clone()
         {
-            return new GoState(new Game(m_Game, cloneTurn: true));
+            Game nextGame = new Game();
+            nextGame.Clone(m_Game, cloneTurn: true);
+            m_Game = nextGame;
+            return new GoState(m_Game);
         }
 
         public double GetResult(GoPlayer forPlayer)

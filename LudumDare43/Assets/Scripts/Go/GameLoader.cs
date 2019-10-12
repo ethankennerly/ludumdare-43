@@ -5,9 +5,13 @@ namespace FineGameDesign.Go
 {
     public sealed class GameLoader : MonoBehaviour
     {
-        [Header("Unity does not recognize .sgf extension as text.")]
+        [Header("Size 1 to 3")]
         [SerializeField]
-        private TextAsset m_SgfFile = null;
+        private int m_SizeX = 3;
+
+        [Header("Size 1 to 3")]
+        [SerializeField]
+        private int m_SizeY = 3;
 
         private void OnEnable()
         {
@@ -16,8 +20,7 @@ namespace FineGameDesign.Go
 
         public void Load()
         {
-            string sgf = m_SgfFile.text;
-            Referee.instance.Game = Game.SerializeGameFromSGFString(sgf);
+            Referee.instance.Game = new Game(new Board(m_SizeX, m_SizeY), Content.Black);
         }
     }
 }
