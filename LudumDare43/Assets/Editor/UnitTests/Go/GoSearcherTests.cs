@@ -25,7 +25,8 @@ namespace FineGameDesign.UnitTests.Go
             Stopwatch timePerMove = new Stopwatch();
 
             Referee referee = new Referee();
-            referee.Game = new Game(new Board(sizeX, sizeY), Content.Black);
+            referee.Game = new Game();
+            referee.Game.Clone(new Board(sizeX, sizeY), Content.Black);
             GoSearcher searcher = new GoSearcher();
 
             timePerMove.Start();

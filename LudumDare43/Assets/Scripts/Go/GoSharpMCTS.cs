@@ -63,6 +63,8 @@ namespace FineGameDesign.Go
 
         private IList<GoAction> m_Actions;
 
+        private List<Game> m_Renters = new List<Game>(64);
+
         /// <summary>
         /// Caches.
         /// Otherwise, expensive to calculate legal moves.
@@ -89,13 +91,22 @@ namespace FineGameDesign.Go
         {
             Log("ApplyAction: Before: " + m_Game.Turn + action.Position +
                 "\n" + m_Game.Board);
-            m_Game = m_Game.MakeMove(action.Position);
+            Game nextGame = Game.GamePool.Rent();
+            m_Renters.Add(nextGame);
+            m_Game = m_Game.MakeMove(action.Position, nextGame);
             m_Actions = GoAction.ConvertMoves(m_Game.GetLegalMoves());
         }
 
         public IState<GoPlayer, GoAction> Clone()
         {
-            Game nextGame = new Game();
+            foreach (Game renter in m_Renters)
+            {
+                Game.GamePool.Return(renter);
+            }
+            m_Renters.Clear();
+
+            Game nextGame = Game.GamePool.Rent();
+            m_Renters.Add(nextGame);
             nextGame.Clone(m_Game, cloneTurn: true);
             m_Game = nextGame;
             return new GoState(m_Game);

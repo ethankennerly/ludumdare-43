@@ -92,7 +92,8 @@ namespace FineGameDesign.Go
 
             bool legal;
             Game previousGame = Game;
-            Game nextGame = previousGame.MakeMove(x, y, out legal);
+            Game nextGame = new Game();
+            nextGame = previousGame.MakeMove(x, y, out legal, nextGame);
             if (!legal)
             {
                 if (OnIllegalMove != null)
@@ -105,7 +106,7 @@ namespace FineGameDesign.Go
 
         public void Pass()
         {
-            Game = Game.Pass();
+            Game = Game.Pass(new Game());
         }
 
         /// <summary>

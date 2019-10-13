@@ -20,7 +20,8 @@ namespace FineGameDesign.Go
 
         public void Load()
         {
-            Referee.instance.Game = new Game(new Board(m_SizeX, m_SizeY), Content.Black);
+            Referee.instance.Game = new Game();
+            Referee.instance.Game.Clone(new Board(m_SizeX, m_SizeY), Content.Black);
         }
     }
 }
