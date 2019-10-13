@@ -23,7 +23,7 @@ namespace FineGameDesign.Go
             Game.InitPools();
 
             Point move = GetMove(referee.Game);
-            referee.MakeMove(move.x, move.y);
+            referee.MakeLegalMove(move.x, move.y, new Game());
         }
 
         private Point GetMove(Game game)

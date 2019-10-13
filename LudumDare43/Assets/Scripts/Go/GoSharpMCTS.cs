@@ -93,7 +93,7 @@ namespace FineGameDesign.Go
                 "\n" + m_Game.Board);
             Game nextGame = Game.GamePool.Rent();
             m_Renters.Add(nextGame);
-            m_Game = m_Game.MakeMove(action.Position, nextGame);
+            m_Game = m_Game.MakeLegalMove(action.Position, nextGame);
             m_Actions = GoAction.ConvertMoves(m_Game.GetLegalMoves());
         }
 

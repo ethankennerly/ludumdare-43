@@ -16,10 +16,10 @@
 1. [x] Pool games.
 1. [x] `DISABLE_GROUP_POINTS` hypothesizes next hotspots.
 1. [x] Store in super ko previous board state and move that will be made.
-1. [ ] Do not calculate captures for legal moves.
+1. [x] Query has liberty before suicide.
+1. [x] Do not calculate captures for legal moves.
 1. [ ] When making a move from AI, assume legal.
 1. [ ] Liberties mask per group.
-1. [ ] Query has liberty before suicide.
 1. [ ] Super ko: Preallocate fixed length data, circular array of bitmasks.
 1. [ ] Groups: Preallocate fixed length data.
 1. [ ] Precompute bitmask of move.
