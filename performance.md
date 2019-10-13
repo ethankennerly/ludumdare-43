@@ -11,24 +11,30 @@
 
 ## Solutions
 
-1. [ ] Pool groups.
-1. [ ] Pool boards.
-1. [ ] Pool games.
+1. [x] Pool groups.
+1. [x] Pool boards.
+1. [x] Pool games.
 1. [x] `DISABLE_GROUP_POINTS` hypothesizes next hotspots.
 1. [ ] Flyweight board data structure.
 1. [ ] With each move, modify only necessary data.
 1. [ ] Localize memory access.
-1. [ ] Preallocate fixed length data.
-1. [ ] Bitmask 5x5 board into 25 bits of a 32-bit integer. Masks: Black, White.
-1. [ ] legal moves.
+1. [ ] Liberties mask per group.
+1. [ ] Store in super ko previous board state and move that will be made.
+1. [ ] Do not calculate captures for legal moves.
+1. [ ] When making a move, take immediately.
 1. [ ] Query has liberty before suicide.
-1. [ ] captures.
+1. [ ] Super ko: Preallocate fixed length data, circular array of bitmasks.
+1. [ ] Groups: Preallocate fixed length data.
+1. [ ] Precompute bitmask of move.
+1. [x] Bitmask 5x5 board into 25 bits of a 32-bit integer. Masks: Black, White.
+1. [ ] Static: Komi, board size.
+1. [ ] When no legal move, cache loss for that player. Do not calc territory. if komi, other player keeps playing.
 1. [ ] Legal moves: modifies board with minimal data copying.
-1. [ ] Superko by circular array of bitmasks.
+1. [ ] Legal moves as mask.
+1. [ ] captures as bitmask.
 1. [ ] Index instead of point.
 1. [ ] Bitmask instead of groups.
 1. [x] `DISABLE_CALC_TERRITORY`
-1. [ ] When no legal move, cache loss for that player. Do not calc territory.
 1. [ ] Cache boards.
 1. [x] `DISABLE_CAPTURES_DICTIONARY`
 1. [ ] Pool actions.
