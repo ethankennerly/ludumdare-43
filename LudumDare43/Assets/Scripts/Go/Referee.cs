@@ -87,6 +87,9 @@ namespace FineGameDesign.Go
 
         public void MakeLegalMove(int x, int y, Game nextGame)
         {
+            if (Game.Ended)
+                return;
+
             Game previousGame = Game;
             nextGame = previousGame.MakeLegalMove(new Point(x, y), nextGame);
             Game = nextGame;

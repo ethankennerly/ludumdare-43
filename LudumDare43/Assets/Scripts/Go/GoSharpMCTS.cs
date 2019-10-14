@@ -80,7 +80,7 @@ namespace FineGameDesign.Go
         public GoState(Game game)
         {
             m_Game = game;
-            m_Actions = GoAction.ConvertMoves(m_Game.GetLegalMoves(cloneTurn: true));
+            m_Actions = GoAction.ConvertMoves(m_Game.GetLegalMoves());
         }
 
         /// <summary>
