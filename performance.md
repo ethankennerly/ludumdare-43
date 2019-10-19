@@ -19,18 +19,23 @@
 1. [x] Query has liberty before suicide.
 1. [x] Do not calculate captures for legal moves.
 1. [x] Cache legal moves. Copy when cloning game. Update after making a move.
-1. [ ] legal moves bitmask.
 1. [x] When making a move from AI, assume legal.
-1. [ ] Liberties mask per group.
-1. [ ] Super ko: Preallocate fixed length data, circular array of bitmasks.
+1. [x] Board: clone: group caches.
+1. [x] Game: black capture advantage.
+1. [ ] When no legal move, cache loss for that player. Do not calc territory or score. if komi, other player keeps playing. captures modifies local komi delta. black wins ties.
+1. [ ] Minimal group data.
 1. [ ] Groups: Preallocate fixed length data.
+1. [ ] Groups: Merge groups.
+1. [ ] Liberties mask per group.
+1. [ ] Static: board size.
+1. [ ] Flyweight board data structure.
+1. [ ] when capturing, update legal moves. when playing reexamine legal moves.
+1. [ ] Super ko: Preallocate fixed length data, circular array of bitmasks.
+1. [ ] When applying action, reuses game instead of cloning game.
 1. [ ] Precompute bitmask of move.
 1. [x] Bitmask 5x5 board into 25 bits of a 32-bit integer. Masks: Black, White.
-1. [ ] Static: Komi, board size.
-1. [ ] Flyweight board data structure.
 1. [ ] With each move, modify only necessary data.
 1. [ ] Localize memory access.
-1. [ ] When no legal move, cache loss for that player. Do not calc territory. if komi, other player keeps playing. captures modifies local komi delta. black wins ties.
 1. [ ] Legal moves: modifies board with minimal data copying.
 1. [ ] Legal moves as mask.
 1. [ ] captures as bitmask.
