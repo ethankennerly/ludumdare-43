@@ -107,7 +107,7 @@ namespace FineGameDesign.Go
 
             Game nextGame = Game.GamePool.Rent();
             m_Renters.Add(nextGame);
-            nextGame.Clone(m_Game, cloneTurn: true);
+            nextGame.Clone(m_Game);
             m_Game = nextGame;
             return new GoState(m_Game);
         }

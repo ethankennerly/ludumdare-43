@@ -18,7 +18,9 @@
 1. [x] Store in super ko previous board state and move that will be made.
 1. [x] Query has liberty before suicide.
 1. [x] Do not calculate captures for legal moves.
-1. [ ] When making a move from AI, assume legal.
+1. [x] Cache legal moves. Copy when cloning game. Update after making a move.
+1. [ ] legal moves bitmask.
+1. [x] When making a move from AI, assume legal.
 1. [ ] Liberties mask per group.
 1. [ ] Super ko: Preallocate fixed length data, circular array of bitmasks.
 1. [ ] Groups: Preallocate fixed length data.
