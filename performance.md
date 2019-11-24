@@ -28,6 +28,7 @@
 1. [ ] Groups: Merge groups.
 1. [ ] Liberties mask per group.
 1. [ ] Static: board size.
+1. [ ] Weight exploratory actions toward center position on the 3x3 or 5x5 board.
 1. [ ] Flyweight board data structure.
 1. [ ] when capturing, update legal moves. when playing reexamine legal moves.
 1. [ ] Super ko: Preallocate fixed length data, circular array of bitmasks.
