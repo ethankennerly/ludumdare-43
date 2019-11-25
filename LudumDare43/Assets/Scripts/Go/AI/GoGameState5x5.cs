@@ -28,14 +28,28 @@ namespace FineGameDesign.Go
 
         public uint IllegalMoveMask;
 
-        public uint CoordinateToMask(BoardPosition pos)
-        {
-            return (uint)((1 << (Config.SizeY * pos.y)) + pos.x);
-        }
-
         public void Move(uint moveMask)
         {
             IllegalMoveMask |= moveMask;
+        }
+
+        /// <remarks>
+        /// Example with 3x2:
+        ///
+        ///   x:012
+        ///
+        ///     000     y:0
+        ///     000     y:1
+        ///
+        ///     000
+        ///     001
+        ///
+        /// 100000
+        /// 64
+        /// </remarks>
+        public uint CoordinateToMask(BoardPosition pos)
+        {
+            return (uint)(1 << (Config.SizeX * pos.y + pos.x - 1));
         }
     }
 }
