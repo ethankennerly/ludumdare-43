@@ -54,7 +54,7 @@ namespace FineGameDesign.Go
         /// </remarks>
         public uint CoordinateToMask(BoardPosition pos)
         {
-            return (uint)(1 << (Config.SizeX * pos.y + pos.x - 1));
+            return (uint)(1 << (Config.SizeX * pos.y + pos.x));
         }
     }
 }
