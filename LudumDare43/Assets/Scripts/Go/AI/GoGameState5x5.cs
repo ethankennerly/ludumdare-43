@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace FineGameDesign.Go
 {
     /// <summary>
@@ -31,11 +33,40 @@ namespace FineGameDesign.Go
     {
         public GoConfig5x5 Config = new GoConfig5x5();
 
-        public uint IllegalMoveMask;
+        public uint IllegalMoveMask
+        {
+            get { return m_IllegalMoveMasks[m_TurnIndex]; }
+        }
 
+        private uint[] m_IllegalMoveMasks = new uint[2];
+        private int m_TurnIndex;
+
+        private List<uint>[] m_GroupLibertyMasks = new List<uint>[]
+        {
+            new List<uint>(16),
+            new List<uint>(16)
+        };
+
+        /// <summary>
+        /// Forbids the move made.
+        ///
+        /// Also forbids a move by an opponent that would be suicide.
+        /// The only possible suicides would be adjacent to the move.
+        /// The current move robs a liberty of any neighboring group.
+        /// </summary>
+        /// <remarks>
+        /// Processing array of groups:
+        /// On a move, find if move is adjacent to a group of the player.
+        /// If not, create a new group liberty mask.
+        /// For each neighbor of the move, find liberties.
+        /// If empty and no liberties and no pieces adjacent, then the move is illegal.
+        /// </remarks>
         public void Move(uint moveMask)
         {
-            IllegalMoveMask |= moveMask;
+            m_IllegalMoveMasks[m_TurnIndex] |= moveMask;
+
+            m_TurnIndex = m_TurnIndex == 0 ? 1 : 0;
+            m_IllegalMoveMasks[m_TurnIndex] |= moveMask;
         }
 
         /// <remarks>
