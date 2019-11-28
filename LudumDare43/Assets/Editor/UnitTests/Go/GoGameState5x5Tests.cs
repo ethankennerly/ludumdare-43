@@ -62,6 +62,17 @@ namespace FineGameDesign.Go.UnitTests
         }
 
         [Test]
+        public void CreateLibertyMask_FirstCornerOn3x1_MiddleCell()
+        {
+            GoGameState5x5 gameState = new GoGameState5x5();
+            gameState.Config.SizeX = 3;
+            gameState.Config.SizeY = 1;
+            uint moveMask = gameState.CoordinateToMask(new BoardPosition());
+            uint libertyMask = gameState.CreateLibertyMask(moveMask);
+            Assert.AreEqual(2, libertyMask);
+        }
+
+        [Test]
         public void RemoveLiberties_FirstMoveOn3x1_CreatesLibertyMask()
         {
             GoGameState5x5 gameState = new GoGameState5x5();

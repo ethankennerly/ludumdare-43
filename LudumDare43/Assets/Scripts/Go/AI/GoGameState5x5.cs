@@ -88,16 +88,38 @@ namespace FineGameDesign.Go
         {
             for (int playerIndex = 0; playerIndex < kNumPlayers; ++playerIndex)
             {
+                bool moveEditsGroup = false;
                 List<uint> libertyMasks = m_GroupLibertyMasks[playerIndex];
                 for (int groupIndex = 0, numGroups = libertyMasks.Count; groupIndex < numGroups; ++numGroups)
                 {
                     uint libertyMask = libertyMasks[groupIndex];
-                    if ((libertyMask & moveMask) > 0)
+                    if ((libertyMask & moveMask) == 0)
                     {
-                        libertyMasks[groupIndex] = libertyMask ^ moveMask;
+                        continue;
                     }
+
+                    moveEditsGroup = true;
+                    libertyMasks[groupIndex] = libertyMask ^ moveMask;
                 }
+
+                if (moveEditsGroup)
+                {
+                    continue;
+                }
+
+                if (m_TurnIndex != playerIndex)
+                {
+                    continue;
+                }
+
+                uint newLibertyMask = CreateLibertyMask(moveMask);
+                libertyMasks.Add(newLibertyMask);
             }
+        }
+
+        public uint CreateLibertyMask(uint moveMask)
+        {
+            return (uint)0;
         }
 
         /// <remarks>
