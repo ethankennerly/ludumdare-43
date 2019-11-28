@@ -60,5 +60,38 @@ namespace FineGameDesign.Go.UnitTests
             gameState.Move(moveMask);
             Assert.AreEqual(1 + 2 + 4, gameState.IllegalMoveMask);
         }
+
+        [Test]
+        public void RemoveLiberties_FirstMoveOn3x1_CreatesLibertyMask()
+        {
+            GoGameState5x5 gameState = new GoGameState5x5();
+            gameState.Config.SizeX = 3;
+            gameState.Config.SizeY = 1;
+            uint moveMask = gameState.CoordinateToMask(new BoardPosition());
+            Assert.AreEqual(0, gameState.GetNumGroups(),
+                "Num groups before removing liberties");
+            gameState.RemoveLiberties(moveMask);
+            Assert.AreEqual(1, gameState.GetNumGroups(),
+                "Num groups after removing liberties");
+
+            uint libertyMask = gameState.GetGroupLibertyMask(0);
+            Assert.AreEqual(2, libertyMask,
+                "First group liberty mask after move at 0,0.");
+        }
+
+        [Test]
+        public void TODO_RemoveLiberties_AdjacentMove_ReducesLibertyMask()
+        {
+        }
+
+        [Test]
+        public void TODO_RemoveLiberties_FormsEyes_MasksIllegalForOpponent()
+        {
+        }
+
+        [Test]
+        public void TODO_RemoveLiberties_Bridge_JoinsGroups()
+        {
+        }
     }
 }

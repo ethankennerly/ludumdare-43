@@ -31,6 +31,8 @@ namespace FineGameDesign.Go
     /// </summary>
     public sealed class GoGameState5x5
     {
+        private const int kNumPlayers = 2;
+
         public GoConfig5x5 Config = new GoConfig5x5();
 
         public uint IllegalMoveMask
@@ -47,6 +49,16 @@ namespace FineGameDesign.Go
             new List<uint>(16)
         };
 
+        public int GetNumGroups()
+        {
+            return m_GroupLibertyMasks[m_TurnIndex].Count;
+        }
+
+        public uint GetGroupLibertyMask(int groupIndex)
+        {
+            return m_GroupLibertyMasks[m_TurnIndex][groupIndex];
+        }
+
         /// <summary>
         /// Forbids the move made.
         ///
@@ -54,19 +66,38 @@ namespace FineGameDesign.Go
         /// The only possible suicides would be adjacent to the move.
         /// The current move robs a liberty of any neighboring group.
         /// </summary>
-        /// <remarks>
-        /// Processing array of groups:
-        /// On a move, find if move is adjacent to a group of the player.
-        /// If not, create a new group liberty mask.
-        /// For each neighbor of the move, find liberties.
-        /// If empty and no liberties and no pieces adjacent, then the move is illegal.
-        /// </remarks>
         public void Move(uint moveMask)
         {
+            RemoveLiberties(moveMask);
+
             m_IllegalMoveMasks[m_TurnIndex] |= moveMask;
 
             m_TurnIndex = m_TurnIndex == 0 ? 1 : 0;
             m_IllegalMoveMasks[m_TurnIndex] |= moveMask;
+        }
+
+        /// <remarks>
+        /// Processing array of groups:
+        /// On a move, find if the move is adjacent to a group of the player.
+        /// If not, create a new group liberty mask.
+        /// For each neighbor of the move, find liberties.
+        /// If empty and no liberties and no pieces adjacent, then the move is illegal.
+        /// The empty positions are explored.
+        /// </remarks>
+        public void RemoveLiberties(uint moveMask)
+        {
+            for (int playerIndex = 0; playerIndex < kNumPlayers; ++playerIndex)
+            {
+                List<uint> libertyMasks = m_GroupLibertyMasks[playerIndex];
+                for (int groupIndex = 0, numGroups = libertyMasks.Count; groupIndex < numGroups; ++numGroups)
+                {
+                    uint libertyMask = libertyMasks[groupIndex];
+                    if ((libertyMask & moveMask) > 0)
+                    {
+                        libertyMasks[groupIndex] = libertyMask ^ moveMask;
+                    }
+                }
+            }
         }
 
         /// <remarks>
