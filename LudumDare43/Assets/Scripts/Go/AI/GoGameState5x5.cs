@@ -7,10 +7,12 @@ namespace FineGameDesign.Go
     ///
     /// Public variables for speedy access.
     /// </summary>
-    public sealed class GoConfig5x5
+    internal sealed class GoConfig5x5
     {
-        public int SizeX = 5;
-        public int SizeY = 5;
+        internal int SizeX = 5;
+        internal int SizeY = 5;
+
+        internal int NumCells;
     }
 
     public struct BoardPosition
@@ -33,7 +35,7 @@ namespace FineGameDesign.Go
     {
         private const int kNumPlayers = 2;
 
-        public GoConfig5x5 Config = new GoConfig5x5();
+        private GoConfig5x5 Config = new GoConfig5x5();
 
         public uint IllegalMoveMask
         {
@@ -66,6 +68,7 @@ namespace FineGameDesign.Go
         {
             Config.SizeX = sizeX;
             Config.SizeY = sizeY;
+            Config.NumCells = sizeX * sizeY;
 
             m_EmptyMask = (uint)((1 << (sizeX + sizeY)) - 1);
         }
@@ -87,6 +90,8 @@ namespace FineGameDesign.Go
 
             m_TurnIndex = m_TurnIndex == 0 ? 1 : 0;
             m_IllegalMoveMasks[m_TurnIndex] |= moveMask;
+
+            ForbidAdjacentEmptySuicides(m_TurnIndex, moveMask);
         }
 
         /// <remarks>
@@ -203,6 +208,57 @@ namespace FineGameDesign.Go
         public uint CoordinateToMask(BoardPosition pos)
         {
             return (uint)(1 << (Config.SizeX * pos.y + pos.x));
+        }
+
+        /// <summary>
+        /// Adds suicides to illegal move masks.
+        /// Suicides would be empty spaces adjacent that have no liberties.
+        /// </summary>
+        private void ForbidAdjacentEmptySuicides(int turnIndex, uint moveMask)
+        {
+            int SizeX = Config.SizeX;
+            int SizeY = Config.SizeY;
+
+            int positionIndex = MaskToIndex(moveMask);
+            if (positionIndex >= SizeX)
+            {
+                TryForbidSuicideAtIndex(positionIndex - SizeX, turnIndex);
+            }
+
+            if (positionIndex < (Config.NumCells - SizeX))
+            {
+                TryForbidSuicideAtIndex(positionIndex + SizeX, turnIndex);
+            }
+
+            if (positionIndex > 0)
+            {
+                TryForbidSuicideAtIndex(positionIndex - 1, turnIndex);
+            }
+
+            if (positionIndex < (Config.NumCells - 1))
+            {
+                TryForbidSuicideAtIndex(positionIndex + 1, turnIndex);
+            }
+        }
+
+        /// <summary>
+        /// TODO: Share liberties if adjacent to group of equal player.
+        /// </summary>
+        private void TryForbidSuicideAtIndex(int positionIndex, int turnIndex)
+        {
+            uint positionMask = (uint)(1 << positionIndex);
+            if ((m_EmptyMask & positionMask) == 0)
+            {
+                return;
+            }
+
+            uint positionLibertyMask = CreateLibertyMaskFromIndex(positionIndex);
+            if (positionLibertyMask != 0)
+            {
+                return;
+            }
+
+            m_IllegalMoveMasks[turnIndex] |= positionMask;
         }
     }
 }

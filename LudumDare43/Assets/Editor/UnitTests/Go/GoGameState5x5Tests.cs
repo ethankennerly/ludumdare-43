@@ -57,7 +57,7 @@ namespace FineGameDesign.Go.UnitTests
         }
 
         [Test]
-        public void IllegalMoveMask_On3x1AfterCenter_ExcludesSuicide()
+        public void Move_On3x1AfterCenter_ExcludesSuicide()
         {
             GoGameState5x5 gameState = new GoGameState5x5();
             gameState.SetSize(3, 1);
@@ -115,6 +115,11 @@ namespace FineGameDesign.Go.UnitTests
 
         [Test]
         public void TODO_RemoveLiberties_Bridge_JoinsGroups()
+        {
+        }
+
+        [Test]
+        public void TODO_CreateLibertyMaskFromIndex_On3x1Adjacent_SharesGroupLiberty()
         {
         }
     }
