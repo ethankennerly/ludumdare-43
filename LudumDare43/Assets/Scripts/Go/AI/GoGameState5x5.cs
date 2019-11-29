@@ -112,12 +112,38 @@ namespace FineGameDesign.Go
                     continue;
                 }
 
-                uint newLibertyMask = CreateLibertyMask(moveMask);
+                int positionIndex = MaskToIndex(moveMask);
+                uint newLibertyMask = CreateLibertyMaskFromIndex(moveMask);
                 libertyMasks.Add(newLibertyMask);
             }
         }
 
-        public uint CreateLibertyMask(uint moveMask)
+        private const int kMaxBits = 32;
+        private const int kNoBits = -1;
+
+        /// <summary>
+        /// Expects exactly only one bit.
+        /// Equivalent to logarithm.
+        /// If no bits, returns -1.
+        /// </summary>
+        public static int MaskToIndex(uint moveMask)
+        {
+            for (int index = 0; index < kMaxBits; ++index)
+            {
+                if ((moveMask & (1 << index)) > 0)
+                {
+                    return index;
+                }
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// Creates a liberty mask around the move.
+        /// Only supports one position in the mask.
+        /// </summary>
+        public uint CreateLibertyMaskFromIndex(uint moveMask)
         {
             return (uint)0;
         }

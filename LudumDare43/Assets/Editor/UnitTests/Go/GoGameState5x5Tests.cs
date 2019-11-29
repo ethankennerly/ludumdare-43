@@ -35,6 +35,12 @@ namespace FineGameDesign.Go.UnitTests
         }
 
         [Test]
+        public void MaskToIndex_From8_Equals3()
+        {
+            Assert.AreEqual(3, GoGameState5x5.MaskToIndex(8));
+        }
+
+        [Test]
         public void IllegalMoveMask_Default_None()
         {
             GoGameState5x5 gameState = new GoGameState5x5();
@@ -62,13 +68,12 @@ namespace FineGameDesign.Go.UnitTests
         }
 
         [Test]
-        public void CreateLibertyMask_FirstCornerOn3x1_MiddleCell()
+        public void CreateLibertyMaskFromIndex_FirstCornerOn3x1_MiddleCell()
         {
             GoGameState5x5 gameState = new GoGameState5x5();
             gameState.Config.SizeX = 3;
             gameState.Config.SizeY = 1;
-            uint moveMask = gameState.CoordinateToMask(new BoardPosition());
-            uint libertyMask = gameState.CreateLibertyMask(moveMask);
+            uint libertyMask = gameState.CreateLibertyMaskFromIndex(0);
             Assert.AreEqual(2, libertyMask);
         }
 
