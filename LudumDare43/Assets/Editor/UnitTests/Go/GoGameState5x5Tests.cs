@@ -60,8 +60,7 @@ namespace FineGameDesign.Go.UnitTests
         public void IllegalMoveMask_On3x1AfterCenter_ExcludesSuicide()
         {
             GoGameState5x5 gameState = new GoGameState5x5();
-            gameState.Config.SizeX = 3;
-            gameState.Config.SizeY = 1;
+            gameState.SetSize(3, 1);
             uint moveMask = gameState.CoordinateToMask(new BoardPosition(){x = 1, y = 0});
             gameState.Move(moveMask);
             Assert.AreEqual(1 + 2 + 4, gameState.IllegalMoveMask);
@@ -71,18 +70,27 @@ namespace FineGameDesign.Go.UnitTests
         public void CreateLibertyMaskFromIndex_FirstCornerOn3x1_MiddleCell()
         {
             GoGameState5x5 gameState = new GoGameState5x5();
-            gameState.Config.SizeX = 3;
-            gameState.Config.SizeY = 1;
+            gameState.SetSize(3, 1);
             uint libertyMask = gameState.CreateLibertyMaskFromIndex(0);
             Assert.AreEqual(2, libertyMask);
+        }
+
+        [Test]
+        public void CreateLibertyMaskFromIndex_On3x1AfterCenter_NoLiberties()
+        {
+            GoGameState5x5 gameState = new GoGameState5x5();
+            gameState.SetSize(3, 1);
+            uint moveMask = gameState.CoordinateToMask(new BoardPosition(){x = 1, y = 0});
+            gameState.Move(moveMask);
+            uint libertyMask = gameState.CreateLibertyMaskFromIndex(0);
+            Assert.AreEqual(0, libertyMask);
         }
 
         [Test]
         public void RemoveLiberties_FirstMoveOn3x1_CreatesLibertyMask()
         {
             GoGameState5x5 gameState = new GoGameState5x5();
-            gameState.Config.SizeX = 3;
-            gameState.Config.SizeY = 1;
+            gameState.SetSize(3, 1);
             uint moveMask = gameState.CoordinateToMask(new BoardPosition());
             Assert.AreEqual(0, gameState.GetNumGroups(),
                 "Num groups before removing liberties");

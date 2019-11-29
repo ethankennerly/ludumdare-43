@@ -41,6 +41,9 @@ namespace FineGameDesign.Go
         }
 
         private uint[] m_IllegalMoveMasks = new uint[2];
+
+        private uint m_EmptyMask;
+
         private int m_TurnIndex;
 
         private List<uint>[] m_GroupLibertyMasks = new List<uint>[]
@@ -59,6 +62,14 @@ namespace FineGameDesign.Go
             return m_GroupLibertyMasks[m_TurnIndex][groupIndex];
         }
 
+        public void SetSize(int sizeX, int sizeY)
+        {
+            Config.SizeX = sizeX;
+            Config.SizeY = sizeY;
+
+            m_EmptyMask = (uint)((1 << (sizeX + sizeY)) - 1);
+        }
+
         /// <summary>
         /// Forbids the move made.
         ///
@@ -68,6 +79,8 @@ namespace FineGameDesign.Go
         /// </summary>
         public void Move(uint moveMask)
         {
+            m_EmptyMask &= ~moveMask;
+
             RemoveLiberties(moveMask);
 
             m_IllegalMoveMasks[m_TurnIndex] |= moveMask;
@@ -113,7 +126,7 @@ namespace FineGameDesign.Go
                 }
 
                 int positionIndex = MaskToIndex(moveMask);
-                uint newLibertyMask = CreateLibertyMaskFromIndex(moveMask);
+                uint newLibertyMask = CreateLibertyMaskFromIndex(positionIndex);
                 libertyMasks.Add(newLibertyMask);
             }
         }
@@ -143,9 +156,34 @@ namespace FineGameDesign.Go
         /// Creates a liberty mask around the move.
         /// Only supports one position in the mask.
         /// </summary>
-        public uint CreateLibertyMaskFromIndex(uint moveMask)
+        public uint CreateLibertyMaskFromIndex(int positionIndex)
         {
-            return (uint)0;
+            int SizeX = Config.SizeX;
+            int SizeY = Config.SizeY;
+
+            uint libertyMask = (uint)0;
+
+            if (positionIndex >= SizeX)
+            {
+                libertyMask |= (uint)(1 << (positionIndex - SizeX));
+            }
+
+            if (positionIndex < (SizeX * SizeY - SizeX))
+            {
+                libertyMask |= (uint)(1 << (positionIndex + SizeX));
+            }
+
+            if (positionIndex > 0)
+            {
+                libertyMask |= (uint)(1 << (positionIndex - 1));
+            }
+
+            if (positionIndex < (SizeX * SizeY - 1))
+            {
+                libertyMask |= (uint)(1 << (positionIndex + 1));
+            }
+
+            return libertyMask & m_EmptyMask;
         }
 
         /// <remarks>
