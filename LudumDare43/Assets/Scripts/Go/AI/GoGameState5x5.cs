@@ -79,6 +79,9 @@ namespace FineGameDesign.Go
         /// Also forbids a move by an opponent that would be suicide.
         /// The only possible suicides would be adjacent to the move.
         /// The current move robs a liberty of any neighboring group.
+        ///
+        /// TODO: Capture permits move at each captured stone,
+        /// except suicide or ko.
         /// </summary>
         public void Move(uint moveMask)
         {
@@ -100,6 +103,10 @@ namespace FineGameDesign.Go
             Move(moveMask);
         }
 
+        /// <summary>
+        /// If the move joins a group of the same player,
+        /// then also merge liberty mask from adjacents.
+        /// </summary>
         /// <remarks>
         /// Processing array of groups:
         /// On a move, find if the move is adjacent to a group of the player.
@@ -124,6 +131,15 @@ namespace FineGameDesign.Go
 
                     moveEditsGroup = true;
                     libertyMasks[groupIndex] = libertyMask ^ moveMask;
+
+                    if (m_TurnIndex != playerIndex)
+                    {
+                        continue;
+                    }
+
+                    int expandingPositionIndex = MaskToIndex(moveMask);
+                    uint expandingLibertyMask = CreateLibertyMaskFromIndex(expandingPositionIndex);
+                    libertyMasks[groupIndex] |= expandingLibertyMask;
                 }
 
                 if (moveEditsGroup)
@@ -136,8 +152,8 @@ namespace FineGameDesign.Go
                     continue;
                 }
 
-                int positionIndex = MaskToIndex(moveMask);
-                uint newLibertyMask = CreateLibertyMaskFromIndex(positionIndex);
+                int newPositionIndex = MaskToIndex(moveMask);
+                uint newLibertyMask = CreateLibertyMaskFromIndex(newPositionIndex);
                 libertyMasks.Add(newLibertyMask);
             }
         }
