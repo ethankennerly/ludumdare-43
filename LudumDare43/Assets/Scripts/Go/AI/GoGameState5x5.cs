@@ -249,7 +249,7 @@ namespace FineGameDesign.Go
         /// <summary>
         /// If would capture, then permit move.
         ///
-        /// TODO: Share liberties if adjacent to group of equal player.
+        /// Shares liberties if adjacent to group of equal player.
         /// </summary>
         /// <remarks>
         /// Loops through opponent's groups' liberty masks.

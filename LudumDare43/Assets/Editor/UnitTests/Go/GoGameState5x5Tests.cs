@@ -87,14 +87,22 @@ namespace FineGameDesign.Go.UnitTests
         }
 
         [Test]
-        public void TODO_Move_On4x1Adjacent_SharesGroupLiberty()
+        public void Move_On4x1Adjacent_SharesGroupLiberties()
         {
             GoGameState5x5 gameState = new GoGameState5x5();
             gameState.SetSize(4, 1);
-            uint moveMask = gameState.CoordinateToMask(new BoardPosition(){x = 1, y = 0});
-            gameState.Move(moveMask);
-            uint libertyMask = gameState.CreateLibertyMaskFromIndex(0);
-            Assert.AreEqual(0, libertyMask);
+            gameState.MoveAtPosition(new BoardPosition(){x = 1, y = 0});
+            Assert.AreEqual(1 + 2 + 0 + 0, gameState.IllegalMoveMask,
+                "White player cannot play on top or at suicide point.");
+
+            gameState.MoveAtPosition(new BoardPosition(){x = 3, y = 0});
+            Assert.AreEqual(0 + 2 + 0 + 8, gameState.IllegalMoveMask,
+                "Black player can play adjacent to the previous black stone.");
+        }
+
+        [Test]
+        public void TODO_Move_On3x2Adjacent_MergesGroups()
+        {
         }
 
         [Test]
