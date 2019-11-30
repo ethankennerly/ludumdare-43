@@ -77,8 +77,25 @@ namespace FineGameDesign.Go.UnitTests
         }
 
         [Test]
-        public void TODO_Move_CaptureOn3x1_RestoresCapturedPosition()
+        public void TODO_Move_CaptureOn4x1_PermitsCapturedPosition()
         {
+            GoGameState5x5 gameState = new GoGameState5x5();
+            gameState.SetSize(4, 1);
+            gameState.MoveAtPosition(new BoardPosition(){x = 0});
+            Assert.AreEqual(1 + 0 + 0 + 0, gameState.IllegalMoveMask,
+                "After black plays at 0, white may play anywhere else.");
+            gameState.MoveAtPosition(new BoardPosition(){x = 3});
+            Assert.AreEqual(1 + 0 + 0 + 8, gameState.IllegalMoveMask,
+                "After white plays at 3, black may play anywhere empty.");
+            gameState.MoveAtPosition(new BoardPosition(){x = 1});
+            Assert.AreEqual(1 + 2 + 0 + 8, gameState.IllegalMoveMask,
+                "After black plays at 1, white may capture at 2.");
+            gameState.MoveAtPosition(new BoardPosition(){x = 2});
+            Assert.AreEqual(0 + 0 + 4 + 8, gameState.IllegalMoveMask,
+                "After white captures at 2, black may play on the left side.");
+            gameState.MoveAtPosition(new BoardPosition(){x = 1});
+            Assert.AreEqual(1 + 2 + 0 + 0, gameState.IllegalMoveMask,
+                "After black captures back at 1, white may play on the right side.");
         }
 
         [Test]
