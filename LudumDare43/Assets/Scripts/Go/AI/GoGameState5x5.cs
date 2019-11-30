@@ -223,7 +223,6 @@ namespace FineGameDesign.Go
         private void ForbidAdjacentEmptySuicides(int turnIndex, uint moveMask)
         {
             int SizeX = Config.SizeX;
-            int SizeY = Config.SizeY;
 
             int positionIndex = MaskToIndex(moveMask);
             if (positionIndex >= SizeX)
@@ -248,8 +247,15 @@ namespace FineGameDesign.Go
         }
 
         /// <summary>
+        /// If would capture, then permit move.
+        ///
         /// TODO: Share liberties if adjacent to group of equal player.
         /// </summary>
+        /// <remarks>
+        /// Loops through opponent's groups' liberty masks.
+        /// If the position equals the liberty mask,
+        /// then the opposing group would be captured.
+        /// </remarks>
         private void TryForbidSuicideAtIndex(int positionIndex, int turnIndex)
         {
             uint positionMask = (uint)(1 << positionIndex);
@@ -262,6 +268,16 @@ namespace FineGameDesign.Go
             if (positionLibertyMask != 0)
             {
                 return;
+            }
+
+            int opponentIndex = turnIndex == 0 ? 1 : 0;
+            List<uint> opponentLibertyMasks = m_GroupLibertyMasks[opponentIndex];
+            foreach (uint opponentLibertyMask in opponentLibertyMasks)
+            {
+                if (opponentLibertyMask == positionMask)
+                {
+                    return;
+                }
             }
 
             m_IllegalMoveMasks[turnIndex] |= positionMask;
