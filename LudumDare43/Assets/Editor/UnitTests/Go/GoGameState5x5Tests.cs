@@ -48,7 +48,7 @@ namespace FineGameDesign.Go.UnitTests
         }
 
         [Test]
-        public void IllegalMoveMask_AfterMove_EqualsBitShiftYPlusX()
+        public void Move_AfterMove3x2_IllegalMoveMaskEqualsBitShiftYPlusX()
         {
             GoGameState5x5 gameState = new GoGameState5x5();
             uint moveMask = gameState.CoordinateToMask(new BoardPosition(){x = 3, y = 2});
@@ -64,6 +64,37 @@ namespace FineGameDesign.Go.UnitTests
             uint moveMask = gameState.CoordinateToMask(new BoardPosition(){x = 1, y = 0});
             gameState.Move(moveMask);
             Assert.AreEqual(1 + 2 + 4, gameState.IllegalMoveMask);
+        }
+
+        [Test]
+        public void Move_LastLibertyOn3x1ThatWouldCapture_IsPermitted()
+        {
+            GoGameState5x5 gameState = new GoGameState5x5();
+            gameState.SetSize(3, 1);
+            gameState.MoveAtPosition(new BoardPosition(){x = 0, y = 0});
+            gameState.MoveAtPosition(new BoardPosition(){x = 2, y = 0});
+            Assert.AreEqual(1 + 0 + 4, gameState.IllegalMoveMask);
+        }
+
+        [Test]
+        public void TODO_Move_CaptureOn3x1_RestoresCapturedPosition()
+        {
+        }
+
+        [Test]
+        public void TODO_Move_Capture_PreventsRepeatingLastBoardState()
+        {
+        }
+
+        [Test]
+        public void TODO_Move_On4x1Adjacent_SharesGroupLiberty()
+        {
+            GoGameState5x5 gameState = new GoGameState5x5();
+            gameState.SetSize(4, 1);
+            uint moveMask = gameState.CoordinateToMask(new BoardPosition(){x = 1, y = 0});
+            gameState.Move(moveMask);
+            uint libertyMask = gameState.CreateLibertyMaskFromIndex(0);
+            Assert.AreEqual(0, libertyMask);
         }
 
         [Test]
@@ -115,11 +146,6 @@ namespace FineGameDesign.Go.UnitTests
 
         [Test]
         public void TODO_RemoveLiberties_Bridge_JoinsGroups()
-        {
-        }
-
-        [Test]
-        public void TODO_CreateLibertyMaskFromIndex_On3x1Adjacent_SharesGroupLiberty()
         {
         }
     }

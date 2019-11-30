@@ -94,6 +94,12 @@ namespace FineGameDesign.Go
             ForbidAdjacentEmptySuicides(m_TurnIndex, moveMask);
         }
 
+        public void MoveAtPosition(BoardPosition pos)
+        {
+            uint moveMask = CoordinateToMask(pos);
+            Move(moveMask);
+        }
+
         /// <remarks>
         /// Processing array of groups:
         /// On a move, find if the move is adjacent to a group of the player.
@@ -108,7 +114,7 @@ namespace FineGameDesign.Go
             {
                 bool moveEditsGroup = false;
                 List<uint> libertyMasks = m_GroupLibertyMasks[playerIndex];
-                for (int groupIndex = 0, numGroups = libertyMasks.Count; groupIndex < numGroups; ++numGroups)
+                for (int groupIndex = 0, numGroups = libertyMasks.Count; groupIndex < numGroups; ++groupIndex)
                 {
                     uint libertyMask = libertyMasks[groupIndex];
                     if ((libertyMask & moveMask) == 0)
