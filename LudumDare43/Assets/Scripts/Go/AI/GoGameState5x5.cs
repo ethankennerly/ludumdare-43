@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 
 namespace FineGameDesign.Go
 {
@@ -54,6 +55,34 @@ namespace FineGameDesign.Go
             new List<uint>(16)
         };
 
+        private List<uint>[] m_GroupOccupiedMasks = new List<uint>[]
+        {
+            new List<uint>(16),
+            new List<uint>(16)
+        };
+
+        public string Audit()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Audit:\n");
+            sb.Append("Illegal Move Masks: ").Append(m_IllegalMoveMasks[0]);
+            sb.Append(", ").Append(m_IllegalMoveMasks[1]).Append("\n");
+            sb.Append("Turn Index: ").Append(m_TurnIndex).Append("\n");
+            for (int playerIndex = 0, numPlayers = m_GroupLibertyMasks.Length; playerIndex < numPlayers; ++playerIndex)
+            {
+                sb.Append("Player Index ").Append(playerIndex).Append(":\n");
+                List<uint> libertyMasks = m_GroupLibertyMasks[playerIndex];
+                List<uint> occupiedMasks = m_GroupOccupiedMasks[playerIndex];
+                for (int groupIndex = 0, numGroups = libertyMasks.Count; groupIndex < numGroups; ++groupIndex)
+                {
+                    sb.Append("Group Liberty Mask: ").Append(libertyMasks[groupIndex]);
+                    sb.Append(", Group Occupied Mask: ").Append(occupiedMasks[groupIndex]);
+                    sb.Append("\n");
+                }
+            }
+            return sb.ToString();
+        }
+
         public int GetNumGroups()
         {
             return m_GroupLibertyMasks[m_TurnIndex].Count;
@@ -79,9 +108,6 @@ namespace FineGameDesign.Go
         /// Also forbids a move by an opponent that would be suicide.
         /// The only possible suicides would be adjacent to the move.
         /// The current move robs a liberty of any neighboring group.
-        ///
-        /// TODO: Capture permits move at each captured stone,
-        /// except suicide or ko.
         /// </summary>
         public void Move(uint moveMask)
         {
@@ -114,6 +140,11 @@ namespace FineGameDesign.Go
         /// For each neighbor of the move, find liberties.
         /// If empty and no liberties and no pieces adjacent, then the move is illegal.
         /// The empty positions are explored.
+        ///
+        /// TODO: Capture permits move at each captured stone,
+        /// except suicide or ko.
+        ///
+        /// TODO: Capture removes captured group.
         /// </remarks>
         public void RemoveLiberties(uint moveMask)
         {
@@ -121,7 +152,7 @@ namespace FineGameDesign.Go
             {
                 bool moveEditsGroup = false;
                 List<uint> libertyMasks = m_GroupLibertyMasks[playerIndex];
-                for (int groupIndex = 0, numGroups = libertyMasks.Count; groupIndex < numGroups; ++groupIndex)
+                for (int groupIndex = libertyMasks.Count - 1; groupIndex >= 0; --groupIndex)
                 {
                     uint libertyMask = libertyMasks[groupIndex];
                     if ((libertyMask & moveMask) == 0)
@@ -130,16 +161,26 @@ namespace FineGameDesign.Go
                     }
 
                     moveEditsGroup = true;
-                    libertyMasks[groupIndex] = libertyMask ^ moveMask;
+                    uint nextLibertyMask = libertyMask ^ moveMask;
+                    libertyMasks[groupIndex] = nextLibertyMask;
+                    List<uint> expandingOccupiedMasks = m_GroupOccupiedMasks[playerIndex];
 
                     if (m_TurnIndex != playerIndex)
                     {
+                        if (nextLibertyMask == 0)
+                        {
+                            m_IllegalMoveMasks[playerIndex] ^= expandingOccupiedMasks[groupIndex];
+                            expandingOccupiedMasks.RemoveAt(groupIndex);
+                            libertyMasks.RemoveAt(groupIndex);
+                        }
                         continue;
                     }
 
                     int expandingPositionIndex = MaskToIndex(moveMask);
                     uint expandingLibertyMask = CreateLibertyMaskFromIndex(expandingPositionIndex);
                     libertyMasks[groupIndex] |= expandingLibertyMask;
+                    
+                    expandingOccupiedMasks[groupIndex] |= moveMask;
                 }
 
                 if (moveEditsGroup)
@@ -155,6 +196,8 @@ namespace FineGameDesign.Go
                 int newPositionIndex = MaskToIndex(moveMask);
                 uint newLibertyMask = CreateLibertyMaskFromIndex(newPositionIndex);
                 libertyMasks.Add(newLibertyMask);
+                List<uint> newOccupiedMasks = m_GroupOccupiedMasks[playerIndex];
+                newOccupiedMasks.Add(moveMask);
             }
         }
 
