@@ -15,7 +15,7 @@ namespace FineGameDesign.Go.UnitTests
         }
 
         [Test]
-        public void MaskToBitString_3x2AtR0C2AndR1C0_AlignedRowMajorFromTop()
+        public void MaskToBitString_3x2AtX0Y2AndX1Y0_AlignedRowMajorFromTop()
         {
             GoGameState5x5 gameState = new GoGameState5x5();
             gameState.SetSize(3, 2);
@@ -85,30 +85,54 @@ namespace FineGameDesign.Go.UnitTests
         }
 
         [Test]
+        public void ToString_Board3x1MoveAtX1_EqualsBoardDiagram()
+        {
+            GoGameState5x5 gameState = new GoGameState5x5();
+            gameState.SetSize(3, 1);
+            gameState.MoveAtPosition(new BoardPosition(){x = 1});
+            Assert.AreEqual(".x.", gameState.ToString(),
+                "After black plays at 1.");
+        }
+
+        [Test]
         public void TODO_Move_CaptureOn4x1_PermitsCapturedPosition()
         {
             GoGameState5x5 gameState = new GoGameState5x5();
             gameState.SetSize(4, 1);
             gameState.MoveAtPosition(new BoardPosition(){x = 0});
-            Assert.AreEqual("1000", gameState.MaskToBitString(gameState.IllegalMoveMask),
-                "After black plays at 0, white may play anywhere else." +
-                gameState.Audit());
+            AssertBoardDiagramAndIllegalMoveMask("x...", "1000", gameState,
+                "After black plays at 0, white may play anywhere else.");
+
             gameState.MoveAtPosition(new BoardPosition(){x = 3});
-            Assert.AreEqual("1001", gameState.MaskToBitString(gameState.IllegalMoveMask),
-                "After white plays at 3, black may play anywhere empty." +
-                gameState.Audit());
+            AssertBoardDiagramAndIllegalMoveMask("x..o", "1001", gameState,
+                "After white plays at 3, black may play anywhere empty.");
+
             gameState.MoveAtPosition(new BoardPosition(){x = 1});
-            Assert.AreEqual("1101", gameState.MaskToBitString(gameState.IllegalMoveMask),
-                "After black plays at 1, white may capture at 2." +
-                gameState.Audit());
+            AssertBoardDiagramAndIllegalMoveMask("xx.o", "1101", gameState,
+                "After black plays at 1, white may capture at 2.");
+
             gameState.MoveAtPosition(new BoardPosition(){x = 2});
-            Assert.AreEqual("0011", gameState.MaskToBitString(gameState.IllegalMoveMask),
-                "After white captures at 2, black may play on the left side." +
-                gameState.Audit());
+            AssertBoardDiagramAndIllegalMoveMask("..oo", "0011", gameState,
+                "After white captures at 2, black may play on the left side.\n" +
+                "Were the black stones on the left captured and marked empty in the first player's group?");
+
             gameState.MoveAtPosition(new BoardPosition(){x = 1});
-            Assert.AreEqual("1100", gameState.MaskToBitString(gameState.IllegalMoveMask),
-                "After black captures back at 1, white may play on the right side. " +
-                gameState.Audit());
+            AssertBoardDiagramAndIllegalMoveMask(".x..", "1100", gameState,
+                "After black captures at 1, white may play on the left side.\n" +
+                "Were the captured stones cleared from each group?");
+        }
+
+        private static void AssertBoardDiagramAndIllegalMoveMask(
+            string boardDiagram,
+            string illegalMoveMask,
+            GoGameState5x5 gameState,
+            string message)
+        {
+            string details = message + "\n" + gameState.Audit();
+            Assert.AreEqual(boardDiagram, gameState.ToString(),
+                details);
+            Assert.AreEqual(illegalMoveMask, gameState.MaskToBitString(gameState.IllegalMoveMask),
+                details);
         }
 
         [Test]

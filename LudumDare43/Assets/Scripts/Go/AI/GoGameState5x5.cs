@@ -61,10 +61,20 @@ namespace FineGameDesign.Go
             new List<uint>(16)
         };
 
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            AppendBoardDiagram(sb);
+            return sb.ToString();
+        }
+
         public string Audit()
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("Audit:\n");
+            sb.Append("BoardDiagram: ");
+            AppendBoardDiagram(sb);
+            sb.Append("\n");
             sb.Append("Illegal Move Masks: ").Append(MaskToBitString(m_IllegalMoveMasks[0]));
             sb.Append(", ").Append(MaskToBitString(m_IllegalMoveMasks[1])).Append("\n");
             sb.Append("Turn Index: ").Append(m_TurnIndex).Append("\n");
@@ -113,6 +123,56 @@ namespace FineGameDesign.Go
             }
 
             return sb.ToString();
+        }
+
+        private const string kEmptyCell = ".";
+        private const string kBlackCell = "x";
+        private const string kWhiteCell = "o";
+
+        /// <summary>
+        /// Appends 2D grid of cells.
+        /// Conventional cell format:
+        ///     .   Empty
+        ///     x   Black (first player)
+        ///     o   White (second player)
+        /// Lower case "o" reduces ambiguity with character "0" (zero).
+        /// </summary>
+        private void AppendBoardDiagram(StringBuilder sb)
+        {
+            int numRows = Config.SizeY;
+            int numCols = Config.SizeX;
+            BoardPosition pos;
+            for (int rowIndex = 0; rowIndex < numRows; ++rowIndex)
+            {
+                if (rowIndex > 0)
+                {
+                    sb.Append("\n");
+                }
+
+                for (int colIndex = 0; colIndex < numCols; ++colIndex)
+                {
+                    pos.x = colIndex;
+                    pos.y = rowIndex;
+                    uint posMask = CoordinateToMask(pos);
+                    string cell = kEmptyCell;
+                    for (int playerIndex = 0; playerIndex < 2 && cell == kEmptyCell; ++playerIndex)
+                    {
+                        List<uint> occupiedMasks = m_GroupOccupiedMasks[playerIndex];
+                        foreach (uint occupiedMask in occupiedMasks)
+                        {
+                            if ((occupiedMask & posMask) == 0)
+                            {
+                                continue;
+                            }
+
+                            cell = playerIndex == 0 ? kBlackCell : kWhiteCell;
+                            break;
+                        }
+                    }
+
+                    sb.Append(cell);
+                }
+            }
         }
 
         public int GetNumGroups()
