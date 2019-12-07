@@ -90,6 +90,7 @@ namespace FineGameDesign.Go
                     sb.Append("\n");
                 }
             }
+
             return sb.ToString();
         }
 
@@ -191,7 +192,7 @@ namespace FineGameDesign.Go
             Config.SizeY = sizeY;
             Config.NumCells = sizeX * sizeY;
 
-            m_EmptyMask = (uint)((1 << (sizeX + sizeY)) - 1);
+            m_EmptyMask = (uint) ((1 << (sizeX + sizeY)) - 1);
         }
 
         /// <summary>
@@ -253,7 +254,7 @@ namespace FineGameDesign.Go
                     }
 
                     moveEditsGroup = true;
-                    uint nextLibertyMask = libertyMask ^ moveMask;
+                    uint nextLibertyMask = libertyMask & (~moveMask);
                     libertyMasks[groupIndex] = nextLibertyMask;
                     List<uint> expandingOccupiedMasks = m_GroupOccupiedMasks[playerIndex];
 
@@ -261,17 +262,53 @@ namespace FineGameDesign.Go
                     {
                         if (nextLibertyMask == 0)
                         {
-                            m_IllegalMoveMasks[playerIndex] ^= expandingOccupiedMasks[groupIndex];
+                            uint capturedGroupMask = expandingOccupiedMasks[groupIndex];
+
+                            // Capturing removes the group.
                             expandingOccupiedMasks.RemoveAt(groupIndex);
                             libertyMasks.RemoveAt(groupIndex);
+                            m_EmptyMask |= capturedGroupMask;
+
+                            for (int anyPlayerIndex = 0, numPlayers = m_IllegalMoveMasks.Length;
+                                anyPlayerIndex < numPlayers;
+                                ++anyPlayerIndex)
+                            {
+                                m_IllegalMoveMasks[anyPlayerIndex] &= ~capturedGroupMask;
+                                List<uint> anyPlayerLibertyMasks = m_GroupLibertyMasks[anyPlayerIndex];
+
+                                // Capturing liberates each captured cell.
+                                for (int anyPlayerGroupIndex = anyPlayerLibertyMasks.Count - 1;
+                                    anyPlayerGroupIndex >= 0;
+                                    --anyPlayerGroupIndex)
+                                {
+                                    // Capturing only liberates cells adjacent to the group.
+                                    for (int capturableIndex = 0; capturableIndex < Config.NumCells; ++capturableIndex)
+                                    {
+                                        uint capturablePositionMask = (uint)1 << capturableIndex;
+                                        if ((capturedGroupMask & capturablePositionMask) == 0)
+                                        {
+                                            continue;
+                                        }
+                                        
+                                        uint capturedAdjacencyMask = CreateAdjacencyMaskFromIndex(capturableIndex);
+                                        uint anyPlayerGroupMask = m_GroupOccupiedMasks[anyPlayerIndex][anyPlayerGroupIndex];
+                                        if ((capturedAdjacencyMask & anyPlayerGroupMask) == 0)
+                                        {
+                                            continue;
+                                        }
+                                        anyPlayerLibertyMasks[anyPlayerGroupIndex] |= capturablePositionMask;
+                                    }
+                                }
+                            }
                         }
+
                         continue;
                     }
 
                     int expandingPositionIndex = MaskToIndex(moveMask);
                     uint expandingLibertyMask = CreateLibertyMaskFromIndex(expandingPositionIndex);
                     libertyMasks[groupIndex] |= expandingLibertyMask;
-                    
+
                     expandingOccupiedMasks[groupIndex] |= moveMask;
                 }
 
@@ -320,32 +357,38 @@ namespace FineGameDesign.Go
         /// </summary>
         public uint CreateLibertyMaskFromIndex(int positionIndex)
         {
+            uint adjacencyMask = CreateAdjacencyMaskFromIndex(positionIndex);
+            return adjacencyMask & m_EmptyMask;
+        }
+
+        private uint CreateAdjacencyMaskFromIndex(int positionIndex)
+        {
             int SizeX = Config.SizeX;
             int SizeY = Config.SizeY;
 
-            uint libertyMask = (uint)0;
+            uint adjacencyMask = 0;
 
             if (positionIndex >= SizeX)
             {
-                libertyMask |= (uint)(1 << (positionIndex - SizeX));
+                adjacencyMask |= (uint)(1 << (positionIndex - SizeX));
             }
 
             if (positionIndex < (SizeX * SizeY - SizeX))
             {
-                libertyMask |= (uint)(1 << (positionIndex + SizeX));
+                adjacencyMask |= (uint)(1 << (positionIndex + SizeX));
             }
 
             if (positionIndex > 0)
             {
-                libertyMask |= (uint)(1 << (positionIndex - 1));
+                adjacencyMask |= (uint)(1 << (positionIndex - 1));
             }
 
             if (positionIndex < (SizeX * SizeY - 1))
             {
-                libertyMask |= (uint)(1 << (positionIndex + 1));
+                adjacencyMask |= (uint)(1 << (positionIndex + 1));
             }
 
-            return libertyMask & m_EmptyMask;
+            return adjacencyMask;
         }
 
         /// <remarks>
@@ -402,11 +445,6 @@ namespace FineGameDesign.Go
         ///
         /// Shares liberties if adjacent to group of equal player.
         /// </summary>
-        /// <remarks>
-        /// Loops through opponent's groups' liberty masks.
-        /// If the position equals the liberty mask,
-        /// then the opposing group would be captured.
-        /// </remarks>
         private void TryForbidSuicideAtIndex(int positionIndex, int turnIndex)
         {
             uint positionMask = (uint)(1 << positionIndex);
@@ -421,17 +459,32 @@ namespace FineGameDesign.Go
                 return;
             }
 
+            if (WouldCaptureAny(positionMask, turnIndex))
+            {
+                return;
+            }
+
+            m_IllegalMoveMasks[turnIndex] |= positionMask;
+        }
+
+        /// <remarks>
+        /// Loops through opponent's groups' liberty masks.
+        /// If the position equals the liberty mask,
+        /// then the opposing group would be captured.
+        /// </remarks>
+        private bool WouldCaptureAny(uint positionMask, int turnIndex)
+        {
             int opponentIndex = turnIndex == 0 ? 1 : 0;
             List<uint> opponentLibertyMasks = m_GroupLibertyMasks[opponentIndex];
             foreach (uint opponentLibertyMask in opponentLibertyMasks)
             {
                 if (opponentLibertyMask == positionMask)
                 {
-                    return;
+                    return true;
                 }
             }
 
-            m_IllegalMoveMasks[turnIndex] |= positionMask;
+            return false;
         }
     }
 }

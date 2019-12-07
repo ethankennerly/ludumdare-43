@@ -95,7 +95,7 @@ namespace FineGameDesign.Go.UnitTests
         }
 
         [Test]
-        public void TODO_Move_CaptureOn4x1_PermitsCapturedPosition()
+        public void Move_CaptureOn4x1_PermitsCapturedPosition()
         {
             GoGameState5x5 gameState = new GoGameState5x5();
             gameState.SetSize(4, 1);
@@ -132,7 +132,7 @@ namespace FineGameDesign.Go.UnitTests
             Assert.AreEqual(boardDiagram, gameState.ToString(),
                 details);
             Assert.AreEqual(illegalMoveMask, gameState.MaskToBitString(gameState.IllegalMoveMask),
-                details);
+                "Illegal Move Mask differs.\n" + details);
         }
 
         [Test]
