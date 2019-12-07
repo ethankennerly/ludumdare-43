@@ -83,6 +83,38 @@ namespace FineGameDesign.Go
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Example:
+        /// 3x2 board: mask (2 + 8) --> "010/100".
+        /// See tests.
+        /// </summary>
+        public string MaskToBitString(uint boardMask)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            int numRows = Config.SizeY;
+            int numCols = Config.SizeX;
+            BoardPosition pos;
+            for (int rowIndex = 0; rowIndex < numRows; ++rowIndex)
+            {
+                if (rowIndex > 0)
+                {
+                    sb.Append("/");
+                }
+
+                for (int colIndex = 0; colIndex < numCols; ++colIndex)
+                {
+                    pos.x = colIndex;
+                    pos.y = rowIndex;
+                    uint posMask = CoordinateToMask(pos);
+                    string bit = (boardMask & posMask) == 0 ? "0" : "1";
+                    sb.Append(bit);
+                }
+            }
+
+            return sb.ToString();
+        }
+
         public int GetNumGroups()
         {
             return m_GroupLibertyMasks[m_TurnIndex].Count;

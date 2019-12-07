@@ -15,6 +15,14 @@ namespace FineGameDesign.Go.UnitTests
         }
 
         [Test]
+        public void MaskToBitString_3x2AtR0C2AndR1C0_AlignedRowMajorFromTop()
+        {
+            GoGameState5x5 gameState = new GoGameState5x5();
+            gameState.SetSize(3, 2);
+            Assert.AreEqual("001/100", gameState.MaskToBitString((uint)(4 + 8)));
+        }
+
+        [Test]
         public void CoordinateToMask_BoardPositionX_EqualsToBitShiftYPlusX()
         {
             uint expectedMask = 1;
