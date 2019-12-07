@@ -136,26 +136,31 @@ namespace FineGameDesign.Go.UnitTests
         }
 
         [Test]
-        public void TODO_Move_Capture_PreventsRepeatingLastBoardState()
-        {
-        }
-
-        [Test]
         public void Move_On4x1Adjacent_SharesGroupLiberties()
         {
             GoGameState5x5 gameState = new GoGameState5x5();
             gameState.SetSize(4, 1);
-            gameState.MoveAtPosition(new BoardPosition(){x = 1, y = 0});
-            Assert.AreEqual(1 + 2 + 0 + 0, gameState.IllegalMoveMask,
-                "White player cannot play on top or at suicide point.");
+            gameState.MoveAtPosition(new BoardPosition(){x = 1});
+            AssertBoardDiagramAndIllegalMoveMask(".x..", "1100", gameState,
+                "After black plays at 1, white may play on right side.");
 
-            gameState.MoveAtPosition(new BoardPosition(){x = 3, y = 0});
-            Assert.AreEqual(0 + 2 + 0 + 8, gameState.IllegalMoveMask,
+            gameState.MoveAtPosition(new BoardPosition(){x = 3});
+            AssertBoardDiagramAndIllegalMoveMask(".x.o", "0101", gameState,
                 "Black player can play adjacent to the previous black stone.");
         }
 
         [Test]
         public void TODO_Move_On3x2Adjacent_MergesGroups()
+        {
+        }
+
+        [Test]
+        public void TODO_Move_Capture_PreventsRepeatingLastBoardState()
+        {
+        }
+
+        [Test]
+        public void TODO_Move_NoLegalMove_LosesGame()
         {
         }
 
@@ -194,31 +199,6 @@ namespace FineGameDesign.Go.UnitTests
             uint libertyMask = gameState.GetGroupLibertyMask(0);
             Assert.AreEqual(2, libertyMask,
                 "First group liberty mask after move at 0,0.");
-        }
-
-        [Test]
-        public void TODO_RemoveLiberties_AdjacentMove_ReducesLibertyMask()
-        {
-        }
-
-        [Test]
-        public void TODO_RemoveLiberties_FormsEyes_MasksIllegalForOpponent()
-        {
-        }
-
-        [Test]
-        public void TODO_RemoveLiberties_Bridge_JoinsGroups()
-        {
-        }
-
-        [Test]
-        public void TODO_Move_AfterCapture_NumberOfGroupsReduced()
-        {
-        }
-
-        [Test]
-        public void TODO_Move_NoLegalMoveForOpponent_LosesGame()
-        {
         }
     }
 }
