@@ -65,8 +65,8 @@ namespace FineGameDesign.Go
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("Audit:\n");
-            sb.Append("Illegal Move Masks: ").Append(m_IllegalMoveMasks[0]);
-            sb.Append(", ").Append(m_IllegalMoveMasks[1]).Append("\n");
+            sb.Append("Illegal Move Masks: ").Append(MaskToBitString(m_IllegalMoveMasks[0]));
+            sb.Append(", ").Append(MaskToBitString(m_IllegalMoveMasks[1])).Append("\n");
             sb.Append("Turn Index: ").Append(m_TurnIndex).Append("\n");
             for (int playerIndex = 0, numPlayers = m_GroupLibertyMasks.Length; playerIndex < numPlayers; ++playerIndex)
             {
@@ -75,8 +75,8 @@ namespace FineGameDesign.Go
                 List<uint> occupiedMasks = m_GroupOccupiedMasks[playerIndex];
                 for (int groupIndex = 0, numGroups = libertyMasks.Count; groupIndex < numGroups; ++groupIndex)
                 {
-                    sb.Append("Group Liberty Mask: ").Append(libertyMasks[groupIndex]);
-                    sb.Append(", Group Occupied Mask: ").Append(occupiedMasks[groupIndex]);
+                    sb.Append("Group Liberty Mask: ").Append(MaskToBitString(libertyMasks[groupIndex]));
+                    sb.Append(", Group Occupied Mask: ").Append(MaskToBitString(occupiedMasks[groupIndex]));
                     sb.Append("\n");
                 }
             }
