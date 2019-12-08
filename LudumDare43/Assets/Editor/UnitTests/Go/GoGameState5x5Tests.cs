@@ -15,6 +15,14 @@ namespace FineGameDesign.Go.UnitTests
         }
 
         [Test]
+        public void SetSize3x2_EmptyMask_Equals3x2()
+        {
+            GoGameState5x5 gameState = new GoGameState5x5();
+            gameState.SetSize(3, 2);
+            Assert.AreEqual("111/111", gameState.MaskToBitString(gameState.EmptyMask));
+        }
+
+        [Test]
         public void MaskToBitString_3x2AtX0Y2AndX1Y0_AlignedRowMajorFromTop()
         {
             GoGameState5x5 gameState = new GoGameState5x5();
@@ -55,6 +63,15 @@ namespace FineGameDesign.Go.UnitTests
             Assert.AreEqual(0, gameState.IllegalMoveMask);
         }
 
+        [Test]
+        public void CreateAdjacencyMaskFromIndex_On3x2AtX2_EqualsLeftAndBelow()
+        {
+            GoGameState5x5 gameState = new GoGameState5x5();
+            gameState.SetSize(3, 2);
+            uint adjacencyMask = gameState.CreateAdjacencyMaskFromIndex(2);
+            Assert.AreEqual("010/001", gameState.MaskToBitString(adjacencyMask));
+        }
+        
         [Test]
         public void Move_AfterMove3x2_IllegalMoveMaskEqualsBitShiftYPlusX()
         {
@@ -152,6 +169,27 @@ namespace FineGameDesign.Go.UnitTests
         [Test]
         public void TODO_Move_On3x2Adjacent_MergesGroups()
         {
+            GoGameState5x5 gameState = new GoGameState5x5();
+            gameState.SetSize(3, 2);
+            gameState.MoveAtPosition(new BoardPosition(){x = 0});
+            AssertBoardDiagramAndIllegalMoveMask("x..\n...", "100/000", gameState,
+                "After black at 0,0.");
+            
+            gameState.MoveAtPosition(new BoardPosition(){x = 2});
+            AssertBoardDiagramAndIllegalMoveMask("x.o\n...", "101/000", gameState,
+                "After white at 2,0.");
+            
+            gameState.MoveAtPosition(new BoardPosition(){x = 1, y = 1});
+            AssertBoardDiagramAndIllegalMoveMask("x.o\n.x.", "101/110", gameState,
+                "After black at 1,1.");
+            
+            gameState.MoveAtPosition(new BoardPosition(){x = 1, y = 2});
+            AssertBoardDiagramAndIllegalMoveMask("x.o\n.xo", "101/011", gameState,
+                "After white at 1,2.");
+            
+            gameState.MoveAtPosition(new BoardPosition(){x = 0, y = 1});
+            AssertBoardDiagramAndIllegalMoveMask("x.o\nxxo", "101/111", gameState,
+                "After black at 0,1.");
         }
 
         [Test]

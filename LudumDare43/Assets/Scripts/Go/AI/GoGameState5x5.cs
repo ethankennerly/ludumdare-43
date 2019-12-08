@@ -46,6 +46,10 @@ namespace FineGameDesign.Go
         private uint[] m_IllegalMoveMasks = new uint[2];
 
         private uint m_EmptyMask;
+        public uint EmptyMask
+        {
+            get { return m_EmptyMask; }
+        }
 
         private int m_TurnIndex;
 
@@ -72,7 +76,7 @@ namespace FineGameDesign.Go
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("Audit:\n");
-            sb.Append("BoardDiagram: ");
+            sb.Append("Board Diagram: \n");
             AppendBoardDiagram(sb);
             sb.Append("\n");
             sb.Append("Illegal Move Masks: ").Append(MaskToBitString(m_IllegalMoveMasks[0]));
@@ -192,7 +196,7 @@ namespace FineGameDesign.Go
             Config.SizeY = sizeY;
             Config.NumCells = sizeX * sizeY;
 
-            m_EmptyMask = (uint) ((1 << (sizeX + sizeY)) - 1);
+            m_EmptyMask = (uint)((1 << (sizeX + sizeY + 1)) - 1);
         }
 
         /// <summary>
@@ -234,10 +238,10 @@ namespace FineGameDesign.Go
         /// If empty and no liberties and no pieces adjacent, then the move is illegal.
         /// The empty positions are explored.
         ///
-        /// TODO: Capture permits move at each captured stone,
+        /// Capture permits move at each captured stone,
         /// except suicide or ko.
         ///
-        /// TODO: Capture removes captured group.
+        /// Capture removes captured group.
         /// </remarks>
         public void RemoveLiberties(uint moveMask)
         {
@@ -361,29 +365,34 @@ namespace FineGameDesign.Go
             return adjacencyMask & m_EmptyMask;
         }
 
-        private uint CreateAdjacencyMaskFromIndex(int positionIndex)
+        /// <returns>
+        /// TODO: Horizontal is adjacent only if the preceding or subsequent index is in the same row.
+        /// </returns>
+        public uint CreateAdjacencyMaskFromIndex(int positionIndex)
         {
-            int SizeX = Config.SizeX;
-            int SizeY = Config.SizeY;
+            int sizeX = Config.SizeX;
+            int numCells = Config.NumCells;
 
             uint adjacencyMask = 0;
 
-            if (positionIndex >= SizeX)
+            if (positionIndex >= sizeX)
             {
-                adjacencyMask |= (uint)(1 << (positionIndex - SizeX));
+                adjacencyMask |= (uint)(1 << (positionIndex - sizeX));
             }
 
-            if (positionIndex < (SizeX * SizeY - SizeX))
+            if (positionIndex < (numCells - sizeX))
             {
-                adjacencyMask |= (uint)(1 << (positionIndex + SizeX));
+                adjacencyMask |= (uint)(1 << (positionIndex + sizeX));
             }
 
-            if (positionIndex > 0)
+            if (positionIndex > 0 &&
+                (positionIndex % sizeX) > 0)
             {
                 adjacencyMask |= (uint)(1 << (positionIndex - 1));
             }
 
-            if (positionIndex < (SizeX * SizeY - 1))
+            if (positionIndex < (numCells - 1) &&
+                (positionIndex % sizeX) < (sizeX - 1))
             {
                 adjacencyMask |= (uint)(1 << (positionIndex + 1));
             }
@@ -416,17 +425,17 @@ namespace FineGameDesign.Go
         /// </summary>
         private void ForbidAdjacentEmptySuicides(int turnIndex, uint moveMask)
         {
-            int SizeX = Config.SizeX;
+            int sizeX = Config.SizeX;
 
             int positionIndex = MaskToIndex(moveMask);
-            if (positionIndex >= SizeX)
+            if (positionIndex >= sizeX)
             {
-                TryForbidSuicideAtIndex(positionIndex - SizeX, turnIndex);
+                TryForbidSuicideAtIndex(positionIndex - sizeX, turnIndex);
             }
 
-            if (positionIndex < (Config.NumCells - SizeX))
+            if (positionIndex < (Config.NumCells - sizeX))
             {
-                TryForbidSuicideAtIndex(positionIndex + SizeX, turnIndex);
+                TryForbidSuicideAtIndex(positionIndex + sizeX, turnIndex);
             }
 
             if (positionIndex > 0)
@@ -443,7 +452,7 @@ namespace FineGameDesign.Go
         /// <summary>
         /// If would capture, then permit move.
         ///
-        /// Shares liberties if adjacent to group of equal player.
+        /// TODO: Shares liberties if adjacent to group of equal player.
         /// </summary>
         private void TryForbidSuicideAtIndex(int positionIndex, int turnIndex)
         {
@@ -455,6 +464,11 @@ namespace FineGameDesign.Go
 
             uint positionLibertyMask = CreateLibertyMaskFromIndex(positionIndex);
             if (positionLibertyMask != 0)
+            {
+                return;
+            }
+
+            if (WouldShareAnyLiberty(positionMask, turnIndex))
             {
                 return;
             }
@@ -484,6 +498,33 @@ namespace FineGameDesign.Go
                 }
             }
 
+            return false;
+        }
+
+        /// <returns>
+        /// If any group's liberty masks of the player overlap position,
+        /// and the liberty mask minus the position still has another liberty.
+        /// </returns>
+        private bool WouldShareAnyLiberty(uint positionMask, int turnIndex)
+        {
+            List<uint> libertyMasks = m_GroupLibertyMasks[turnIndex];
+            foreach (uint libertyMask in libertyMasks)
+            {
+                if ((libertyMask & positionMask) == 0)
+                {
+                    continue;
+                }
+
+                if (libertyMask == positionMask)
+                {
+                    // This position would be suicide.
+                    // Seems like this position is already known to be illegal.
+                    continue;
+                }
+
+                return true;
+            }
+            
             return false;
         }
     }
