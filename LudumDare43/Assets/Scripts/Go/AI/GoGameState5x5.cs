@@ -8,6 +8,10 @@ namespace FineGameDesign.Go
     /// Constant throughout play.
     ///
     /// Public variables for speedy access.
+    ///
+    /// Traditionally in the game of go, the first player plays the black stones.
+    /// The second player plays the white stones.
+    /// So descriptors of black and white, are interchangeable with first and second player, respectively.
     /// </summary>
     internal sealed class GoConfig5x5
     {
@@ -145,6 +149,16 @@ namespace FineGameDesign.Go
         /// </summary>
         private void AppendBoardDiagram(StringBuilder sb)
         {
+            int numBoards = m_BoardHistory.Count;
+            UniqueBoard currentBoard = numBoards == 0 ? new UniqueBoard() : m_BoardHistory[numBoards - 1];
+            AppendBoardDiagram(sb, currentBoard);
+        }
+        
+        /// <summary>
+        /// Infers white position as nonempty and nonblack.
+        /// </summary>
+        private void AppendBoardDiagram(StringBuilder sb, UniqueBoard board)
+        {
             int numRows = Config.SizeY;
             int numCols = Config.SizeX;
             BoardPosition pos;
@@ -160,22 +174,10 @@ namespace FineGameDesign.Go
                     pos.x = colIndex;
                     pos.y = rowIndex;
                     uint posMask = CoordinateToMask(pos);
-                    string cell = kEmptyCell;
-                    for (int playerIndex = 0; playerIndex < 2 && cell == kEmptyCell; ++playerIndex)
-                    {
-                        List<uint> occupiedMasks = m_GroupOccupiedMasks[playerIndex];
-                        foreach (uint occupiedMask in occupiedMasks)
-                        {
-                            if ((occupiedMask & posMask) == 0)
-                            {
-                                continue;
-                            }
-
-                            cell = playerIndex == 0 ? kBlackCell : kWhiteCell;
-                            break;
-                        }
-                    }
-
+                    bool empty = (board.emptyMask & posMask) > 0;
+                    bool black = (board.player0Mask & posMask) > 0;
+                    string cell = empty ? kEmptyCell :
+                        (black ? kBlackCell : kWhiteCell);
                     sb.Append(cell);
                 }
             }
@@ -223,6 +225,8 @@ namespace FineGameDesign.Go
             RemoveLiberties(moveMask);
 
             m_IllegalMoveMasks[m_TurnIndex] |= moveMask;
+
+            AddBoardToHistory();
 
             m_TurnIndex = m_TurnIndex == 0 ? 1 : 0;
             m_IllegalMoveMasks[m_TurnIndex] |= moveMask;
@@ -525,14 +529,101 @@ namespace FineGameDesign.Go
         /// Loops through opponent's groups' liberty masks.
         /// If the position equals the liberty mask,
         /// then the opposing group would be captured.
+        ///
+        /// TODO: Prevent ko.
+        /// Ko is a Japanese word for eternity.
+        /// In Go, ko represents repeating a board position.
+        /// Practically this occurs when capturing.
+        /// If the captured pieces being removed from the board would result in a previous board, then this move is illegal.
+        /// An illegal move may not capture.
+        /// A naive and robust check for all repeating boards on all potentially legal positions would be more expensive.
         /// </remarks>
         private bool WouldCaptureAny(uint positionMask, int turnIndex)
         {
             int opponentIndex = turnIndex == 0 ? 1 : 0;
             List<uint> opponentLibertyMasks = m_GroupLibertyMasks[opponentIndex];
-            foreach (uint opponentLibertyMask in opponentLibertyMasks)
+            for (int groupIndex = 0, numGroups = opponentLibertyMasks.Count; groupIndex < numGroups; ++groupIndex)
             {
-                if (opponentLibertyMask == positionMask)
+                uint opponentLibertyMask = opponentLibertyMasks[groupIndex];
+                if (opponentLibertyMask != positionMask)
+                {
+                    continue;
+                }
+
+                uint occupiedMask = m_GroupOccupiedMasks[opponentIndex][groupIndex];
+                return !WouldRepeatBoardAfterCapturing(opponentIndex, occupiedMask);
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// No hash code defined so slow for equality and dictionary comparison.
+        /// A board is unique if the empty cells or player 0 (black) cells are unique.
+        /// THe player 1 (white) cells are the non-empty and non-black cells.
+        /// </summary>
+        private struct UniqueBoard
+        {
+            public uint emptyMask;
+            public uint player0Mask;
+
+            public bool Equals(UniqueBoard other)
+            {
+                return emptyMask == other.emptyMask &&
+                    player0Mask == other.player0Mask;
+            }
+        }
+        
+        #region BoardHistory
+        
+        private List<UniqueBoard> m_BoardHistory = new List<UniqueBoard>(16);
+
+        private void AddBoardToHistory()
+        {
+            UniqueBoard nextBoard = new UniqueBoard();
+            nextBoard.emptyMask = m_EmptyMask;
+            nextBoard.player0Mask = MergePlayerOccupiedMasks(0);
+            m_BoardHistory.Add(nextBoard);
+        }
+
+        private uint MergePlayerOccupiedMasks(int turnIndex)
+        {
+            List<uint> occupiedMasks = m_GroupOccupiedMasks[turnIndex];
+            uint mergedMask = 0;
+            foreach (uint occupiedMask in occupiedMasks)
+            {
+                mergedMask |= occupiedMask;
+            }
+
+            return mergedMask;
+        }
+
+        /// <summary>
+        /// Removes the stones from the current board
+        /// and checks if that next board equals any previous board.
+        /// </summary>
+        private bool WouldRepeatBoardAfterCapturing(int turnIndex, uint occupiedMask)
+        {
+            int numBoards = m_BoardHistory.Count;
+            if (numBoards == 0)
+            {
+                return false;
+            }
+            
+            UniqueBoard currentBoard = m_BoardHistory[numBoards - 1];
+            UniqueBoard nextBoard;
+            uint survivorMask = ~occupiedMask;
+            nextBoard.emptyMask = currentBoard.emptyMask & survivorMask;
+            nextBoard.player0Mask = currentBoard.player0Mask;
+            if (turnIndex == 0)
+            {
+                nextBoard.player0Mask &= survivorMask;
+            }
+            
+            for (int boardIndex = numBoards - 2; boardIndex >= 0; --boardIndex)
+            {
+                UniqueBoard previousBoard = m_BoardHistory[boardIndex];
+                if (previousBoard.Equals(nextBoard))
                 {
                     return true;
                 }
@@ -540,6 +631,8 @@ namespace FineGameDesign.Go
 
             return false;
         }
+        
+        #endregion BoardHistory
 
         /// <returns>
         /// If any group's liberty masks of the player overlap position,

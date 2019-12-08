@@ -232,7 +232,8 @@ namespace FineGameDesign.Go.UnitTests
             
             gameState.MoveAtPosition(new BoardPosition(){x = 2, y = 0});
             AssertBoardDiagramAndIllegalMoveMask("x.x\n.xo\n...", "111/011/000", gameState,
-                "After black captures at 2,0.");
+                "After black captures at 2,0, white cannot capture back,\n" +
+                "because that would repeat the previous board.");
             
             gameState.MoveAtPosition(new BoardPosition(){x = 1, y = 2});
             AssertBoardDiagramAndIllegalMoveMask("x.x\n.xo\n.o.", "101/011/011", gameState,
@@ -241,6 +242,39 @@ namespace FineGameDesign.Go.UnitTests
             gameState.MoveAtPosition(new BoardPosition(){x = 0, y = 2});
             AssertBoardDiagramAndIllegalMoveMask("x.x\n.xo\n.o.", "101/011/111", gameState,
                 "After black recaptures at 0,2 white could recapture.");
+        }
+
+        /// <summary>
+        /// Suppose this sequence of play:
+        /// x.
+        /// ..
+        /// 
+        /// x.
+        /// o.
+        /// 
+        /// xx
+        /// o.
+        /// 
+        /// ..
+        /// oo
+        /// 
+        /// x.
+        /// oo
+        /// 
+        /// .o
+        /// oo
+        /// 
+        /// x.
+        /// ..
+        /// The last board repeats first board above.
+        /// So that move is illegal.
+        /// White wins due to 3 captured stones of black plus black had to pass first.
+        /// A reflection or rotation does not count as a repetition of the board.
+        /// </summary>
+        [Test]
+        public void TODO_Move_CaptureOn2x2_PreventsRepeatingLastBoardStateUntilPlayElsewhere()
+        {
+            
         }
 
         [Test]
