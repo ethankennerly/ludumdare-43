@@ -231,6 +231,11 @@ namespace FineGameDesign.Go
         /// Also forbids a move by an opponent that would be suicide.
         /// The only possible suicides would be adjacent to the move.
         /// The current move robs a liberty of any neighboring group.
+        ///
+        /// TODO: Reevaluates legality at each empty position.
+        /// If forbidden due to repeating board, recheck if would repeat now.
+        /// If group's liberty was taken, reevaluate suicide at each remaining liberty.
+        /// If a group was captured, reevaluate suicide at each liberty the captured group had taken.
         /// </summary>
         public void Move(uint moveMask)
         {
@@ -248,6 +253,7 @@ namespace FineGameDesign.Go
             m_TurnIndex = m_TurnIndex == 0 ? 1 : 0;
             m_IllegalMoveMasks[m_TurnIndex] |= moveMask;
 
+            RemovePositionsThatNoLongerRepeat(m_TurnIndex);
             ForbidAdjacentEmptySuicides(m_TurnIndex, moveMask);
         }
 
@@ -534,7 +540,7 @@ namespace FineGameDesign.Go
                 return;
             }
 
-            if (WouldCaptureAny(positionMask, turnIndex))
+            if (WouldCaptureAny(positionMask, turnIndex, true))
             {
                 return;
             }
@@ -555,7 +561,7 @@ namespace FineGameDesign.Go
         /// An illegal move may not capture.
         /// A naive and robust check for all repeating boards on all potentially legal positions would be more expensive.
         /// </remarks>
-        private bool WouldCaptureAny(uint positionMask, int turnIndex)
+        private bool WouldCaptureAny(uint positionMask, int turnIndex, bool rememberRepetition = false)
         {
             int opponentIndex = turnIndex == 0 ? 1 : 0;
             List<uint> opponentLibertyMasks = m_GroupLibertyMasks[opponentIndex];
@@ -568,11 +574,22 @@ namespace FineGameDesign.Go
                 }
 
                 uint occupiedMask = m_GroupOccupiedMasks[opponentIndex][groupIndex];
-                return !WouldRepeatBoardAfterCapturing(opponentIndex, occupiedMask);
+                if (!WouldRepeatBoardAfterCapturing(turnIndex, occupiedMask, positionMask))
+                {
+                    return true;
+                }
+
+                if (rememberRepetition)
+                {
+                    m_PositionMasksThatWouldRepeat[turnIndex].Add(positionMask);
+                }
+                return false;
             }
 
             return false;
         }
+        
+        #region BoardHistory
 
         /// <summary>
         /// No hash code defined so slow for equality and dictionary comparison.
@@ -591,9 +608,13 @@ namespace FineGameDesign.Go
             }
         }
         
-        #region BoardHistory
-        
         private List<UniqueBoard> m_BoardHistory = new List<UniqueBoard>(16);
+
+        private List<uint>[] m_PositionMasksThatWouldRepeat = new List<uint>[]
+        {
+            new List<uint>(),
+            new List<uint>()
+        };
 
         private void AddBoardToHistory()
         {
@@ -619,7 +640,7 @@ namespace FineGameDesign.Go
         /// Removes the stones from the current board
         /// and checks if that next board equals any previous board.
         /// </summary>
-        private bool WouldRepeatBoardAfterCapturing(int turnIndex, uint occupiedMask)
+        private bool WouldRepeatBoardAfterCapturing(int capturerTurnIndex, uint prisonerMask, uint capturerMask)
         {
             int numBoards = m_BoardHistory.Count;
             if (numBoards == 0)
@@ -629,17 +650,23 @@ namespace FineGameDesign.Go
             
             UniqueBoard currentBoard = m_BoardHistory[numBoards - 1];
             UniqueBoard nextBoard;
-            uint survivorMask = ~occupiedMask;
-            nextBoard.emptyMask = currentBoard.emptyMask & survivorMask;
+            uint noncapturerMask = ~capturerMask;
+            nextBoard.emptyMask = (currentBoard.emptyMask | prisonerMask) & noncapturerMask;
             nextBoard.player0Mask = currentBoard.player0Mask;
-            if (turnIndex == 0)
+            if (capturerTurnIndex == 0)
             {
+                nextBoard.player0Mask |= capturerMask;
+            }
+            else
+            {
+                uint survivorMask = ~prisonerMask;
                 nextBoard.player0Mask &= survivorMask;
+                nextBoard.player0Mask &= noncapturerMask;
             }
 
             LogBoard(nextBoard,
-                "WouldRepeatBoardAfterCapturing: " + MaskToBitString(occupiedMask) + ":" +
-                " on turn: " + turnIndex + ", number of boards: " + numBoards);
+                "WouldRepeatBoardAfterCapturing: " + MaskToBitString(prisonerMask) + ":" +
+                " on capturer's turn: " + capturerTurnIndex + ", number of boards: " + numBoards);
             
             for (int boardIndex = numBoards - 2; boardIndex >= 0; --boardIndex)
             {
@@ -652,6 +679,27 @@ namespace FineGameDesign.Go
             }
 
             return false;
+        }
+
+        private void RemovePositionsThatNoLongerRepeat(int turnIndex)
+        {
+            List<uint> positionMasksThatWouldRepeat = m_PositionMasksThatWouldRepeat[turnIndex];
+            int numRepetitions = positionMasksThatWouldRepeat.Count;
+            if (numRepetitions == 0)
+            {
+                return;
+            }
+
+            for (int repetitionIndex = numRepetitions - 1; repetitionIndex >= 0; --repetitionIndex)
+            {
+                uint positionMaskThatWouldRepeat = positionMasksThatWouldRepeat[repetitionIndex];
+                if (!WouldCaptureAny(positionMaskThatWouldRepeat, turnIndex, false))
+                {
+                    continue;
+                }
+                positionMasksThatWouldRepeat.RemoveAt(repetitionIndex);
+                m_IllegalMoveMasks[turnIndex] &= ~positionMaskThatWouldRepeat;
+            }
         }
 
         [Conditional("LOG_GO_GAME_STATE")]

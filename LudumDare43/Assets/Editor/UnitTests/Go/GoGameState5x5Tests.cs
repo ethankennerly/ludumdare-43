@@ -236,12 +236,12 @@ namespace FineGameDesign.Go.UnitTests
                 "because that would repeat the previous board.");
             
             gameState.MoveAtPosition(new BoardPosition(){x = 1, y = 2});
-            AssertBoardDiagramAndIllegalMoveMask("x.x\n.xo\n.o.", "101/011/011", gameState,
+            AssertBoardDiagramAndIllegalMoveMask("x.x\n.xo\n.o.", "101/011/010", gameState,
                 "After white at 1,2.");
             
             gameState.MoveAtPosition(new BoardPosition(){x = 0, y = 2});
-            AssertBoardDiagramAndIllegalMoveMask("x.x\n.xo\n.o.", "101/011/111", gameState,
-                "After black recaptures at 0,2 white could recapture.");
+            AssertBoardDiagramAndIllegalMoveMask("x.x\n.xo\nxo.", "101/011/111", gameState,
+                "After black plays elsewhere at 0,2 white could recapture.");
         }
 
         /// <summary>
