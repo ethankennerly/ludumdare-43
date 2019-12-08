@@ -638,7 +638,8 @@ namespace FineGameDesign.Go
             }
 
             LogBoard(nextBoard,
-                "WouldRepeatBoardAfterCapturing: " + MaskToBitString(occupiedMask) + ":");
+                "WouldRepeatBoardAfterCapturing: " + MaskToBitString(occupiedMask) + ":" +
+                " on turn: " + turnIndex + ", number of boards: " + numBoards);
             
             for (int boardIndex = numBoards - 2; boardIndex >= 0; --boardIndex)
             {
@@ -672,7 +673,9 @@ namespace FineGameDesign.Go
             StringBuilder sb = new StringBuilder();
             AppendBoardDiagram(sb, board, mayAppendBitString: true);
             string boardDiagram = sb.ToString();
-            Debug.Log(prefix + "\n" + boardDiagram);
+            string currentDiagram = ToString();
+            Debug.Log(prefix + "\n" + boardDiagram +
+                "\n    compared to current diagram:\n" + currentDiagram);
         }
         
         [Conditional("LOG_GO_GAME_STATE")]
