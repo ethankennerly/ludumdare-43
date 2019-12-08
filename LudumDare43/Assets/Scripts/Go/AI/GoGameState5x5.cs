@@ -109,7 +109,7 @@ namespace FineGameDesign.Go
             foreach (UniqueBoard previousBoard in m_BoardHistory)
             {
                 sb.Append("\n\n");
-                AppendBoardDiagram(sb, previousBoard);
+                AppendBoardDiagram(sb, previousBoard, mayAppendBitString: true);
             }
             
             return sb.ToString();
@@ -159,17 +159,17 @@ namespace FineGameDesign.Go
         ///     o   White (second player)
         /// Lower case "o" reduces ambiguity with character "0" (zero).
         /// </summary>
-        private void AppendBoardDiagram(StringBuilder sb)
+        private void AppendBoardDiagram(StringBuilder sb, bool mayAppendBitString = false)
         {
             int numBoards = m_BoardHistory.Count;
             UniqueBoard currentBoard = numBoards == 0 ? new UniqueBoard() : m_BoardHistory[numBoards - 1];
-            AppendBoardDiagram(sb, currentBoard);
+            AppendBoardDiagram(sb, currentBoard, mayAppendBitString);
         }
         
         /// <summary>
         /// Infers white position as nonempty and nonblack.
         /// </summary>
-        private void AppendBoardDiagram(StringBuilder sb, UniqueBoard board)
+        private void AppendBoardDiagram(StringBuilder sb, UniqueBoard board, bool mayAppendBitString = false)
         {
             int numRows = Config.SizeY;
             int numCols = Config.SizeX;
@@ -192,6 +192,11 @@ namespace FineGameDesign.Go
                         (black ? kBlackCell : kWhiteCell);
                     sb.Append(cell);
                 }
+            }
+
+            if (mayAppendBitString)
+            {
+                AppendBoardBitString(sb, board);
             }
         }
 
@@ -649,10 +654,23 @@ namespace FineGameDesign.Go
         }
 
         [Conditional("LOG_GO_GAME_STATE")]
+        private void AppendBoardBitString(StringBuilder sb, UniqueBoard board)
+        {
+            sb.Append("\nEmpty Mask: ");
+            sb.Append(MaskToBitString(board.emptyMask));
+            sb.Append(": ");
+            sb.Append(board.emptyMask);
+            sb.Append("\nBlack Mask: ");
+            sb.Append(MaskToBitString(board.player0Mask));
+            sb.Append(": ");
+            sb.Append(board.player0Mask);
+        }
+
+        [Conditional("LOG_GO_GAME_STATE")]
         private void LogBoard(UniqueBoard board, string prefix)
         {
             StringBuilder sb = new StringBuilder();
-            AppendBoardDiagram(sb, board);
+            AppendBoardDiagram(sb, board, mayAppendBitString: true);
             string boardDiagram = sb.ToString();
             Debug.Log(prefix + "\n" + boardDiagram);
         }
