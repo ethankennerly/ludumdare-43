@@ -232,10 +232,10 @@ namespace FineGameDesign.Go
         /// The only possible suicides would be adjacent to the move.
         /// The current move robs a liberty of any neighboring group.
         ///
-        /// TODO: Reevaluates legality at each empty position.
         /// If forbidden due to repeating board, recheck if would repeat now.
         /// If group's liberty was taken, reevaluate suicide at each remaining liberty.
-        /// If a group was captured, reevaluate suicide at each liberty the captured group had taken.
+        /// TODO: If a group was captured, reevaluate suicide at each liberty the captured group had taken.
+        /// TODO: Reevaluates legality at each empty position.
         /// </summary>
         public void Move(uint moveMask)
         {
@@ -519,16 +519,64 @@ namespace FineGameDesign.Go
         /// <summary>
         /// If would capture, then permit move.
         ///
-        /// TODO: Shares liberties if adjacent to group of equal player.
+        /// Shares liberties if adjacent to group of equal player.
+        ///
+        /// TODO: If occupied by a stone of the same player,
+        /// then also check for suicide at the last liberty of that stone.
         /// </summary>
         private void TryForbidSuicideAtIndex(int positionIndex, int turnIndex)
         {
-            uint positionMask = (uint)(1 << positionIndex);
+            uint positionMask = (uint) (1 << positionIndex);
             if ((m_EmptyMask & positionMask) == 0)
             {
+                int numBoards = m_BoardHistory.Count;
+                UniqueBoard currentBoard = m_BoardHistory[numBoards - 1];
+                bool isPlayer0Position = (currentBoard.player0Mask & positionMask) > 0;
+                if (isPlayer0Position != (turnIndex == 0))
+                {
+                    return;
+                }
+
+                List<uint> libertyMasks = m_GroupLibertyMasks[turnIndex];
+                for (int groupIndex = 0, numMasks = libertyMasks.Count; groupIndex < numMasks; ++groupIndex)
+                {
+                    uint libertyMask = libertyMasks[groupIndex];
+                    int lastLibertyIndex = 0;
+                    uint lastLibertyMask = 0;
+                    bool exactlyOneLiberty = false;
+                    for (; lastLibertyIndex < Config.NumCells; ++lastLibertyIndex)
+                    {
+                        lastLibertyMask = (uint) (1 << lastLibertyIndex);
+                        if ((libertyMask & lastLibertyMask) == 0)
+                        {
+                            continue;
+                        }
+
+                        if (exactlyOneLiberty)
+                        {
+                            return;
+                        }
+
+                        exactlyOneLiberty = true;
+                    }
+
+                    if (!exactlyOneLiberty)
+                    {
+                        continue;
+                    }
+                    
+                    TryForbidPositionMask(lastLibertyIndex, lastLibertyMask, turnIndex);
+                    return;
+                }
+
                 return;
             }
 
+            TryForbidPositionMask(positionIndex, positionMask, turnIndex);
+        }
+        
+        private void TryForbidPositionMask(int positionIndex, uint positionMask, int turnIndex)
+        {
             uint positionLibertyMask = CreateLibertyMaskFromIndex(positionIndex);
             if (positionLibertyMask != 0)
             {
@@ -553,7 +601,7 @@ namespace FineGameDesign.Go
         /// If the position equals the liberty mask,
         /// then the opposing group would be captured.
         ///
-        /// TODO: Prevent ko.
+        /// Side effect: Prevents ko.
         /// Ko is a Japanese word for eternity.
         /// In Go, ko represents repeating a board position.
         /// Practically this occurs when capturing.

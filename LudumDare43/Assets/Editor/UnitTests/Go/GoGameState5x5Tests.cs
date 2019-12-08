@@ -210,7 +210,7 @@ namespace FineGameDesign.Go.UnitTests
         /// x..
         /// </summary>
         [Test]
-        public void TODO_Move_CaptureOn3x2_PreventsRepeatingLastBoardStateUntilPlayElsewhere()
+        public void Move_CaptureOn3x2_PreventsRepeatingLastBoardStateUntilPlayElsewhere()
         {
             GoGameState5x5 gameState = new GoGameState5x5();
             gameState.SetSize(3, 3);
