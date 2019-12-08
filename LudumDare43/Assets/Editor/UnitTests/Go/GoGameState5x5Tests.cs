@@ -170,7 +170,7 @@ namespace FineGameDesign.Go.UnitTests
         }
 
         [Test]
-        public void TODO_Move_On3x2Adjacent_MergesGroups()
+        public void Move_On3x2Adjacent_MergesGroups()
         {
             GoGameState5x5 gameState = new GoGameState5x5();
             gameState.SetSize(3, 2);

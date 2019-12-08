@@ -258,6 +258,7 @@ namespace FineGameDesign.Go
             for (int playerIndex = 0; playerIndex < kNumPlayers; ++playerIndex)
             {
                 bool moveEditsGroup = false;
+                int groupIndexToMerge = -1;
                 List<uint> libertyMasks = m_GroupLibertyMasks[playerIndex];
                 for (int groupIndex = libertyMasks.Count - 1; groupIndex >= 0; --groupIndex)
                 {
@@ -324,6 +325,15 @@ namespace FineGameDesign.Go
                     libertyMasks[groupIndex] |= expandingLibertyMask;
 
                     expandingOccupiedMasks[groupIndex] |= moveMask;
+
+                    if (groupIndexToMerge < 0)
+                    {
+                        groupIndexToMerge = groupIndex;
+                        continue;
+                    }
+                    
+                    MergeGroups(playerIndex, groupIndex, groupIndexToMerge);
+                    groupIndexToMerge = groupIndex;
                 }
 
                 if (moveEditsGroup)
@@ -342,6 +352,26 @@ namespace FineGameDesign.Go
                 List<uint> newOccupiedMasks = m_GroupOccupiedMasks[playerIndex];
                 newOccupiedMasks.Add(moveMask);
             }
+        }
+
+        /// <remarks>
+        /// Merges two groups that are joined by this move.
+        /// Merges occupied by including either group.
+        /// Merges liberties by keeping where empty and removing where occupied.
+        /// Removes the later occurring group.
+        /// </remarks>
+        private void MergeGroups(int playerIndex, int groupIndex, int groupIndexToMerge)
+        {
+            List<uint> occupiedMasks = m_GroupOccupiedMasks[playerIndex];
+            List<uint> libertyMasks = m_GroupLibertyMasks[playerIndex];
+
+            occupiedMasks[groupIndex] |= occupiedMasks[groupIndexToMerge];
+            
+            libertyMasks[groupIndex] |= occupiedMasks[groupIndexToMerge];
+            libertyMasks[groupIndex] &= m_EmptyMask;
+            
+            occupiedMasks.RemoveAt(groupIndexToMerge);
+            libertyMasks.RemoveAt(groupIndexToMerge);
         }
 
         private const int kMaxBits = 32;
