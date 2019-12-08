@@ -204,13 +204,52 @@ namespace FineGameDesign.Go.UnitTests
             );
         }
 
+        /// <summary>
+        /// xo.
+        /// .xo
+        /// x..
+        /// </summary>
         [Test]
-        public void TODO_Move_Capture_PreventsRepeatingLastBoardState()
+        public void TODO_Move_CaptureOn3x2_PreventsRepeatingLastBoardStateUntilPlayElsewhere()
         {
+            GoGameState5x5 gameState = new GoGameState5x5();
+            gameState.SetSize(3, 3);
+            gameState.MoveAtPosition(new BoardPosition(){x = 0});
+            AssertBoardDiagramAndIllegalMoveMask("x..\n...\n...", "100/000/000", gameState,
+                "After black at 0,0.");
+            
+            gameState.MoveAtPosition(new BoardPosition(){x = 1});
+            AssertBoardDiagramAndIllegalMoveMask("xo.\n...\n...", "110/000/000", gameState,
+                "After white at 0,1.");
+            
+            gameState.MoveAtPosition(new BoardPosition(){x = 1, y = 1});
+            AssertBoardDiagramAndIllegalMoveMask("xo.\n.x.\n...", "110/010/000", gameState,
+                "After black at 1,1.");
+            
+            gameState.MoveAtPosition(new BoardPosition(){x = 2, y = 1});
+            AssertBoardDiagramAndIllegalMoveMask("xo.\n.xo\n...", "110/011/000", gameState,
+                "After white at 2,1.");
+            
+            gameState.MoveAtPosition(new BoardPosition(){x = 2, y = 0});
+            AssertBoardDiagramAndIllegalMoveMask("x.x\n.xo\n...", "111/011/000", gameState,
+                "After black captures at 2,0.");
+            
+            gameState.MoveAtPosition(new BoardPosition(){x = 1, y = 2});
+            AssertBoardDiagramAndIllegalMoveMask("x.x\n.xo\n.o.", "101/011/011", gameState,
+                "After white at 1,2.");
+            
+            gameState.MoveAtPosition(new BoardPosition(){x = 0, y = 2});
+            AssertBoardDiagramAndIllegalMoveMask("x.x\n.xo\n.o.", "101/011/111", gameState,
+                "After black recaptures at 0,2 white could recapture.");
         }
 
         [Test]
         public void TODO_Move_NoLegalMove_LosesGame()
+        {
+        }
+
+        [Test]
+        public void TODO_Move_CapturedOneThenNoLegalMove_GrantsPassAndOpponentLosesGame()
         {
         }
 
