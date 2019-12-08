@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text;
+using UnityEngine;
 
 namespace FineGameDesign.Go
 {
@@ -182,7 +183,12 @@ namespace FineGameDesign.Go
 
         public int GetNumGroups()
         {
-            return m_GroupLibertyMasks[m_TurnIndex].Count;
+            return GetNumGroupsForPlayer(m_TurnIndex);
+        }
+        
+        public int GetNumGroupsForPlayer(int turnIndex)
+        {
+            return m_GroupLibertyMasks[turnIndex].Count;
         }
 
         public uint GetGroupLibertyMask(int groupIndex)
@@ -194,9 +200,10 @@ namespace FineGameDesign.Go
         {
             Config.SizeX = sizeX;
             Config.SizeY = sizeY;
-            Config.NumCells = sizeX * sizeY;
+            int numCells = sizeX * sizeY;
+            Config.NumCells = numCells;
 
-            m_EmptyMask = (uint)((1 << (sizeX + sizeY + 1)) - 1);
+            m_EmptyMask = (uint)((1 << (numCells + 1)) - 1);
         }
 
         /// <summary>
@@ -208,6 +215,9 @@ namespace FineGameDesign.Go
         /// </summary>
         public void Move(uint moveMask)
         {
+            Debug.Assert((m_EmptyMask & moveMask) > 0,
+                "Expected move was in an empty position. move mask: " + moveMask);
+            
             m_EmptyMask &= ~moveMask;
 
             RemoveLiberties(moveMask);

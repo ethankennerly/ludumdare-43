@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using FineGameDesign.Go;
+using UnityEngine;
 
 namespace FineGameDesign.Go.UnitTests
 {
@@ -8,6 +9,7 @@ namespace FineGameDesign.Go.UnitTests
         private static void AssertMoveCoordinateToMask(BoardPosition pos, uint expectedMask)
         {
             GoGameState5x5 gameState = new GoGameState5x5();
+            gameState.SetSize(5, 5);
             uint moveMask = gameState.CoordinateToMask(pos);
             gameState.Move(moveMask);
             Assert.AreEqual(expectedMask, gameState.IllegalMoveMask,
@@ -45,9 +47,10 @@ namespace FineGameDesign.Go.UnitTests
         public void CoordinateToMask_BoardPositionX2Y1_EqualsToBitShiftYPlusX()
         {
             GoGameState5x5 gameState = new GoGameState5x5();
+            gameState.SetSize(3, 2);
             uint moveMask = gameState.CoordinateToMask(new BoardPosition(){x = 2, y = 1});
             gameState.Move(moveMask);
-            Assert.AreEqual(32 * 4, gameState.IllegalMoveMask);
+            Assert.AreEqual("000/001", gameState.MaskToBitString(gameState.IllegalMoveMask));
         }
 
         [Test]
@@ -76,9 +79,9 @@ namespace FineGameDesign.Go.UnitTests
         public void Move_AfterMove3x2_IllegalMoveMaskEqualsBitShiftYPlusX()
         {
             GoGameState5x5 gameState = new GoGameState5x5();
-            uint moveMask = gameState.CoordinateToMask(new BoardPosition(){x = 3, y = 2});
-            gameState.Move(moveMask);
-            Assert.AreEqual(1024 * 8, gameState.IllegalMoveMask);
+            gameState.SetSize(4, 3);
+            gameState.MoveAtPosition(new BoardPosition(){x = 3, y = 2});
+            Assert.AreEqual("0000/0000/0001", gameState.MaskToBitString(gameState.IllegalMoveMask));
         }
 
         [Test]
@@ -183,13 +186,22 @@ namespace FineGameDesign.Go.UnitTests
             AssertBoardDiagramAndIllegalMoveMask("x.o\n.x.", "101/110", gameState,
                 "After black at 1,1.");
             
-            gameState.MoveAtPosition(new BoardPosition(){x = 1, y = 2});
+            Assert.AreEqual(2, gameState.GetNumGroupsForPlayer(0),
+                "On second stone, expected 2 groups for player 0.\n" + 
+                gameState.Audit()
+            );
+            gameState.MoveAtPosition(new BoardPosition(){x = 2, y = 1});
             AssertBoardDiagramAndIllegalMoveMask("x.o\n.xo", "101/011", gameState,
                 "After white at 1,2.");
             
             gameState.MoveAtPosition(new BoardPosition(){x = 0, y = 1});
             AssertBoardDiagramAndIllegalMoveMask("x.o\nxxo", "101/111", gameState,
                 "After black at 0,1.");
+
+            Assert.AreEqual(1, gameState.GetNumGroupsForPlayer(0),
+                "On bridging stone, expected 1 group for player 0.\n" + 
+                gameState.Audit()
+            );
         }
 
         [Test]
