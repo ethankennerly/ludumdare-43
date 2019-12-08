@@ -17,11 +17,21 @@ namespace FineGameDesign.Go.UnitTests
         }
 
         [Test]
+        public void SetSize3x1_EmptyMask_Equals3x1()
+        {
+            GoGameState5x5 gameState = new GoGameState5x5();
+            gameState.SetSize(3, 1);
+            Assert.AreEqual("111", gameState.MaskToBitString(gameState.EmptyMask));
+            Assert.AreEqual(7, gameState.EmptyMask);
+        }
+
+        [Test]
         public void SetSize3x2_EmptyMask_Equals3x2()
         {
             GoGameState5x5 gameState = new GoGameState5x5();
             gameState.SetSize(3, 2);
             Assert.AreEqual("111/111", gameState.MaskToBitString(gameState.EmptyMask));
+            Assert.AreEqual(63, gameState.EmptyMask);
         }
 
         [Test]
@@ -246,6 +256,29 @@ namespace FineGameDesign.Go.UnitTests
 
         /// <summary>
         /// Suppose this sequence of play:
+        /// .x.
+        /// Score. White has no place to play, but black does have a place to play.
+        /// </summary>
+        [Test]
+        public void Move_NoLegalMove_LosesGame()
+        {
+            GoGameState5x5 gameState = new GoGameState5x5();
+            gameState.SetSize(3, 1);
+            Assert.AreEqual(0.5f, gameState.GetWinner());
+            gameState.MoveAtPosition(new BoardPosition(){x = 1});
+            AssertBoardDiagramAndIllegalMoveMask(".x.", "111", gameState,
+                "Black forms two eyes.");
+            Assert.AreEqual(0f, gameState.GetWinner(),
+                gameState.Audit());
+        }
+
+        [Test]
+        public void TODO_Move_CapturedOneThenNoLegalMove_GrantsPassAndOpponentLosesGame()
+        {
+        }
+
+        /// <summary>
+        /// Suppose this sequence of play:
         /// x.
         /// ..
         /// 
@@ -275,16 +308,6 @@ namespace FineGameDesign.Go.UnitTests
         public void TODO_Move_CaptureOn2x2_PreventsRepeatingLastBoardStateUntilPlayElsewhere()
         {
             
-        }
-
-        [Test]
-        public void TODO_Move_NoLegalMove_LosesGame()
-        {
-        }
-
-        [Test]
-        public void TODO_Move_CapturedOneThenNoLegalMove_GrantsPassAndOpponentLosesGame()
-        {
         }
 
         [Test]

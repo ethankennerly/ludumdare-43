@@ -222,7 +222,7 @@ namespace FineGameDesign.Go
             int numCells = sizeX * sizeY;
             Config.NumCells = numCells;
 
-            m_EmptyMask = (uint)((1 << (numCells + 1)) - 1);
+            m_EmptyMask = (uint)((1 << numCells) - 1);
         }
 
         /// <summary>
@@ -261,6 +261,28 @@ namespace FineGameDesign.Go
         {
             uint moveMask = CoordinateToMask(pos);
             Move(moveMask);
+        }
+
+        /// <returns>
+        /// 0.5 if each still can move.
+        /// Otherwise 0 for player 0 (black) or 1 for player 1 (white)
+        /// </returns>
+        public float GetWinner()
+        {
+            bool blackCanMove = CanMove(0);
+            bool whiteCanMove = CanMove(1);
+            if (blackCanMove && whiteCanMove)
+            {
+                return 0.5f;
+            }
+
+            return blackCanMove ? 0f : 1f;
+        }
+
+        public bool CanMove(int turnIndex)
+        {
+            uint illegalMoveMask = m_IllegalMoveMasks[turnIndex];
+            return (m_EmptyMask & ~illegalMoveMask) > 0;
         }
 
         /// <summary>
