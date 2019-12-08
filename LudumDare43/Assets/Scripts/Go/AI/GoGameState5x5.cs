@@ -100,6 +100,16 @@ namespace FineGameDesign.Go
                 }
             }
 
+            if (m_BoardHistory.Count > 0)
+            {
+                sb.Append("Board History:");
+            }
+            foreach (UniqueBoard previousBoard in m_BoardHistory)
+            {
+                sb.Append("\n\n");
+                AppendBoardDiagram(sb, previousBoard);
+            }
+            
             return sb.ToString();
         }
 
