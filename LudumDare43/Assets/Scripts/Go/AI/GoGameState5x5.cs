@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
-using UnityEngine;
+
+using Debug = UnityEngine.Debug;
 
 namespace FineGameDesign.Go
 {
@@ -629,17 +631,36 @@ namespace FineGameDesign.Go
             {
                 nextBoard.player0Mask &= survivorMask;
             }
+
+            LogBoard(nextBoard,
+                "WouldRepeatBoardAfterCapturing: " + MaskToBitString(occupiedMask) + ":");
             
             for (int boardIndex = numBoards - 2; boardIndex >= 0; --boardIndex)
             {
                 UniqueBoard previousBoard = m_BoardHistory[boardIndex];
                 if (previousBoard.Equals(nextBoard))
                 {
+                    Log("WouldRepeatBoardAfterCapturing: true");
                     return true;
                 }
             }
 
             return false;
+        }
+
+        [Conditional("LOG_GO_GAME_STATE")]
+        private void LogBoard(UniqueBoard board, string prefix)
+        {
+            StringBuilder sb = new StringBuilder();
+            AppendBoardDiagram(sb, board);
+            string boardDiagram = sb.ToString();
+            Debug.Log(prefix + "\n" + boardDiagram);
+        }
+        
+        [Conditional("LOG_GO_GAME_STATE")]
+        private void Log(string message)
+        {
+            Debug.Log(message);
         }
         
         #endregion BoardHistory
