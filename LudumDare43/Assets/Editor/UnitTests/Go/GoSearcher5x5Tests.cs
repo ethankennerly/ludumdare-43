@@ -1,6 +1,7 @@
 using FineGameDesign.Go.AI;
 using NUnit.Framework;
 using System.Diagnostics;
+using UnityEditor;
 
 using Debug = UnityEngine.Debug;
 
@@ -8,6 +9,20 @@ namespace FineGameDesign.Go.UnitTests
 {
     public sealed class GoSearcher5x5Tests
     {
+        [MenuItem("Tools/Go/Make Move On 3x1 For Profiling")]
+        public static void MakeMoveOn3x1ForProfiling()
+        {
+            var tester = new GoSearcher5x5Tests();
+            tester.MakeMoveOn3x1();
+        }
+
+        [MenuItem("Tools/Go/Make Move On 3x3 For Profiling")]
+        public static void MakeMoveOn3x3ForProfiling()
+        {
+            var tester = new GoSearcher5x5Tests();
+            tester.MakeMoveOn3x3();
+        }
+
         private static void AssertTinyAndOdd(int size, string dimension)
         {
             Assert.IsTrue(size == 1 || size == 3 || size == 5,

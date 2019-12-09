@@ -57,3 +57,20 @@
 1. [ ] burst compiler.
 1. [ ] Job System.
 1. [ ] Pool game tree node.
+
+# Go Searcher 3x1 CPU Hotspots
+
+- 700 ms: Cloning 20000 Go State 5x5.
+    - 500 ms: Cloning Go Game State 5x5.
+        - 200 ms: Cloning arrays.
+        - 50 ms: Constructing lists.
+- 400 ms: Apply Action 20000 times.
+    - 380 ms: Go Game State 5x5 Move
+        - 100 ms: Try Forbid Suicide At Index
+            - 40 ms: Would Share Any Liberty
+            - 20 ms: Would Capture Any
+        - 100 ms: String concat.
+        - 70 ms: Convert Move Mask.
+        - 40 ms: Add Board To History
+
+1. [ ] Bias central move.
