@@ -60,6 +60,8 @@ namespace FineGameDesign.Go
 
         private int m_TurnIndex;
 
+        public int PointsForPlayer1;
+
         private List<uint>[] m_GroupLibertyMasks = new List<uint>[]
         {
             new List<uint>(16),
@@ -266,8 +268,9 @@ namespace FineGameDesign.Go
         /// <returns>
         /// 0.5 if each still can move.
         /// Otherwise 0 for player 0 (black) or 1 for player 1 (white)
+        /// Player 1 breaks ties.
         /// </returns>
-        public float GetWinner()
+        public float CalculateWinner()
         {
             bool blackCanMove = CanMove(0);
             bool whiteCanMove = CanMove(1);
@@ -276,13 +279,45 @@ namespace FineGameDesign.Go
                 return 0.5f;
             }
 
-            return blackCanMove ? 0f : 1f;
+            if (PointsForPlayer1 == 0)
+            {
+                return blackCanMove ? 0f : 1f;
+            }
+
+            int movesForPlayer0 = CountBits(CreateLegalMoveMask(0));
+            int movesForPlayer1 = CountBits(CreateLegalMoveMask(1));
+            movesForPlayer1 += PointsForPlayer1;
+            return movesForPlayer0 > movesForPlayer1 ? 0f : 1f;
         }
 
         public bool CanMove(int turnIndex)
         {
             uint illegalMoveMask = m_IllegalMoveMasks[turnIndex];
             return (m_EmptyMask & ~illegalMoveMask) > 0;
+        }
+        
+        public uint CreateLegalMoveMask(int turnIndex)
+        {
+            uint illegalMoveMask = m_IllegalMoveMasks[turnIndex];
+            uint legalMoveMask = m_EmptyMask & ~illegalMoveMask;
+            return legalMoveMask;
+        }
+
+        /// <remarks>
+        /// Copied from:
+        /// <a href="https://stackoverflow.com/a/12171691/1417849">
+        /// Aug 29 '12 at 5:56 Jon Skeet
+        /// </a>
+        /// </remarks>
+        private static int CountBits(uint value)
+        {
+            int count = 0;
+            while (value != 0)
+            {
+                count++;
+                value &= value - 1;
+            }
+            return count;
         }
 
         /// <summary>

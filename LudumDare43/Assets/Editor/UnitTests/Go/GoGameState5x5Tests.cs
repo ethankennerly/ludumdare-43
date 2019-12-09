@@ -264,16 +264,34 @@ namespace FineGameDesign.Go.UnitTests
         {
             GoGameState5x5 gameState = new GoGameState5x5();
             gameState.SetSize(3, 1);
-            Assert.AreEqual(0.5f, gameState.GetWinner());
+            Assert.AreEqual(0.5f, gameState.CalculateWinner());
             gameState.MoveAtPosition(new BoardPosition(){x = 1});
             AssertBoardDiagramAndIllegalMoveMask(".x.", "111", gameState,
                 "Black forms two eyes.");
-            Assert.AreEqual(0f, gameState.GetWinner(),
+            Assert.AreEqual(0f, gameState.CalculateWinner(),
                 gameState.Audit());
         }
 
         [Test]
-        public void TODO_Move_CapturedOneThenNoLegalMove_GrantsPassAndOpponentLosesGame()
+        public void Move_NoLegalMove_PointsWinGame()
+        {
+            GoGameState5x5 gameState = new GoGameState5x5();
+            gameState.SetSize(3, 1);
+            Assert.AreEqual(0.5f, gameState.CalculateWinner());
+            gameState.MoveAtPosition(new BoardPosition(){x = 1});
+            AssertBoardDiagramAndIllegalMoveMask(".x.", "111", gameState,
+                "Black forms two eyes.");
+            
+            gameState.PointsForPlayer1 = 2;
+            Assert.AreEqual(1f, gameState.CalculateWinner(),
+                gameState.Audit());
+            gameState.PointsForPlayer1 = 1;
+            Assert.AreEqual(0f, gameState.CalculateWinner(),
+                gameState.Audit());
+        }
+
+        [Test]
+        public void TODO_Move_CaptureTwo_EarnsTwoPoints()
         {
         }
 
