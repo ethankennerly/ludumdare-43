@@ -59,6 +59,10 @@ namespace FineGameDesign.Go
         }
 
         private int m_TurnIndex;
+        public int TurnIndex
+        {
+            get { return m_TurnIndex; }
+        }
 
         public int PointsForPlayer1;
 
@@ -73,6 +77,11 @@ namespace FineGameDesign.Go
             new List<uint>(16),
             new List<uint>(16)
         };
+
+        public GoGameState5x5 Clone()
+        {
+            return (GoGameState5x5)MemberwiseClone();
+        }
 
         public override string ToString()
         {
@@ -290,12 +299,27 @@ namespace FineGameDesign.Go
             return movesForPlayer0 > movesForPlayer1 ? 0f : 1f;
         }
 
+        public float CalculateResultForPlayer(int turnIndex)
+        {
+            float result = CalculateWinner();
+            if (turnIndex == 1)
+            {
+                result = 1f - result;
+            }
+
+            return result;
+        }
+
         public bool CanMove(int turnIndex)
         {
-            uint illegalMoveMask = m_IllegalMoveMasks[turnIndex];
-            return (m_EmptyMask & ~illegalMoveMask) > 0;
+            return CreateLegalMoveMask(turnIndex) > 0;
         }
         
+        public uint CreateLegalMoveMask()
+        {
+            return CreateLegalMoveMask(m_TurnIndex);
+        }
+
         public uint CreateLegalMoveMask(int turnIndex)
         {
             uint illegalMoveMask = m_IllegalMoveMasks[turnIndex];
