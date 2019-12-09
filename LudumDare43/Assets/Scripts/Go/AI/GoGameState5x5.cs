@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -78,9 +79,38 @@ namespace FineGameDesign.Go
             new List<uint>(16)
         };
 
+        /// <summary>
+        /// Deep copies, except config which doesn't vary between states.
+        /// Config is shallowly linked.
+        /// </summary>
         public GoGameState5x5 Clone()
         {
-            return (GoGameState5x5)MemberwiseClone();
+            GoGameState5x5 clone = new GoGameState5x5();
+
+            clone.Config = Config;
+            clone.m_EmptyMask = m_EmptyMask;
+            clone.m_TurnIndex = m_TurnIndex;
+            clone.PointsForPlayer1 = PointsForPlayer1;
+            
+            Array.Copy(clone.m_IllegalMoveMasks, m_IllegalMoveMasks, clone.m_IllegalMoveMasks.Length);
+            CloneArrayOfLists(m_GroupLibertyMasks, clone.m_GroupLibertyMasks);
+            CloneArrayOfLists(m_GroupOccupiedMasks, clone.m_GroupOccupiedMasks);
+            
+            CloneArrayOfLists(m_PositionMasksThatWouldRepeat, clone.m_PositionMasksThatWouldRepeat);
+            clone.m_BoardHistory.AddRange(m_BoardHistory);
+
+            return clone;
+        }
+
+        private static void CloneArrayOfLists<T>(List<T>[] original, List<T>[] clone)
+        {
+            int numElements = original.Length;
+            Array.Resize(ref clone, numElements);
+            for (int index = original.Length - 1; index >= 0; --index)
+            {
+                clone[index].Clear();
+                clone[index].AddRange(original[index]);
+            }
         }
 
         public override string ToString()
