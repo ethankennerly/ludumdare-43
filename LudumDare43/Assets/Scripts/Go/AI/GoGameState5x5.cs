@@ -42,6 +42,8 @@ namespace FineGameDesign.Go
     /// </summary>
     public sealed class GoGameState5x5
     {
+        public const uint kPassMask = 0;
+
         private const int kNumPlayers = 2;
 
         private GoConfig5x5 Config = new GoConfig5x5();
@@ -280,6 +282,12 @@ namespace FineGameDesign.Go
         /// </summary>
         public void Move(uint moveMask)
         {
+            if (moveMask == kPassMask)
+            {
+                m_TurnIndex = m_TurnIndex == 0 ? 1 : 0;
+                return;
+            }
+
             Debug.Assert((m_EmptyMask & moveMask) > 0,
                 "Expected move was in an empty position. move mask: " + moveMask);
             
