@@ -362,6 +362,15 @@ namespace FineGameDesign.Go
                         if (nextLibertyMask == 0)
                         {
                             uint capturedGroupMask = expandingOccupiedMasks[groupIndex];
+                            int capturedPoints = CountBits(capturedGroupMask);
+                            if (m_TurnIndex == 0)
+                            {
+                                PointsForPlayer1 -= capturedPoints;
+                            }
+                            else
+                            {
+                                PointsForPlayer1 += capturedPoints;
+                            }
 
                             // Capturing removes the group.
                             expandingOccupiedMasks.RemoveAt(groupIndex);

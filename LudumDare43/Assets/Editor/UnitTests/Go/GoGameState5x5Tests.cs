@@ -291,8 +291,17 @@ namespace FineGameDesign.Go.UnitTests
         }
 
         [Test]
-        public void TODO_Move_CaptureTwo_EarnsTwoPoints()
+        public void Move_WhiteCapturesTwoStones_EarnsTwoPointsForPlayer1()
         {
+            GoGameState5x5 gameState = new GoGameState5x5();
+            gameState.SetSize(4, 1);
+            Assert.AreEqual(0.5f, gameState.CalculateWinner());
+            gameState.MoveAtPosition(new BoardPosition(){x = 0});
+            gameState.MoveAtPosition(new BoardPosition(){x = 3});
+            gameState.MoveAtPosition(new BoardPosition(){x = 1});
+            Assert.AreEqual(0, gameState.PointsForPlayer1);
+            gameState.MoveAtPosition(new BoardPosition(){x = 2});
+            Assert.AreEqual(2, gameState.PointsForPlayer1, gameState.Audit());
         }
 
         /// <summary>
