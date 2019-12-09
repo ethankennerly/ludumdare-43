@@ -9,12 +9,11 @@ namespace FineGameDesign.Go.AI
 {
     public sealed class GoSearcher5x5
     {
-        // 2 at 3x3 idiotic moves at edges.
-        // 10 at 5x5 freezes laptop.
-        // 1000 at 3x3 reasonable, fast.
-        // 50000 at 5x5 freezes laptop.
-        private const int kMaxIterations = 1000;
-        private const int kMaxMilliseconds = 2000;
+        /// <remarks>
+        /// 20000 iterations on 5x5 reasonable.
+        /// </remarks>
+        private const int kMaxIterations = 20000;
+        private const int kMaxMilliseconds = 8000;
         private const double kMinExploitationValue = 0.125;
 
         public GoGameState5x5 Game = new GoGameState5x5();
@@ -39,7 +38,7 @@ namespace FineGameDesign.Go.AI
                 return GoGameState5x5.kPassMask;
             }
 
-            Log(gameState.CurrentPlayer.TurnIndex.ToString(), topActions, game);
+            Log("Turn Index: " + gameState.CurrentPlayer.TurnIndex.ToString(), topActions, game);
             MonteCarloTreeSearch.Node<GoPlayer5x5, GoAction5x5> topAction = topActions[0];
             double exploitationValue = topAction.NumWins / topAction.NumRuns;
             if (exploitationValue < kMinExploitationValue)

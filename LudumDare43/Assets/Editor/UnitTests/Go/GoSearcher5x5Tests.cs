@@ -54,13 +54,13 @@ namespace FineGameDesign.Go.UnitTests
         }
 
         [Test]
-        public void TODO_DO_NOT_FREEZE_EDITOR_MakeMoveOn5x3()
+        public void MakeMoveOn5x3()
         {
             MakeMove(5, 3);
         }
 
         [Test]
-        public void TODO_DO_NOT_FREEZE_EDITOR_MakeMoveOn5x5()
+        public void MakeMoveOn5x5()
         {
             MakeMove(5, 5);
         }

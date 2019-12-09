@@ -95,7 +95,8 @@ namespace FineGameDesign.Go.AI
         /// </summary>
         public void ApplyAction(GoAction5x5 action)
         {
-            Log("ApplyAction: Before: " + m_Game.TurnIndex + action.PositionMask +
+            Log("ApplyAction: Before Turn: " + m_Game.TurnIndex +
+                " Position Mask: " + action.PositionMask +
                 "\n" + m_Game);
             m_Game.Move(action.PositionMask);
             GoAction5x5.ConvertMoveMask(m_Game.CreateLegalMoveMask(), m_Actions);
@@ -109,7 +110,7 @@ namespace FineGameDesign.Go.AI
         public double GetResult(GoPlayer5x5 forPlayer)
         {
             double result = m_Game.CalculateResultForPlayer(forPlayer.TurnIndex);
-            Log("GetResult: " + forPlayer.TurnIndex +
+            Log("GetResult: For Player: " + forPlayer.TurnIndex +
                 ": result: " + result +
                 "\n" + m_Game);
             return result;

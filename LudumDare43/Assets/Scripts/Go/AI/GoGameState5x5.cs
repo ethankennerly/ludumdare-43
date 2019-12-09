@@ -340,7 +340,7 @@ namespace FineGameDesign.Go
         public float CalculateResultForPlayer(int turnIndex)
         {
             float result = CalculateWinner();
-            if (turnIndex == 1)
+            if (turnIndex == 0)
             {
                 result = 1f - result;
             }
