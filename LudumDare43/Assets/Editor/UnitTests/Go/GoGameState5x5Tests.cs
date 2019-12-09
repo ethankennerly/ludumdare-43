@@ -373,5 +373,27 @@ namespace FineGameDesign.Go.UnitTests
             Assert.AreEqual(2, libertyMask,
                 "First group liberty mask after move at 0,0.");
         }
+
+        [Test]
+        public void Clone_Audits_AreEqual()
+        {
+            GoGameState5x5 gameState = new GoGameState5x5();
+            gameState.SetSize(3, 1);
+            gameState.MoveAtPosition(new BoardPosition());
+            GoGameState5x5 cloneState = gameState.Clone();
+            Assert.AreEqual(gameState.Audit(), cloneState.Audit());
+        }
+
+        [Test]
+        public void Clone_MoveOnClone_AuditUnchangedOnOriginal()
+        {
+            GoGameState5x5 gameState = new GoGameState5x5();
+            gameState.SetSize(3, 1);
+            gameState.MoveAtPosition(new BoardPosition());
+            GoGameState5x5 cloneState = gameState.Clone();
+            string originalAudit = gameState.Audit();
+            cloneState.MoveAtPosition(new BoardPosition(){x = 2});
+            Assert.AreEqual(originalAudit, gameState.Audit());
+        }
     }
 }
