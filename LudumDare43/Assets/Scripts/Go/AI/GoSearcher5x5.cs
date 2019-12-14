@@ -12,7 +12,7 @@ namespace FineGameDesign.Go.AI
         /// <remarks>
         /// 20000 iterations on 5x5 reasonable.
         /// </remarks>
-        private const int kMaxIterations = 20000;
+        private const int kMaxIterations = 40000;
         private const int kMaxMilliseconds = 8000;
         private const double kMinExploitationValue = 0.125;
 
