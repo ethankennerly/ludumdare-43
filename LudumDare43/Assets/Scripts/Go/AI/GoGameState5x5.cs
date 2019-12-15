@@ -306,6 +306,12 @@ namespace FineGameDesign.Go
             ForbidAdjacentEmptySuicides(m_TurnIndex, moveMask);
         }
 
+        public bool IsLegalMoveAtPosition(BoardPosition pos)
+        {
+            uint moveMask = CoordinateToMask(pos);
+            return (IllegalMoveMask & moveMask) == 0;
+        }
+
         public void MoveAtPosition(BoardPosition pos)
         {
             uint moveMask = CoordinateToMask(pos);

@@ -1,10 +1,17 @@
 using FineGameDesign.Utils;
 using Go;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace FineGameDesign.Go
+namespace FineGameDesign.Go.AI
 {
+    public sealed class Board5x5
+    {
+        GoConfig5x5 Config;
+        List<Board.PositionContent> AllContent;
+    }
+
     public sealed class Referee5x5 : ASingleton<Referee5x5>
     {
         public static event Action<Content, int, int> OnIllegalMove;
@@ -18,9 +25,9 @@ namespace FineGameDesign.Go
 
         public static event Action<Content> OnWin;
 
-        public static event Action<Board> OnBoardSet;
+        public static event Action<Board5x5> OnBoardSet;
 
-        private bool m_Verbose = false;
+        public Board5x5 Board = new Board5x5();
 
         private Content m_Turn = Content.Empty;
         public Content Turn
@@ -40,6 +47,24 @@ namespace FineGameDesign.Go
             }
         }
 
+        public Content OtherTurn
+        {
+            get
+            {
+                if (m_Turn == Content.Black)
+                {
+                    return Content.White;
+                }
+
+                if (m_Turn == Content.White)
+                {
+                    return Content.Black;
+                }
+
+                return Content.Empty;
+            }
+        }
+
         private Content m_Win = Content.Empty;
         public Content Win
         {
@@ -48,75 +73,87 @@ namespace FineGameDesign.Go
             private set
             {
                 if (m_Win == value)
+                {
                     return;
+                }
 
                 Turn = value;
                 m_Win = value;
 
                 if (OnWin != null)
+                {
                     OnWin(value);
+                }
             }
         }
 
-        private Game m_Game;
+        private GoGameState5x5 m_Game;
+
         /// <summary>
         /// GoSharp replaces Game every turn.
         /// </summary>
-        public Game Game
+        public void Init(int sizeX, int sizeY)
         {
-            get { return m_Game; }
-            set
+            m_Game = new GoGameState5x5();
+            m_Game.SetSize(sizeX, sizeY);
+
+            if (PlayEnded())
             {
-                m_Game = value;
+                PublishPlayEnded();
+            }
 
-                if (value.Ended)
-                    PublishPlayEnded();
-                else if (value != null)
-                    Turn = value.Turn;
+            if (OnScoreSet != null)
+            {
+                OnScoreSet(Content.Black, -m_Game.PointsForPlayer1);
+                OnScoreSet(Content.White, 0);
+            }
 
-                if (value != null && OnScoreSet != null)
-                {
-                    OnScoreSet(Content.Black, value.GetScore(Content.Black));
-                    OnScoreSet(Content.White, value.GetScore(Content.White));
-                }
-
-                if (value != null && OnBoardSet != null)
-                    OnBoardSet(value.Board);
+            if (OnBoardSet != null)
+            {
+                OnBoardSet(Board);
             }
         }
 
-        public void MakeLegalMove(int x, int y, Game nextGame)
+        public bool PlayEnded()
         {
-            if (Game.Ended)
-                return;
+            return !m_Game.CanMove(m_Game.TurnIndex);
+        }
 
-            Game previousGame = Game;
-            nextGame = previousGame.MakeLegalMove(new Point(x, y), nextGame);
-            Game = nextGame;
+        public void MakeLegalMove(int x, int y)
+        {
+            m_Game.MoveAtPosition(new BoardPosition(){x = x, y = y});
+            UpdateBoard(m_Game, Board);
         }
 
         public void MakeMove(int x, int y)
         {
-            if (Game.Ended)
-                return;
-
-            bool legal;
-            Game previousGame = Game;
-            Game nextGame = new Game();
-            nextGame = previousGame.MakeMove(x, y, out legal, nextGame);
-            if (!legal)
+            if (PlayEnded())
             {
-                if (OnIllegalMove != null)
-                    OnIllegalMove(previousGame.Turn, x, y);
                 return;
             }
 
-            Game = nextGame;
+            BoardPosition pos = new BoardPosition(){x = x, y = y};
+            if (!m_Game.IsLegalMoveAtPosition(pos))
+            {
+                if (OnIllegalMove != null)
+                {
+                    OnIllegalMove(OtherTurn, x, y);
+                }
+                return;
+            }
+
+            m_Game.MoveAtPosition(pos);
+            UpdateBoard(m_Game, Board);
+        }
+
+        // TODO
+        private void UpdateBoard(GoGameState5x5 gameState, Board5x5 board)
+        {
         }
 
         public void Pass()
         {
-            Game = Game.Pass(new Game());
+            m_Game.TurnIndex = m_Game.TurnIndex == 0 ? 1 : 0;
         }
 
         /// <summary>
@@ -124,23 +161,23 @@ namespace FineGameDesign.Go
         /// </summary>
         private void PublishPlayEnded()
         {
-            if (m_Verbose)
-                Debug.Log("PublishPlayEnded: IsScoring=" + Game.Board.IsScoring + " Board=\n" + Game.Board);
-
             PublishWin();
 
             if (OnBoardSet != null)
-                OnBoardSet(Game.Board);
+            {
+                OnBoardSet(Board);
+            }
         }
 
         private void PublishWin()
         {
-            float blackScore = Game.GetScore(Content.Black);
-            float whiteScore = Game.GetScore(Content.White);
-            if (blackScore == whiteScore)
+            float winner = m_Game.CalculateWinner();
+            if (winner == 0.5f)
+            {
                 return;
+            }
 
-            Win = blackScore > whiteScore ? Content.Black : Content.White;
+            Win = winner < 0.5f ? Content.Black : Content.White;
         }
     }
 }
