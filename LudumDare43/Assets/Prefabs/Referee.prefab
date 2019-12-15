@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4079811619177712}
-  - component: {fileID: 114259465607553032}
+  - component: {fileID: 114635950107960976}
   m_Layer: 0
   m_Name: GoAIPlayer
   m_TagString: Untagged
@@ -35,7 +35,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4048117056778418}
-  - component: {fileID: 114978293143443196}
+  - component: {fileID: 114807162573235704}
   m_Layer: 0
   m_Name: BoardLayout
   m_TagString: Untagged
@@ -159,19 +159,6 @@ Transform:
   m_Father: {fileID: 4502366227029736}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114259465607553032
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1135461426082110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 914713429aba943d1b36bbeec00a88c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_BlackAI: 1
-  m_WhiteAI: 1
 --- !u!114 &114311300796001796
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -196,7 +183,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc964bcc70b6c4799a81b74f369781e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114978293143443196
+--- !u!114 &114635950107960976
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1135461426082110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65855943cbef11646ad9825093806041, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BlackAI: 1
+  m_WhiteAI: 1
+--- !u!114 &114807162573235704
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -204,12 +204,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1162115034538828}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4218b6352b8f841d2ae6d02cecf5b993, type: 3}
+  m_Script: {fileID: 11500000, guid: ec528a91e074ad14cbaca2b8bc6c0c14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_CellPrefab: {fileID: 114544461226294382, guid: 28fcc6c390fe3443ca7a67f4210ae957,
-    type: 2}
+    type: 3}
   m_HorizontalOffset: {x: 0.4, y: 0, z: -0.0001}
   m_VerticalOffset: {x: -0.15, y: -0.4, z: -0.01}
   m_Center: {x: 0, y: 0, z: 0}
-  m_Verbose: 0

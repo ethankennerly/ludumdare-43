@@ -166,6 +166,7 @@ namespace FineGameDesign.Go.AI
         public void Init(int sizeX, int sizeY)
         {
             Game.SetSize(sizeX, sizeY);
+            PublishState();
 
             if (PlayEnded)
             {
@@ -188,9 +189,15 @@ namespace FineGameDesign.Go.AI
 
         public void MakeLegalMove(int x, int y)
         {
-            Game.MoveAtPosition(new BoardPosition(){x = x, y = y});
-            UpdateBoard(Game, Board);
+            Game.MoveAtPosition(new BoardPosition() {x = x, y = y});
+            PublishState();
+        }
+
+        public void PublishState()
+        {
+            Turn = Game.TurnIndex == 0 ? Content.Black : Content.White;
             PlayEnded = !Game.CanMove(0) && !Game.CanMove(1);
+            UpdateBoard(Game, Board);
             m_LastMovePassed = false;
         }
 
@@ -218,6 +225,11 @@ namespace FineGameDesign.Go.AI
         {
             board.Config = gameState.Config;
             SetPositionContents(board.AllContents);
+
+            if (s_OnBoardSet != null)
+            {
+                s_OnBoardSet(Board);
+            }
         }
 
         private void SetPositionContents(
@@ -266,11 +278,6 @@ namespace FineGameDesign.Go.AI
         private void PublishPlayEnded()
         {
             PublishWin();
-
-            if (s_OnBoardSet != null)
-            {
-                s_OnBoardSet(Board);
-            }
         }
 
         private void PublishWin()

@@ -1,3 +1,4 @@
+using FineGameDesign.Go.AI;
 using Go;
 using System;
 using UnityEngine;
@@ -47,18 +48,18 @@ namespace FineGameDesign.Go
 
         private void AddTurnListener()
         {
-            Referee.OnTurn += OnTurn;
+            Referee5x5.OnTurn += OnTurn;
         }
 
         private void AddWinListener()
         {
-            Referee.OnWin += OnWin;
+            Referee5x5.OnWin += OnWin;
         }
 
         private void OnDisable()
         {
-            Referee.OnTurn -= OnTurn;
-            Referee.OnWin -= OnWin;
+            Referee5x5.OnTurn -= OnTurn;
+            Referee5x5.OnWin -= OnWin;
         }
 
         private void SetTurn(Content previousTurn, Content nextTurn)
@@ -77,9 +78,9 @@ namespace FineGameDesign.Go
             }
 
             Content turn = Content.Empty;
-            if (Referee.InstanceExists())
+            if (Referee5x5.InstanceExists())
             {
-                turn = Referee.instance.Turn;
+                turn = Referee5x5.instance.Turn;
             }
 
             foreach (var indicator in m_Indicators)

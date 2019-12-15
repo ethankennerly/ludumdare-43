@@ -575,7 +575,7 @@ namespace FineGameDesign.Go.AI
         }
 
         /// <returns>
-        /// TODO: Horizontal is adjacent only if the preceding or subsequent index is in the same row.
+        /// Horizontal is adjacent only if the preceding or subsequent index is in the same row.
         /// </returns>
         public uint CreateAdjacencyMaskFromIndex(int positionIndex)
         {
@@ -626,6 +626,19 @@ namespace FineGameDesign.Go.AI
         public uint CoordinateToMask(BoardPosition pos)
         {
             return (uint)(1 << (Config.SizeX * pos.y + pos.x));
+        }
+
+        /// <summary>
+        /// Expects exactly one bit set.
+        /// </summary>
+        public BoardPosition MaskToPosition(uint moveMask)
+        {
+            int moveIndex = MaskToIndex(moveMask);
+            return new BoardPosition()
+            {
+                x = moveIndex % Config.SizeX,
+                y = moveIndex / Config.SizeY
+            };
         }
 
         /// <summary>
@@ -805,7 +818,10 @@ namespace FineGameDesign.Go.AI
                 int numBoards = m_BoardHistory.Count;
                 if (numBoards == 0)
                 {
-                    return new UniqueBoard();
+                    return new UniqueBoard()
+                    {
+                        emptyMask = m_EmptyMask
+                    };
                 }
 
                 return m_BoardHistory[numBoards - 1];

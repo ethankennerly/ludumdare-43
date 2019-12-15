@@ -62,7 +62,9 @@ namespace FineGameDesign.Go.AI
                 return;
 
             m_WillMove = false;
+            m_Searcher.Game = Referee5x5.instance.Game;
             m_Searcher.MakeMove();
+            Referee5x5.instance.PublishState();
         }
     }
 }

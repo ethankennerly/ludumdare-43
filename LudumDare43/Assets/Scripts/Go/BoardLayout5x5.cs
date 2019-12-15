@@ -37,7 +37,7 @@ namespace FineGameDesign.Go
 
         private Cell[] m_Cells;
 
-        private Board5x5 m_PreviousBoard;
+        private Board5x5 m_PreviousBoard = new Board5x5();
 
         private void OnEnable()
         {
@@ -49,11 +49,15 @@ namespace FineGameDesign.Go
             Referee5x5.OnBoardSet -= OnSet;
         }
 
+        /// <summary>
+        /// Copies contents to previous board.
+        /// Otherwise change was not detected.
+        /// </summary>
         private void SetBoard(Board5x5 nextBoard)
         {
             if (nextBoard == null)
             {
-                m_PreviousBoard = null;
+                m_PreviousBoard.AllContents.Clear();
                 DestroyCells();
                 return;
             }
@@ -63,7 +67,8 @@ namespace FineGameDesign.Go
                 CreateCells(nextBoard);
             }
             ChangeContents(m_PreviousBoard, nextBoard);
-            m_PreviousBoard = nextBoard;
+            m_PreviousBoard.Config = nextBoard.Config;
+            m_PreviousBoard.AllContents = new List<Board.PositionContent>(nextBoard.AllContents);
         }
 
         private bool EqualSize(Board5x5 previousBoard, Board5x5 nextBoard)
@@ -74,6 +79,7 @@ namespace FineGameDesign.Go
             }
 
             return previousBoard != null && nextBoard != null &&
+                nextBoard.Config != null && previousBoard.Config != null &&
                 nextBoard.Config.SizeX == previousBoard.Config.SizeX &&
                 nextBoard.Config.SizeY == previousBoard.Config.SizeY;
         }

@@ -24,6 +24,15 @@ namespace FineGameDesign.Go.AI
             Game.Move(moveMask);
         }
 
+        public void MakeMove(out int x, out int y)
+        {
+            uint moveMask = GetMoveMask(Game);
+            Game.Move(moveMask);
+            BoardPosition pos = Game.MaskToPosition(moveMask);
+            x = pos.x;
+            y = pos.y;
+        }
+
         private uint GetMoveMask(GoGameState5x5 game)
         {
             var gameState = new GoState5x5(game);

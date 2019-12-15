@@ -160,14 +160,10 @@ namespace FineGameDesign.Go
             if (m_OnContentChanged == null)
                 m_OnContentChanged = SetContent;
 
-            if (m_OnTerritoryChanged == null)
-                m_OnTerritoryChanged = SetTerritory;
-
             RemoveListeners();
 
             ClickInputSystem.instance.onCollisionEnter2D += m_OnClickAnything;
-            BoardLayout.OnContentChanged += m_OnContentChanged;
-            BoardLayout.OnTerritoryChanged += m_OnTerritoryChanged;
+            BoardLayout5x5.OnContentChanged += m_OnContentChanged;
         }
 
         private void RemoveListeners()
@@ -175,8 +171,7 @@ namespace FineGameDesign.Go
             if (ClickInputSystem.InstanceExists())
                 ClickInputSystem.instance.onCollisionEnter2D -= m_OnClickAnything;
             
-            BoardLayout.OnContentChanged -= m_OnContentChanged;
-            BoardLayout.OnTerritoryChanged -= m_OnTerritoryChanged;
+            BoardLayout5x5.OnContentChanged -= m_OnContentChanged;
         }
 
         private void PublishClick(Collider2D target)
@@ -203,25 +198,6 @@ namespace FineGameDesign.Go
                 tile.Update(m_Content, next.Content);
 
             m_Content = next.Content;
-        }
-
-        private void SetTerritory(Board.PositionContent next)
-        {
-            if (next.Position.x != m_Point.x ||
-                next.Position.y != m_Point.y)
-                return;
-
-            foreach (AnimatedPlayerTile tile in m_PlayerTerritories)
-                tile.Update(m_Territory, next.Content);
-
-            if (m_Territory == next.Content)
-                return;
-
-            m_Territory = next.Content;
-
-            Board.PositionContent clearCapture = next;
-            clearCapture.Content = Content.Empty;
-            SetContent(clearCapture);
         }
     }
 }

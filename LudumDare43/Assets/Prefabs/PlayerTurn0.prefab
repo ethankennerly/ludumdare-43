@@ -167,8 +167,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4928547107516498}
-  - component: {fileID: 114714048882125666}
   - component: {fileID: 95102896711568666}
+  - component: {fileID: 114057825121012184}
   m_Layer: 0
   m_Name: PlayerTurn0
   m_TagString: Untagged
@@ -868,6 +868,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ScoreText: {fileID: 114792469282436976}
   m_PlayerFilter: 1
+--- !u!114 &114057825121012184
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1809858574404952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b64eb725ee9435c4eba5ac4fc00aaba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Indicators:
+  - animator: {fileID: 95102896711568666}
+    tileSet: {fileID: 11400000, guid: dd3ac833fe0eb4c4ca1d01c37a4f4560, type: 2}
+    cellSpriteSets: []
+  m_WinIndicators:
+  - animator: {fileID: 95644772754855896}
+    tileSet: {fileID: 11400000, guid: dd3ac833fe0eb4c4ca1d01c37a4f4560, type: 2}
+    cellSpriteSets: []
 --- !u!114 &114287876291202468
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -994,23 +1013,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   m_maskType: 0
---- !u!114 &114714048882125666
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1809858574404952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 717685bd165e5482395e9ef310680ad3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Indicators:
-  - animator: {fileID: 95102896711568666}
-    tileSet: {fileID: 11400000, guid: dd3ac833fe0eb4c4ca1d01c37a4f4560, type: 2}
-  m_WinIndicators:
-  - animator: {fileID: 95644772754855896}
-    tileSet: {fileID: 11400000, guid: dd3ac833fe0eb4c4ca1d01c37a4f4560, type: 2}
 --- !u!114 &114792469282436976
 MonoBehaviour:
   m_ObjectHideFlags: 1
