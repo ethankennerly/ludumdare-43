@@ -18,10 +18,31 @@ namespace FineGameDesign.Go.AI
 
         public static event Action<Content, float> OnScoreSet;
 
+        private static event Action<Content, Content> s_OnTurn;
         /// <summary>
         /// Static events avoid constructor/destructor races and references.
         /// </summary>
-        public static event Action<Content, Content> OnTurn;
+        public static event Action<Content, Content> OnTurn
+        {
+            add
+            {
+                s_OnTurn -= value;
+                s_OnTurn += value;
+                if (!InstanceExists())
+                {
+                    return;
+                }
+                if (value == null)
+                {
+                    return;
+                }
+                value(Content.Empty, Referee5x5.instance.Turn);
+            }
+            remove
+            {
+                s_OnTurn -= value;
+            }
+        }
 
         public static event Action<Content> OnWin;
 
@@ -44,8 +65,10 @@ namespace FineGameDesign.Go.AI
                 Content previous = m_Turn;
                 m_Turn = value;
 
-                if (OnTurn != null)
-                    OnTurn(previous, value);
+                if (s_OnTurn != null)
+                {
+                    s_OnTurn(previous, value);
+                }
             }
         }
 
@@ -89,15 +112,14 @@ namespace FineGameDesign.Go.AI
             }
         }
 
-        private GoGameState5x5 m_Game;
+        public GoGameState5x5 Game = new GoGameState5x5();
 
         /// <summary>
         /// GoSharp replaces Game every turn.
         /// </summary>
         public void Init(int sizeX, int sizeY)
         {
-            m_Game = new GoGameState5x5();
-            m_Game.SetSize(sizeX, sizeY);
+            Game.SetSize(sizeX, sizeY);
 
             if (PlayEnded)
             {
@@ -106,7 +128,7 @@ namespace FineGameDesign.Go.AI
 
             if (OnScoreSet != null)
             {
-                OnScoreSet(Content.Black, -m_Game.PointsForPlayer1);
+                OnScoreSet(Content.Black, -Game.PointsForPlayer1);
                 OnScoreSet(Content.White, 0);
             }
 
@@ -120,9 +142,9 @@ namespace FineGameDesign.Go.AI
 
         public void MakeLegalMove(int x, int y)
         {
-            m_Game.MoveAtPosition(new BoardPosition(){x = x, y = y});
-            UpdateBoard(m_Game, Board);
-            PlayEnded = !m_Game.CanMove(0) && !m_Game.CanMove(1);
+            Game.MoveAtPosition(new BoardPosition(){x = x, y = y});
+            UpdateBoard(Game, Board);
+            PlayEnded = !Game.CanMove(0) && !Game.CanMove(1);
             m_LastMovePassed = false;
         }
 
@@ -134,7 +156,7 @@ namespace FineGameDesign.Go.AI
             }
 
             BoardPosition pos = new BoardPosition(){x = x, y = y};
-            if (!m_Game.IsLegalMoveAtPosition(pos))
+            if (!Game.IsLegalMoveAtPosition(pos))
             {
                 if (OnIllegalMove != null)
                 {
@@ -157,15 +179,15 @@ namespace FineGameDesign.Go.AI
         {
             positionContents.Clear();
 
-            GoGameState5x5.UniqueBoard uniqueBoard = m_Game.CurrentBoard;
-            int numRows = m_Game.Config.SizeY;
-            int numCols = m_Game.Config.SizeX;
+            GoGameState5x5.UniqueBoard uniqueBoard = Game.CurrentBoard;
+            int numRows = Game.Config.SizeY;
+            int numCols = Game.Config.SizeX;
             for (int rowIndex = 0; rowIndex < numRows; ++rowIndex)
             {
                 for (int colIndex = 0; colIndex < numCols; ++colIndex)
                 {
                     BoardPosition pos = new BoardPosition(){x = colIndex, y = rowIndex};
-                    uint posMask = m_Game.CoordinateToMask(pos);
+                    uint posMask = Game.CoordinateToMask(pos);
                     bool empty = (uniqueBoard.emptyMask & posMask) > 0;
                     bool black = (uniqueBoard.player0Mask & posMask) > 0;
                     Content content = empty ? Content.Empty :
@@ -189,7 +211,7 @@ namespace FineGameDesign.Go.AI
         {
             PlayEnded = PlayEnded || m_LastMovePassed;
             m_LastMovePassed = true;
-            m_Game.Pass();
+            Game.Pass();
         }
 
         /// <summary>
@@ -207,7 +229,7 @@ namespace FineGameDesign.Go.AI
 
         private void PublishWin()
         {
-            float winner = m_Game.CalculateWinner();
+            float winner = Game.CalculateWinner();
             if (winner == 0.5f)
             {
                 return;

@@ -1,8 +1,8 @@
+using FineGameDesign.Go.AI;
 using NUnit.Framework;
-using FineGameDesign.Go;
 using UnityEngine;
 
-namespace FineGameDesign.Go.UnitTests
+namespace FineGameDesign.Go.AI.UnitTests
 {
     public class GoGameState5x5Tests
     {

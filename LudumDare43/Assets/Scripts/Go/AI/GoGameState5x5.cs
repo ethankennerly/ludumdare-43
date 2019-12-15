@@ -5,7 +5,7 @@ using System.Text;
 
 using Debug = UnityEngine.Debug;
 
-namespace FineGameDesign.Go
+namespace FineGameDesign.Go.AI
 {
     /// <summary>
     /// Constant throughout play.

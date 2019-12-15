@@ -2,7 +2,7 @@ using FineGameDesign.Go.AI;
 using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace FineGameDesign.Go.UnitTests
+namespace FineGameDesign.Go.AI.UnitTests
 {
     public sealed class GoAction5x5Tests
     {

@@ -5,7 +5,7 @@ using UnityEditor;
 
 using Debug = UnityEngine.Debug;
 
-namespace FineGameDesign.Go.UnitTests
+namespace FineGameDesign.Go.AI.UnitTests
 {
     public sealed class GoSearcher5x5Tests
     {
