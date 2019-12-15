@@ -1,3 +1,4 @@
+using FineGameDesign.Go.AI;
 using Go;
 using System;
 using TMPro;
@@ -19,8 +20,8 @@ namespace FineGameDesign.Go
         {
             if (m_OnScoreSet == null)
                 m_OnScoreSet = SetScore;
-            Referee.OnScoreSet -= m_OnScoreSet;
-            Referee.OnScoreSet += m_OnScoreSet;
+            Referee5x5.OnScoreSet -= m_OnScoreSet;
+            Referee5x5.OnScoreSet += m_OnScoreSet;
             if (Referee.InstanceExists() && Referee.instance.Game != null)
             {
                 float score = Referee.instance.Game.GetScore(m_PlayerFilter);
@@ -30,7 +31,7 @@ namespace FineGameDesign.Go
 
         private void OnDisable()
         {
-            Referee.OnScoreSet -= m_OnScoreSet;
+            Referee5x5.OnScoreSet -= m_OnScoreSet;
         }
 
         private void SetScore(Content player, float score)

@@ -1,3 +1,4 @@
+using FineGameDesign.Go.AI;
 using Go;
 using UnityEngine;
 
@@ -20,8 +21,8 @@ namespace FineGameDesign.Go
 
         public void Load()
         {
-            Referee.instance.Game = new Game();
-            Referee.instance.Game.Clone(new Board(m_SizeX, m_SizeY), Content.Black);
+            Referee5x5.instance.Game = new GoGameState5x5();
+            Referee5x5.instance.Init(m_SizeX, m_SizeY);
         }
     }
 }

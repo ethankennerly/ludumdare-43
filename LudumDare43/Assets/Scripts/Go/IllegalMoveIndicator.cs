@@ -1,3 +1,4 @@
+using FineGameDesign.Go.AI;
 using Go;
 using System;
 using UnityEngine;
@@ -25,13 +26,13 @@ namespace FineGameDesign.Go
         {
             if (m_OnIllegalMove == null)
                 m_OnIllegalMove = PlayAnimation;
-            Referee.OnIllegalMove -= m_OnIllegalMove;
-            Referee.OnIllegalMove += m_OnIllegalMove;
+            Referee5x5.OnIllegalMove -= m_OnIllegalMove;
+            Referee5x5.OnIllegalMove += m_OnIllegalMove;
         }
 
         private void OnDisable()
         {
-            Referee.OnIllegalMove -= m_OnIllegalMove;
+            Referee5x5.OnIllegalMove -= m_OnIllegalMove;
         }
 
         private void PlayAnimation(Content turn, int x, int y)
