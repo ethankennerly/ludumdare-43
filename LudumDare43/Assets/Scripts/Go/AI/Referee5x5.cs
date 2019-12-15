@@ -44,7 +44,32 @@ namespace FineGameDesign.Go.AI
             }
         }
 
-        public static event Action<Content> OnWin;
+        private static event Action<Content> s_OnWin;
+        public static event Action<Content> OnWin
+        {
+            add
+            {
+                if (value == null)
+                {
+                    return;
+                }
+                s_OnWin -= value;
+                s_OnWin += value;
+                if (!InstanceExists())
+                {
+                    return;
+                }
+                if (instance.Win == Content.Empty)
+                {
+                    return;
+                }
+                value(instance.Win);
+            }
+            remove
+            {
+                s_OnWin -= value;
+            }
+        }
 
         public static event Action<Board5x5> OnBoardSet;
 
@@ -105,9 +130,9 @@ namespace FineGameDesign.Go.AI
                 Turn = value;
                 m_Win = value;
 
-                if (OnWin != null)
+                if (s_OnWin != null)
                 {
-                    OnWin(value);
+                    s_OnWin(value);
                 }
             }
         }
