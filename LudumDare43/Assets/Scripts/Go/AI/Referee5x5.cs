@@ -29,6 +29,8 @@ namespace FineGameDesign.Go.AI
 
         public Board5x5 Board = new Board5x5();
 
+        private bool m_LastMovePassed;
+
         private Content m_Turn = Content.Empty;
         public Content Turn
         {
@@ -97,7 +99,7 @@ namespace FineGameDesign.Go.AI
             m_Game = new GoGameState5x5();
             m_Game.SetSize(sizeX, sizeY);
 
-            if (PlayEnded())
+            if (PlayEnded)
             {
                 PublishPlayEnded();
             }
@@ -114,20 +116,19 @@ namespace FineGameDesign.Go.AI
             }
         }
 
-        public bool PlayEnded()
-        {
-            return !m_Game.CanMove(m_Game.TurnIndex);
-        }
+        public bool PlayEnded { get; private set; }
 
         public void MakeLegalMove(int x, int y)
         {
             m_Game.MoveAtPosition(new BoardPosition(){x = x, y = y});
             UpdateBoard(m_Game, Board);
+            PlayEnded = !m_Game.CanMove(0) && !m_Game.CanMove(1);
+            m_LastMovePassed = false;
         }
 
         public void MakeMove(int x, int y)
         {
-            if (PlayEnded())
+            if (PlayEnded)
             {
                 return;
             }
@@ -142,8 +143,7 @@ namespace FineGameDesign.Go.AI
                 return;
             }
 
-            m_Game.MoveAtPosition(pos);
-            UpdateBoard(m_Game, Board);
+            MakeLegalMove(x, y);
         }
 
         private void UpdateBoard(GoGameState5x5 gameState, Board5x5 board)
@@ -187,6 +187,8 @@ namespace FineGameDesign.Go.AI
 
         public void Pass()
         {
+            PlayEnded = PlayEnded || m_LastMovePassed;
+            m_LastMovePassed = true;
             m_Game.Pass();
         }
 
