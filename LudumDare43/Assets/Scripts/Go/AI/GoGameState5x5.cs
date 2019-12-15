@@ -16,7 +16,7 @@ namespace FineGameDesign.Go
     /// The second player plays the white stones.
     /// So descriptors of black and white, are interchangeable with first and second player, respectively.
     /// </summary>
-    internal sealed class GoConfig5x5
+    public sealed class GoConfig5x5
     {
         internal int SizeX = 5;
         internal int SizeY = 5;
@@ -46,7 +46,7 @@ namespace FineGameDesign.Go
 
         private const int kNumPlayers = 2;
 
-        private GoConfig5x5 Config = new GoConfig5x5();
+        public GoConfig5x5 Config = new GoConfig5x5();
 
         public uint IllegalMoveMask
         {
@@ -316,6 +316,14 @@ namespace FineGameDesign.Go
         {
             uint moveMask = CoordinateToMask(pos);
             Move(moveMask);
+        }
+
+        /// <summary>
+        /// Unlike Go, this class does not end game after two passes in a row.
+        /// </summary>
+        public void Pass()
+        {
+            Move(kPassMask);
         }
 
         /// <returns>
@@ -778,7 +786,7 @@ namespace FineGameDesign.Go
         /// A board is unique if the empty cells or player 0 (black) cells are unique.
         /// THe player 1 (white) cells are the non-empty and non-black cells.
         /// </summary>
-        private struct UniqueBoard
+        public struct UniqueBoard
         {
             public uint emptyMask;
             public uint player0Mask;
@@ -790,6 +798,20 @@ namespace FineGameDesign.Go
             }
         }
         
+        public UniqueBoard CurrentBoard
+        {
+            get
+            {
+                int numBoards = m_BoardHistory.Count;
+                if (numBoards == 0)
+                {
+                    return new UniqueBoard();
+                }
+
+                return m_BoardHistory[numBoards - 1];
+            }
+        }
+
         private List<UniqueBoard> m_BoardHistory = new List<UniqueBoard>(16);
 
         private List<uint>[] m_PositionMasksThatWouldRepeat = new List<uint>[]

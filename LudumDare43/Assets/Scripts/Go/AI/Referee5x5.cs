@@ -8,8 +8,8 @@ namespace FineGameDesign.Go.AI
 {
     public sealed class Board5x5
     {
-        GoConfig5x5 Config;
-        List<Board.PositionContent> AllContent;
+        public GoConfig5x5 Config;
+        public List<Board.PositionContent> AllContents = new List<Board.PositionContent>();
     }
 
     public sealed class Referee5x5 : ASingleton<Referee5x5>
@@ -146,14 +146,48 @@ namespace FineGameDesign.Go.AI
             UpdateBoard(m_Game, Board);
         }
 
-        // TODO
         private void UpdateBoard(GoGameState5x5 gameState, Board5x5 board)
         {
+            board.Config = gameState.Config;
+            SetPositionContents(board.AllContents);
+        }
+
+        private void SetPositionContents(
+            List<Board.PositionContent> positionContents)
+        {
+            positionContents.Clear();
+
+            GoGameState5x5.UniqueBoard uniqueBoard = m_Game.CurrentBoard;
+            int numRows = m_Game.Config.SizeY;
+            int numCols = m_Game.Config.SizeX;
+            for (int rowIndex = 0; rowIndex < numRows; ++rowIndex)
+            {
+                for (int colIndex = 0; colIndex < numCols; ++colIndex)
+                {
+                    BoardPosition pos = new BoardPosition(){x = colIndex, y = rowIndex};
+                    uint posMask = m_Game.CoordinateToMask(pos);
+                    bool empty = (uniqueBoard.emptyMask & posMask) > 0;
+                    bool black = (uniqueBoard.player0Mask & posMask) > 0;
+                    Content content = empty ? Content.Empty :
+                        (black ? Content.Black : Content.White);
+
+                    Board.PositionContent positionContent = new Board.PositionContent()
+                    {
+                        Position = new Point()
+                        {
+                            x = colIndex,
+                            y = rowIndex
+                        },
+                        Content = content
+                    };
+                    positionContents.Add(positionContent);
+                }
+            }
         }
 
         public void Pass()
         {
-            m_Game.TurnIndex = m_Game.TurnIndex == 0 ? 1 : 0;
+            m_Game.Pass();
         }
 
         /// <summary>
