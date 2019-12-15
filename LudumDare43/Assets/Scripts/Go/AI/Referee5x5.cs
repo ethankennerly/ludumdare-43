@@ -163,9 +163,10 @@ namespace FineGameDesign.Go.AI
         /// <summary>
         /// GoSharp replaces Game every turn.
         /// </summary>
-        public void Init(int sizeX, int sizeY)
+        public void Init(int sizeX, int sizeY, int pointsForSecondPlayer)
         {
             Game.SetSize(sizeX, sizeY);
+            Game.PointsForPlayer1 = pointsForSecondPlayer;
             PublishState();
 
             if (PlayEnded)

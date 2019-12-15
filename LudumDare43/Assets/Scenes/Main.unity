@@ -303,6 +303,31 @@ Prefab:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 114603121759169092, guid: 6787b1926a71647ae871a14f6745ebac,
+        type: 2}
+      propertyPath: m_text
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114603121759169092, guid: 6787b1926a71647ae871a14f6745ebac,
+        type: 2}
+      propertyPath: m_textInfo.characterCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114603121759169092, guid: 6787b1926a71647ae871a14f6745ebac,
+        type: 2}
+      propertyPath: m_textInfo.wordCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114603121759169092, guid: 6787b1926a71647ae871a14f6745ebac,
+        type: 2}
+      propertyPath: m_fontSize
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114603121759169092, guid: 6787b1926a71647ae871a14f6745ebac,
+        type: 2}
+      propertyPath: m_textInfo.spaceCount
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6787b1926a71647ae871a14f6745ebac, type: 2}
   m_IsPrefabParent: 0

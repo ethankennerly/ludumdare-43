@@ -73,4 +73,16 @@
         - 70 ms: Convert Move Mask.
         - 40 ms: Add Board To History
 
+1. [ ] Pool go game state 5x5.
+1. [ ] Pool go state 5x5.
+1. [ ] Select move from mask.
 1. [ ] Bias central move.
+1. [ ] Displays cells on 3x1.
+1. [ ] Correct so that will not play suicide:
+
+            .....
+            .xxxx
+            .oooo
+            oxxo.
+
+
