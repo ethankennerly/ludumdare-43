@@ -71,7 +71,28 @@ namespace FineGameDesign.Go.AI
             }
         }
 
-        public static event Action<Board5x5> OnBoardSet;
+        private static event Action<Board5x5> s_OnBoardSet;
+        public static event Action<Board5x5> OnBoardSet
+        {
+            add
+            {
+                s_OnBoardSet -= value;
+                s_OnBoardSet += value;
+                if (!InstanceExists())
+                {
+                    return;
+                }
+                if (value == null)
+                {
+                    return;
+                }
+                value(instance.Board);
+            }
+            remove
+            {
+                s_OnBoardSet -= value;
+            }
+        }
 
         public Board5x5 Board = new Board5x5();
 
@@ -157,9 +178,9 @@ namespace FineGameDesign.Go.AI
                 OnScoreSet(Content.White, 0);
             }
 
-            if (OnBoardSet != null)
+            if (s_OnBoardSet != null)
             {
-                OnBoardSet(Board);
+                s_OnBoardSet(Board);
             }
         }
 
@@ -246,9 +267,9 @@ namespace FineGameDesign.Go.AI
         {
             PublishWin();
 
-            if (OnBoardSet != null)
+            if (s_OnBoardSet != null)
             {
-                OnBoardSet(Board);
+                s_OnBoardSet(Board);
             }
         }
 
