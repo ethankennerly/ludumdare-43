@@ -12,15 +12,13 @@ namespace FineGameDesign.Go.AI.UnitTests
         [MenuItem("Tools/Go/Make Move On 3x1 For Profiling")]
         public static void MakeMoveOn3x1ForProfiling()
         {
-            var tester = new GoSearcher5x5Tests();
-            tester.MakeMoveOn3x1();
+            MakeMoveOn3x1();
         }
 
         [MenuItem("Tools/Go/Make Move On 3x3 For Profiling")]
         public static void MakeMoveOn3x3ForProfiling()
         {
-            var tester = new GoSearcher5x5Tests();
-            tester.MakeMoveOn3x3();
+            MakeMoveOn3x3();
         }
 
         private static void AssertTinyAndOdd(int size, string dimension)
@@ -31,7 +29,7 @@ namespace FineGameDesign.Go.AI.UnitTests
             );
         }
 
-        public void MakeMove(int sizeX, int sizeY)
+        private static void MakeMove(int sizeX, int sizeY)
         {
             AssertTinyAndOdd(sizeX, "X");
             AssertTinyAndOdd(sizeY, "Y");
@@ -57,25 +55,25 @@ namespace FineGameDesign.Go.AI.UnitTests
         }
 
         [Test]
-        public void MakeMoveOn3x1()
+        public static void MakeMoveOn3x1()
         {
             MakeMove(3, 1);
         }
 
         [Test]
-        public void MakeMoveOn3x3()
+        public static void MakeMoveOn3x3()
         {
             MakeMove(3, 3);
         }
 
         [Test]
-        public void MakeMoveOn5x3()
+        public static void MakeMoveOn5x3()
         {
             MakeMove(5, 3);
         }
 
         [Test]
-        public void MakeMoveOn5x5()
+        public static void MakeMoveOn5x5()
         {
             MakeMove(5, 5);
         }
