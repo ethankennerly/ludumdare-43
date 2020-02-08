@@ -229,8 +229,33 @@ namespace FineGameDesign.Go.AI.UnitTests
                 "On capturing, expected 1 group for player 1.\n" + 
                 gameState.Audit()
             );
-            Assert.AreEqual(0, gameState.GetNumGroupsForPlayer(0),
-                "On captured, expected 0 groups for player 0.\n" + 
+        }
+
+        [Test]
+        public void Move_On3x3Capture_MergesGroups()
+        {
+            GoGameState5x5 gameState = new GoGameState5x5();
+            gameState.SetSize(3, 3);
+            gameState.MoveAtPosition(new BoardPosition(){x = 1, y = 1});
+            gameState.MoveAtPosition(new BoardPosition(){x = 0, y = 1});
+            gameState.MoveAtPosition(new BoardPosition(){x = 1, y = 2});
+            gameState.MoveAtPosition(new BoardPosition(){x = 0, y = 2});
+            gameState.MoveAtPosition(new BoardPosition(){x = 2, y = 2});
+            gameState.MoveAtPosition(new BoardPosition(){x = 1, y = 0});
+            gameState.MoveAtPosition(new BoardPosition(){x = 2, y = 1});
+            gameState.MoveAtPosition(new BoardPosition(){x = 0, y = 0});
+            Assert.AreEqual(1, gameState.GetNumGroupsForPlayer(1),
+                "Before black passes, expected 1 group for player 1.\n" + 
+                gameState.Audit()
+            );
+            gameState.Pass();
+            Assert.AreEqual(1, gameState.GetNumGroupsForPlayer(1),
+                "After black passes, expected 1 group for player 1.\n" + 
+                gameState.Audit()
+            );
+            gameState.MoveAtPosition(new BoardPosition(){x = 2, y = 0});
+            Assert.AreEqual(1, gameState.GetNumGroupsForPlayer(1),
+                "On capturing, expected 1 group for player 1.\n" + 
                 gameState.Audit()
             );
         }
