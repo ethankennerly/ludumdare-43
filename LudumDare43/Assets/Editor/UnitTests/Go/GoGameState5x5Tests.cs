@@ -214,6 +214,27 @@ namespace FineGameDesign.Go.AI.UnitTests
             );
         }
 
+        [Test]
+        public void Move_On3x2Capture_MergesGroups()
+        {
+            GoGameState5x5 gameState = new GoGameState5x5();
+            gameState.SetSize(3, 2);
+            gameState.MoveAtPosition(new BoardPosition(){x = 0});
+            gameState.MoveAtPosition(new BoardPosition(){x = 0, y = 1});
+            gameState.MoveAtPosition(new BoardPosition(){x = 1});
+            gameState.MoveAtPosition(new BoardPosition(){x = 1, y = 1});
+            gameState.MoveAtPosition(new BoardPosition(){x = 2});
+            gameState.MoveAtPosition(new BoardPosition(){x = 2, y = 1});
+            Assert.AreEqual(1, gameState.GetNumGroupsForPlayer(1),
+                "On capturing, expected 1 group for player 1.\n" + 
+                gameState.Audit()
+            );
+            Assert.AreEqual(0, gameState.GetNumGroupsForPlayer(0),
+                "On captured, expected 0 groups for player 0.\n" + 
+                gameState.Audit()
+            );
+        }
+
         /// <summary>
         /// xo.
         /// .xo

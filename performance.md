@@ -73,7 +73,8 @@
         - 70 ms: Convert Move Mask.
         - 40 ms: Add Board To History
 
-1. [ ] On each move, log liberties, occupied.
+1. On each move, log liberties, occupied.
+1. [ ] Merge groups after capture. See audit below.
 1. [ ] Diagnose cause of suicide:
 
             .....
@@ -87,3 +88,21 @@
 1. [ ] Pool go state 5x5.
 1. [ ] Select move from mask.
 1. [ ] Bias central move.
+
+
+### Merge groups after capture
+White just captured.
+Expected one group.
+Got two groups.
+
+        Audit:
+        Board Diagram: 
+        ooo
+        o..
+        o..
+        Illegal Move Masks: 111/100/100, 111/100/100
+        Turn Index: 0
+        Player Index 0:
+        Player Index 1:
+        Group Liberty Mask: 000/010/010, Group Occupied Mask: 110/100/100
+        Group Liberty Mask: 000/001/000, Group Occupied Mask: 001/000/000
