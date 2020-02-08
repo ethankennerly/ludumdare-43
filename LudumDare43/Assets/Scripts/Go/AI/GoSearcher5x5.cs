@@ -60,13 +60,13 @@ namespace FineGameDesign.Go.AI
             return topAction.Action.PositionMask;
         }
 
-        [Conditional("LOG_GO_SEARCHER")]
+        [Conditional("LOG_GO_GAME_STATE")]
         private void Log(string message)
         {
             UnityEngine.Debug.Log(message);
         }
 
-        [Conditional("LOG_GO_SEARCHER")]
+        [Conditional("LOG_GO_GAME_STATE")]
         private void Log(string prefix, IList<MonteCarloTreeSearch.Node<GoPlayer5x5, GoAction5x5>> actions,
             GoGameState5x5 game = null,
             int maxActions = 10)
@@ -96,7 +96,7 @@ namespace FineGameDesign.Go.AI
             if (game != null)
             {
                 sb.Append("\n");
-                sb.Append(game.ToString());
+                sb.Append(game.Audit());
             }
 
             string message = sb.ToString();

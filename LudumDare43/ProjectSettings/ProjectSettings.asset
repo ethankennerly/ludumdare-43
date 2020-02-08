@@ -561,7 +561,7 @@ PlayerSettings:
   webGLUseWasm: 0
   webGLCompressionFormat: 1
   scriptingDefineSymbols:
-    1: 
+    1: LOG_GO_GAME_STATE_MCTS
     7: 
   platformArchitecture: {}
   scriptingBackend:

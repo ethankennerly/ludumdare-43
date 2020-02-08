@@ -884,16 +884,18 @@ namespace FineGameDesign.Go.AI
                 nextBoard.player0Mask &= noncapturerMask;
             }
 
+            #if LOG_GO_GAME_STATE_VERBOSE
             LogBoard(nextBoard,
                 "WouldRepeatBoardAfterCapturing: " + MaskToBitString(prisonerMask) + ":" +
                 " on capturer's turn: " + capturerTurnIndex + ", number of boards: " + numBoards);
+            #endif
             
             for (int boardIndex = numBoards - 2; boardIndex >= 0; --boardIndex)
             {
                 UniqueBoard previousBoard = m_BoardHistory[boardIndex];
                 if (previousBoard.Equals(nextBoard))
                 {
-                    Log("WouldRepeatBoardAfterCapturing: true");
+                    VerboseLog("WouldRepeatBoardAfterCapturing: true");
                     return true;
                 }
             }
@@ -946,8 +948,8 @@ namespace FineGameDesign.Go.AI
                 "\n    compared to current diagram:\n" + currentDiagram);
         }
         
-        [Conditional("LOG_GO_GAME_STATE")]
-        private void Log(string message)
+        [Conditional("LOG_GO_GAME_STATE_VERBOSE")]
+        private void VerboseLog(string message)
         {
             Debug.Log(message);
         }
