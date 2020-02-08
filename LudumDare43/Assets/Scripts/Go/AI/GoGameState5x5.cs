@@ -94,7 +94,7 @@ namespace FineGameDesign.Go.AI
             clone.m_TurnIndex = m_TurnIndex;
             clone.PointsForPlayer1 = PointsForPlayer1;
             
-            Array.Copy(clone.m_IllegalMoveMasks, m_IllegalMoveMasks, clone.m_IllegalMoveMasks.Length);
+            Array.Copy(m_IllegalMoveMasks, clone.m_IllegalMoveMasks, clone.m_IllegalMoveMasks.Length);
             CloneArrayOfLists(m_GroupLibertyMasks, clone.m_GroupLibertyMasks);
             CloneArrayOfLists(m_GroupOccupiedMasks, clone.m_GroupOccupiedMasks);
             
