@@ -551,7 +551,7 @@ namespace FineGameDesign.Go.AI
 
             occupiedMasks[groupIndex] |= occupiedMasks[groupIndexToMerge];
             
-            libertyMasks[groupIndex] |= occupiedMasks[groupIndexToMerge];
+            libertyMasks[groupIndex] |= libertyMasks[groupIndexToMerge];
             libertyMasks[groupIndex] &= m_EmptyMask;
             
             occupiedMasks.RemoveAt(groupIndexToMerge);
