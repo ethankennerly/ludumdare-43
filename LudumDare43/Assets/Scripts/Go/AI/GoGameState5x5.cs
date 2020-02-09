@@ -135,14 +135,7 @@ namespace FineGameDesign.Go.AI
             for (int playerIndex = 0, numPlayers = m_GroupLibertyMasks.Length; playerIndex < numPlayers; ++playerIndex)
             {
                 sb.Append("Player Index ").Append(playerIndex).Append(":\n");
-                List<uint> libertyMasks = m_GroupLibertyMasks[playerIndex];
-                List<uint> occupiedMasks = m_GroupOccupiedMasks[playerIndex];
-                for (int groupIndex = 0, numGroups = libertyMasks.Count; groupIndex < numGroups; ++groupIndex)
-                {
-                    sb.Append("Group Liberty Mask: ").Append(MaskToBitString(libertyMasks[groupIndex]));
-                    sb.Append(", Group Occupied Mask: ").Append(MaskToBitString(occupiedMasks[groupIndex]));
-                    sb.Append("\n");
-                }
+                AppendGroupBitStrings(sb, playerIndex);
             }
 
             if (m_BoardHistory.Count > 0)
@@ -156,6 +149,28 @@ namespace FineGameDesign.Go.AI
             }
             
             return sb.ToString();
+        }
+
+        /// <remarks>
+        /// Allocates up to several strings.
+        /// </remarks>
+        public string FormatGroupBitStrings(int playerIndex)
+        {
+            StringBuilder sb = new StringBuilder();
+            AppendGroupBitStrings(sb, playerIndex);
+            return sb.ToString();
+        }
+        
+        private void AppendGroupBitStrings(StringBuilder sb, int playerIndex)
+        {
+            List<uint> libertyMasks = m_GroupLibertyMasks[playerIndex];
+            List<uint> occupiedMasks = m_GroupOccupiedMasks[playerIndex];
+            for (int groupIndex = 0, numGroups = libertyMasks.Count; groupIndex < numGroups; ++groupIndex)
+            {
+                sb.Append("Group Liberty Mask: ").Append(MaskToBitString(libertyMasks[groupIndex]));
+                sb.Append(", Group Occupied Mask: ").Append(MaskToBitString(occupiedMasks[groupIndex]));
+                sb.Append("\n");
+            }
         }
 
         /// <summary>

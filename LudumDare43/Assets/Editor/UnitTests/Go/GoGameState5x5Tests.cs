@@ -244,8 +244,10 @@ namespace FineGameDesign.Go.AI.UnitTests
             gameState.MoveAtPosition(new BoardPosition(){x = 1, y = 0});
             gameState.MoveAtPosition(new BoardPosition(){x = 2, y = 1});
             gameState.MoveAtPosition(new BoardPosition(){x = 0, y = 0});
-            Assert.AreEqual(1, gameState.GetNumGroupsForPlayer(1),
-                "Before black passes, expected 1 group for player 1.\n" + 
+            Assert.AreEqual(
+                "Group Liberty Mask: 001/000/000, Group Occupied Mask: 110/100/100\n",
+                gameState.FormatGroupBitStrings(1),
+                "After white joins groups at 0,0, expected one liberty at 2,0." + 
                 gameState.Audit()
             );
             gameState.Pass();
